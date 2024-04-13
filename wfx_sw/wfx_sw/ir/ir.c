@@ -25,7 +25,7 @@ catch case where fan stops and timer rolls over.
 */
 ISR(TIMER2_OVF_vect) {
 	timer2_overflow_counter++;
-	if (timer2_overflow_counter >= 30){
+	if (timer2_overflow_counter >= 15){
 		timer2_overflow_counter = 0;
 		ir_test_counter++;
 		if (!ir_trigger_1hz_flag_g){

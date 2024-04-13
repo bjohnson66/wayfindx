@@ -1,5 +1,5 @@
 #ifndef F_CPU
-#define F_CPU 8000000UL /**< Define the CPU frequency to 8MHz. */
+#define F_CPU 4000000UL /**< Define the CPU frequency to 8MHz. */
 #endif
 
 #include <avr/interrupt.h>
