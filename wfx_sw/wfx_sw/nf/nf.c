@@ -35,6 +35,7 @@ char ew_indicator[GGA_INDICATOR_SIZE];				// E/W Indicator, 'E' for east or 'W' 
 char position_fix_indicator[GGA_INDICATOR_SIZE];	// Position Fix Indicator, see Table 1-4
 char satellites_used[GGA_SV_USD_BUFFER_SIZE];		// Satellites Used, range 0 to 12 eg 07
 char hdop[GGA_HDOP_BUFFER_SIZE];					// HDOP (Horizontal Dilution of Precision), e.g., "1.0"
+char ns_indicator2[GGA_INDICATOR_SIZE];				// N/S Indicator, 'N' for north or 'S' for south
 
 
 //local static
@@ -68,6 +69,8 @@ uint8_t nf_init(){
 	memset(position_fix_indicator, 0, GGA_INDICATOR_SIZE * sizeof(char));
 	memset(satellites_used, 0, GGA_SV_USD_BUFFER_SIZE * sizeof(char));
 	memset(hdop, 0, GGA_HDOP_BUFFER_SIZE * sizeof(char));
+	memset(ns_indicator2, 0, GGA_INDICATOR_SIZE * sizeof(char));
+
 	
 	
 	
@@ -144,8 +147,6 @@ void read_nmea_msg_raw(){
 	//-----------------------------------------------------------------
 	//only need GGA and VTG for requirements. Drop others
 	if(strcmp(nmea_msg_id_buffer, GGA_TYPE) == 0){
-		memset(gga_msg_buffer, ' ',sizeof(char)*GGA_SIZE); //zeroize msg buffer
-
 		//scrape raw
 		for (counter = 0; counter < GGA_SIZE; counter ++){
 			get_serial_char(gga_msg_buffer+counter);
@@ -159,11 +160,11 @@ void read_nmea_msg_raw(){
 			for (int i =0; i < GGA_UTC_BUFFER_SIZE; i++){
 				utc_time[i] = gga_msg_buffer[offset++];
 			}
-			
-			ds_print_string(utc_time, GGA_UTC_BUFFER_SIZE, 0);	
+			//ds_print_string(utc_time, GGA_UTC_BUFFER_SIZE, 0);	
 		}else{ //otherwise skip comma from if statement
 			offset++;
 		}
+		offset++;// skip comma
 		
 		//////////////////////////////////////////
 		//grab LAT if available
@@ -171,10 +172,82 @@ void read_nmea_msg_raw(){
 			for (int i =0; i < GGA_LAT_BUFFER_SIZE; i++){
 				latitude[i] = gga_msg_buffer[offset++];
 			}
-			
 		}else{ //otherwise skip comma from if statement
 			offset++;
-		}	
-		ds_print_string(gga_msg_buffer+offset, GGA_LAT_BUFFER_SIZE, 1);
+		}
+		offset++; // skip comma
+		
+		//////////////////////////////////////////
+		//grab NS indicator if available
+		if (gga_msg_buffer[offset] != ','){
+			ns_indicator2[0] = gga_msg_buffer[offset++];
+			//ds_print_string(ew_indicator, GGA_INDICATOR_SIZE, 1);
+		}else{ //otherwise skip comma from if statement
+			offset++;
+		}
+		offset++; // skip comma
+		
+		
+		//////////////////////////////////////////
+		//grab LONG if available
+		if (gga_msg_buffer[offset] != ','){
+			for (int i =0; i < GGA_LONG_BUFFER_SIZE; i++){
+				longitude[i] = gga_msg_buffer[offset++];
+			}
+			//ds_print_string(longitude, GGA_LONG_BUFFER_SIZE, 1);
+			}else{ //otherwise skip comma from if statement
+			offset++;
+		}
+		offset++; // skip comma
+		
+		//////////////////////////////////////////
+		//grab EW indicator if available
+		if (gga_msg_buffer[offset] != ','){
+			for (int i =0; i < GGA_INDICATOR_SIZE; i++){
+				ew_indicator[i] = gga_msg_buffer[offset++];
+			}
+			//ds_print_string(ew_indicator, GGA_INDICATOR_SIZE, 1);
+			}else{ //otherwise skip comma from if statement
+			offset++;
+		}
+		offset++; // skip comma
+		
+		
+		//////////////////////////////////////////
+		//grab FIX indicator if available
+		if (gga_msg_buffer[offset] != ','){
+			for (int i =0; i < GGA_INDICATOR_SIZE; i++){
+				position_fix_indicator[i] = gga_msg_buffer[offset++];
+			}
+			//ds_print_string(position_fix_indicator, GGA_INDICATOR_SIZE, 1);
+			}else{ //otherwise skip comma from if statement
+			offset++;
+		}
+		offset++; // skip comma
+		
+		//////////////////////////////////////////
+		//grab NUM_SV if available
+		if (gga_msg_buffer[offset] != ','){
+			for (int i =0; i < GGA_SV_USD_BUFFER_SIZE; i++){
+				satellites_used[i] = gga_msg_buffer[offset++];
+			}
+			//ds_print_string(satellites_used, GGA_SV_USD_BUFFER_SIZE, 1);
+			}else{ //otherwise skip comma from if statement
+			offset++;
+		}
+	    offset++; // skip comma
+		
+		//////////////////////////////////////////
+		//grab HDOP if available
+		if (gga_msg_buffer[offset] != ','){
+			for (int i =0; i < GGA_HDOP_BUFFER_SIZE; i++){
+				hdop[i] = gga_msg_buffer[offset++];
+			}
+			//ds_print_string(hdop, GGA_HDOP_BUFFER_SIZE, 0);
+			}else{ //otherwise skip comma from if statement
+			offset++;
+		}
+		offset++; // skip comma
+		
 	}
 }

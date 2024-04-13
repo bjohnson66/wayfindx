@@ -20,12 +20,13 @@
 #include "ds/ds.h" /**< Include display-related functions. */
 #include "ir/ir.h" /**< Include interrupt routines. */
 #include "nf/nf.h"  /**< Include navigation fetch functions */
+#include "nf/nf_types.h"
 #include "ut/utilities.h" /**< Include utility functions. */
 #include "ut/ut_types.h" /**< Include common type definitions. */
 
 void startup();
 void task_1hz();
-void test_ir_display();
+void update_display();
 
 /**
  * @brief Main loop function.
@@ -39,12 +40,12 @@ int main(void)
 
     /* Main loop */
     while (1){
-		//read_nmea_msg
-		read_nmea_msg_raw();
 		if (ir_trigger_1hz_flag_g == true){
 			task_1hz();
 			ir_trigger_1hz_flag_g = false;
 		}
+		//read_nmea_msg
+		read_nmea_msg_raw();
 	}
 }
 
@@ -74,38 +75,39 @@ void startup(){
 		ds_print_string(err, MAX_COL, 1);
 		while(1){};
 	}
+	_delay_ms(0.1f);
 	ut_init(); /**< Initialize utilities CSC. */
 }
 
 
 void task_1hz(){
-	test_ir_display();
+	update_display();
 }
 
-void test_ir_display(){
-	char* ir_test_string = "                ";
-	//print counter to display
-	if (ir_test_counter >= 10000){
-		ir_test_string[11] = '0' + (ir_test_counter / 10000) % 10; // Get the ten thousands place
-		}else{
-		ir_test_string[11] = ' ';
+void update_display(){
+	{
+			char* line_str = "SVXX FIXX DOPXXX";
+			line_str[2] = satellites_used[0];
+			line_str[3] = satellites_used[1];
+			
+			line_str[8] = position_fix_indicator[0];
+			
+			line_str[13] = hdop[0];
+			line_str[14] = hdop[1];
+			line_str[15] = hdop[2];
+			
+			ds_print_string(line_str, MAX_COL, 0);
 	}
-	if (ir_test_counter >= 1000){
-		ir_test_string[12] = '0' + (ir_test_counter / 1000) % 10; // Get the thousands place
-		}else{
-		ir_test_string[12] = ' ';
+	
+	{
+		char* line_str = "UTC:XXXXXXXXX XX";
+		for (int i=0; i < GGA_UTC_BUFFER_SIZE; i++){
+			line_str[4+i] = utc_time[i];
+		}
+		
+		line_str[14] = ns_indicator2[0];
+		line_str[15] = ew_indicator[0];
+		
+		ds_print_string(line_str, MAX_COL, 1);
 	}
-	if (ir_test_counter >= 100) {
-		ir_test_string[13] = '0' + (ir_test_counter / 100) % 10; // Get the hundreds place
-		} else{
-		ir_test_string[13] = ' ';
-	}
-	if (ir_test_counter >= 10)  {
-		ir_test_string[14] = '0' + (ir_test_counter / 10) % 10; // Get the tens place
-		}else{
-		ir_test_string[14] = ' ';
-	}
-
-	ir_test_string[15] = '0' + ir_test_counter % 10; // Get the ones place
-	ds_print_string(ir_test_string, MAX_COL, 0);
 }
