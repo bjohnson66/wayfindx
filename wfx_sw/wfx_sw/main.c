@@ -13,16 +13,20 @@
 #endif
 
 //PORT Pin 2 PD2
-
-#include <avr/io.h>
 #include <avr/power.h>
+#include <avr/io.h>
 #include <util/delay.h>
-#include "ut/utilities.h" /**< Include utility functions. */
+
 #include "ds/ds.h" /**< Include display-related functions. */
 #include "ir/ir.h" /**< Include interrupt routines. */
+#include "nf/nf.h"  /**< Include navigation fetch functions */
+#include "ut/utilities.h" /**< Include utility functions. */
 #include "ut/ut_types.h" /**< Include common type definitions. */
 
+char* ir_test_string = "                ";
+
 void task_1hz();
+void test_ir_display();
 
 /**
  * @brief Main loop function.
@@ -38,12 +42,20 @@ int main(void)
 		
 	// Initialize computer software components (CSC's)
 	ds_init(); /**< Initialize display CSC. */
+	{ //Welcome Screen - limited scope
+		char* welcome = "- - WayFindX - -";
+		ds_print_string(welcome, MAX_COL, 0);
+	}
+	{
+		char* welcome = "- - - ~~~~ - - -";
+		ds_print_string(welcome, MAX_COL, 1);
+	}
+		
 	ir_init(); /**< Initialize interrupt routines. */
 	ut_init(); /**< Initialize utilities CSC. */
-	
-	{ //Welcome Screen - limited scope
-		char* test1 = "- - WayFindX - -";
-		ds_print_string(test1, MAX_COL, 0);	
+	if (nf_init()){ /**<Initialize navigation fetch CSC. */
+		char* err = "Nav init failure";
+		ds_print_string(err, MAX_COL, 1);
 	}
 		
     /* Main loop */
@@ -58,6 +70,32 @@ int main(void)
 
 void task_1hz(){
 	test_ir_display();
-	char* test1 = "Hello World   :)";
-	ds_print_string(test1, MAX_COL, 1);
+	
+}
+
+void test_ir_display(){
+	//print counter to display
+	if (ir_test_counter >= 10000){
+		ir_test_string[3] = '0' + (ir_test_counter / 10000) % 10; // Get the ten thousands place
+		}else{
+		ir_test_string[3] = ' ';
+	}
+	if (ir_test_counter >= 1000){
+		ir_test_string[4] = '0' + (ir_test_counter / 1000) % 10; // Get the thousands place
+		}else{
+		ir_test_string[4] = ' ';
+	}
+	if (ir_test_counter >= 100) {
+		ir_test_string[5] = '0' + (ir_test_counter / 100) % 10; // Get the hundreds place
+		} else{
+		ir_test_string[5] = ' ';
+	}
+	if (ir_test_counter >= 10)  {
+		ir_test_string[6] = '0' + (ir_test_counter / 10) % 10; // Get the tens place
+		}else{
+		ir_test_string[6] = ' ';
+	}
+
+	ir_test_string[7] = '0' + ir_test_counter % 10; // Get the ones place
+	ds_print_string(ir_test_string, MAX_COL, 0);
 }

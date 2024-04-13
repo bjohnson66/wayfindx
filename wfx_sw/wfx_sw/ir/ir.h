@@ -15,16 +15,10 @@ extern boolean_t ir_trigger_1hz_flag_g;
 extern uint16_t ir_test_counter;
 
 /**
- * @brief Initializes infrared sensor functionality.
- * - Enables button interrupt (INT0) with falling edge trigger.
- * - Initializes fan output and timer for PWM fan control.
- * - Initializes pin change interrupt for RPG.
- * - Configures Timer1 for RPM measurement.
- * - Sets up fan input interrupts.
+ * @brief Initializes interrupt system functionality.
+ * - Configures Timer2 for time management.
  */
 void ir_init();
 
-
-void test_ir_display();
 
 #endif /* IR_H_ */

@@ -1,7 +1,6 @@
 #include "ir.h"
 #include <avr/interrupt.h>
 #include "../ut/utilities.h"
-#include "../ds/ds.h"
 
 //global
 uint16_t ir_test_counter = 0;
@@ -9,7 +8,7 @@ boolean_t ir_trigger_1hz_flag_g = false;
 
 
 //local static
-uint8_t timer2_overflow_counter;char* ir_test_string = "                ";
+uint8_t timer2_overflow_counter;
 
 /**
  * @brief Interrupt Service Routine (ISR) for Timer/Counter0 overflow.
@@ -46,12 +45,8 @@ ISR(TIMER2_OVF_vect) {
 */
 
 /**
- * @brief Initializes infrared sensor functionality.
- * - Enables button interrupt (INT0) with falling edge trigger.
- * - Initializes fan output and timer for PWM fan control.
- * - Initializes pin change interrupt for RPG.
- * - Configures Timer1 for RPM measurement.
- * - Sets up fan input interrupts.
+ * @brief Initializes interrupt system functionality.
+ * - Configures Timer2 for time management.
  */
 void ir_init()
 {
@@ -72,33 +67,4 @@ void ir_init()
 	
 	sei(); // Enable interrupts.
 
-}
-
-
-
-void test_ir_display(){
-	//print counter to display
-	if (ir_test_counter >= 10000){
-		ir_test_string[3] = '0' + (ir_test_counter / 10000) % 10; // Get the ten thousands place
-		}else{
-		ir_test_string[3] = ' ';
-	}
-	if (ir_test_counter >= 1000){
-		ir_test_string[4] = '0' + (ir_test_counter / 1000) % 10; // Get the thousands place
-		}else{
-		ir_test_string[4] = ' ';
-	}
-	if (ir_test_counter >= 100) {
-		ir_test_string[5] = '0' + (ir_test_counter / 100) % 10; // Get the hundreds place
-		} else{
-		ir_test_string[5] = ' ';
-	}
-	if (ir_test_counter >= 10)  {
-		ir_test_string[6] = '0' + (ir_test_counter / 10) % 10; // Get the tens place
-		}else{
-		ir_test_string[6] = ' ';
-	}
-
-	ir_test_string[7] = '0' + ir_test_counter % 10; // Get the ones place
-	ds_print_string(ir_test_string, MAX_COL, 0);
 }
