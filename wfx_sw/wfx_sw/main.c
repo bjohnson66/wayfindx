@@ -39,12 +39,12 @@ int main(void)
 
     /* Main loop */
     while (1){
-		read_nmea_msg();
-		ds_print_string(nf_output_message_line1, MAX_COL, 1);
-		//if (ir_trigger_1hz_flag_g == true){
-		//   task_1hz();
-			//ir_trigger_1hz_flag_g = false;
-		//}
+		//read_nmea_msg();
+		read_nmea_msg_raw();
+		if (ir_trigger_1hz_flag_g == true){
+		   task_1hz();
+		   ir_trigger_1hz_flag_g = false;
+		}
 	}
 }
 
@@ -65,23 +65,21 @@ void startup(){
 		char* welcome = "- - - ~~~~ - - -";
 		ds_print_string(welcome, MAX_COL, 1);
 	}
+	_delay_ms(0.1f);
 		
 	ir_init(); /**< Initialize interrupt routines. */
-	ut_init(); /**< Initialize utilities CSC. */
+	_delay_ms(0.1f);
 	if (nf_init()){ /**<Initialize navigation fetch CSC. */
 		char* err = "Nav init failure";
 		ds_print_string(err, MAX_COL, 1);
 		while(1){};
 	}
+	ut_init(); /**< Initialize utilities CSC. */
 }
 
 
 void task_1hz(){
 	test_ir_display();
-	read_nmea_msg();
-	ds_print_string(nf_output_message_line1, MAX_COL, 1);
-
-	
 }
 
 void test_ir_display(){

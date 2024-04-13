@@ -25,11 +25,12 @@
 #define OK_TO_SEND_TYPE "PSRF1"
 
 //global
-char nf_output_message_line1[MAX_COL] = {' '};
 
 //local static
 char nmea_msg_id_buffer[NMEA_MSG_ID_SIZE];
-gga_struct_type nf_gga_msg = {0};
+char gga_msg_buffer[GGA_SIZE];
+
+gga_struct_type nf_gga_msg;
 
 //local function declarations
 
@@ -45,9 +46,12 @@ uint8_t nf_init(){
      *  UART_BAUD_SELECT_DOUBLE_SPEED() ( double speed mode)
      */
     uart_init( UART_BAUD_SELECT(UART_BAUD_RATE,F_CPU) );
-	
-	sei(); //UART is interrupt based;	
 	memset(nmea_msg_id_buffer,0,sizeof(char)*NMEA_MSG_ID_SIZE); //zeroize
+	memset(gga_msg_buffer, ' ',sizeof(char)*GGA_SIZE); //zeroize msg buffer
+	memset(&nf_gga_msg, 0, sizeof(gga_struct_type));
+		
+	sei(); //UART is interrupt based;	
+
 	
 	return NF_INIT_SUCCESS;
 }
@@ -104,131 +108,48 @@ void get_serial_char(char* outputchar){
 	
 }
 
-void read_nmea_msg(){	
+void process_raw_gga(int* offset, const int data_size, char* buffer){
+		for(int i = 0; i < data_size; i ++){
+			nf_gga_msg.utc_time[i] = gga_msg_buffer[i + *offset];
+		}
+	    *offset += data_size;
+		*offset += 1; //eat comma
+}
+
+
+void read_nmea_msg_raw(){
 	char tempChar;
-    do {
-	    get_serial_char(&tempChar);
-    } while (tempChar != '$');
+	do {
+		get_serial_char(&tempChar);
+	} while (tempChar != '$');
 	
-	if (tempChar == '$'){ //if start of id
-		memset(nmea_msg_id_buffer,0,sizeof(char)*NMEA_MSG_ID_SIZE); //zeroize buffer
-		//read ID
-		for (int i = 0; i < NMEA_MSG_ID_SIZE; i++){
-			get_serial_char(nmea_msg_id_buffer + i);
+	memset(nmea_msg_id_buffer,0,sizeof(char)*NMEA_MSG_ID_SIZE); //zeroize buffer
+	for (int i = 0; i < NMEA_MSG_ID_SIZE; i++){
+		get_serial_char(nmea_msg_id_buffer + i);
+	}
+	get_serial_char(&tempChar); //eat comma
+	
+	int counter = 0; //common counter to save memory alloc time	
+	//-----------------------------------------------------------------
+	//only need GGA and VTG for requirements. Drop others
+	if(strcmp(nmea_msg_id_buffer, GGA_TYPE) == 0){
+		//memset(gga_msg_buffer, ' ',sizeof(char)*GGA_SIZE); //zeroize msg buffer
+
+		//scrape raw
+		for (counter = 0; counter < MAX_COL; counter ++){
+			get_serial_char(gga_msg_buffer+counter);
 		}
-		get_serial_char(&tempChar); //eat comma after msg id
-		int counter = 0; //common counter to save memory alloc time
-
-		//-----------------------------------------------------------------
-		//only need GGA and VTG for requirements. Drop others
-		if(strcmp(nmea_msg_id_buffer, GGA_TYPE) == 0){
-			memset(nf_output_message_line1,' ',sizeof(char)*MAX_COL); //zeroize debug buffer
-			//Pack message
-			//--------------------------------------------------
-			//load utc data
-			get_serial_char(&tempChar); //read first char to see if it is a comma
-			if (! (tempChar == ',')){
-				nf_gga_msg.utc_time[0] = tempChar;
-				for (counter = 1; counter < 10; counter ++){
-					get_serial_char(nf_gga_msg.utc_time + counter);
-				}
-				get_serial_char(&tempChar); //eat comma after utc
-			}
-			
-			//--------------------------------------------------
-			//load latitude
-			get_serial_char(&tempChar); //read first char to see if it is a comma
-			if (! (tempChar == ',')){
-				nf_gga_msg.latitude[0] = tempChar;
-				for (counter = 1; counter < 9; counter ++){
-					get_serial_char(nf_gga_msg.latitude + counter);
-				}
-				get_serial_char(&tempChar); //eat comma after latitude
-			}
-			
-			//--------------------------------------------------
-			//load ns
-			get_serial_char(&tempChar); //read first char to see if it is a comma
-			if (! (tempChar == ',')){
-				nf_gga_msg.ns_indicator[0] = tempChar;
-				get_serial_char(&tempChar); //eat comma after ns_indicator
-				nf_output_message_line1[0] = nf_gga_msg.ns_indicator[0];
-			}
-			
-			//--------------------------------------------------
-			//load longitude
-			get_serial_char(&tempChar); //read first char to see if it is a comma
-			if (! (tempChar == ',')){
-				nf_gga_msg.longitude[0] = tempChar;
-				for (counter = 1; counter < 10; counter ++){
-					get_serial_char(nf_gga_msg.longitude + counter);
-				}
-				get_serial_char(&tempChar); //eat comma after longitude
-			}
-			
-			//--------------------------------------------------
-			//load ew
-			get_serial_char(&tempChar); //read first char to see if it is a comma
-			if (! (tempChar == ',')){
-				nf_gga_msg.ew_indicator[0] = tempChar;
-				get_serial_char(&tempChar); //eat comma after ew_indicator
-				nf_output_message_line1[1] = nf_gga_msg.ew_indicator[0];
-			}
-			
-			//--------------------------------------------------
-			//load fix indicator
-			get_serial_char(&tempChar); //read first char to see if it is a comma
-			if (! (tempChar == ',')){
-				nf_gga_msg.position_fix_indicator[0] = tempChar;
-				get_serial_char(&tempChar); //eat comma after position_fix_indicator
-				nf_output_message_line1[2] = nf_gga_msg.position_fix_indicator[0];
-
-			}
-			
-			//--------------------------------------------------
-			//load SVs used
-			get_serial_char(&tempChar); //read first char to see if it is a comma
-			if (! (tempChar == ',')){
-				nf_gga_msg.satellites_used[0] = tempChar; //pos 1
-				get_serial_char(nf_gga_msg.satellites_used + 1); //pos 2
-				get_serial_char(&tempChar); //eat comma after satellites_used
-				nf_output_message_line1[3] = nf_gga_msg.satellites_used[0];
-			}
-			
-			//--------------------------------------------------
-			//load HDOP
-			get_serial_char(&tempChar); //read first char to see if it is a comma
-			if (! (tempChar == ',')){
-				nf_gga_msg.hdop[0] = tempChar; //pos 1
-				get_serial_char(nf_gga_msg.hdop + 1); //pos 2
-				get_serial_char(nf_gga_msg.hdop + 2); //pos 2
-				get_serial_char(&tempChar); //eat comma after HDOP
-				
-			    nf_output_message_line1[4] = nf_gga_msg.hdop[0];
-				nf_output_message_line1[5] = nf_gga_msg.hdop[1];
-				nf_output_message_line1[6] = nf_gga_msg.hdop[2];
-			}
-			
-			//--------------------------------------------------
-			//discard rest of message
-			char tempChar = 0;
-			while (tempChar != '\r') {
-				get_serial_char(&tempChar);
-			}
+		/*
+		//process
+		int offset = 0;
+		if (gga_msg_buffer[offset] != ','){
+			process_raw_gga(&offset, GGA_UTC_BUFFER_SIZE, nf_gga_msg.utc_time);
+		}else{
+			offset++;
+		}
+		*/
 		
-		}else if(strcmp(nmea_msg_id_buffer, VTG_TYPE) == 0){				
-			char tempChar = 0; //read rest of msg
-			while (tempChar != '\r') {
-				get_serial_char(&tempChar);
-			}
-		}else {
-			char tempChar = 0;
-			//wait for end of message with <CR>
-			while (tempChar != '\r') {
-				get_serial_char(&tempChar);
-			} 
-			//ignore <LF>
-			
-		}
+		ds_print_string(gga_msg_buffer, MAX_COL, 1);
+
 	}
 }
