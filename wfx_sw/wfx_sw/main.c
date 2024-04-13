@@ -17,6 +17,7 @@
 #include <avr/io.h>
 #include <avr/power.h>
 #include <util/delay.h>
+#include <avr/sleep.h>
 #include "ut/utilities.h" /**< Include utility functions. */
 #include "ds/ds.h" /**< Include display-related functions. */
 #include "ir/ir.h" /**< Include interrupt routines. */
@@ -45,14 +46,45 @@ int main(void)
 		char* test1 = "- - WayFindX - -";
 		ds_print_string(test1, MAX_COL, 0);	
 	}
-		
+	
+	int sleep_cnt = 0;
     /* Main loop */
     while (1){
-       _delay_ms(0.1f);
+       _delay_ms(0.01f);
 		if (ir_trigger_1hz_flag_g == true){
 			task_1hz();
 			ir_trigger_1hz_flag_g = false;
+			SMCR = SMCR | (1 << SE); //go to sleep
+			sleep_mode();
+			sleep_cnt=0;
 		}
+		char* test1 = "Hello World   :(";
+		sleep_cnt++;
+		//print counter to display
+		if (sleep_cnt >= 10000){
+			test1[3] = '0' + (sleep_cnt / 10000) % 10; // Get the ten thousands place
+			}else{
+			test1[3] = ' ';
+		}
+		if (sleep_cnt >= 1000){
+			test1[4] = '0' + (sleep_cnt / 1000) % 10; // Get the thousands place
+			}else{
+			test1[4] = ' ';
+		}
+		if (sleep_cnt >= 100) {
+			test1[5] = '0' + (sleep_cnt / 100) % 10; // Get the hundreds place
+			} else{
+			test1[5] = ' ';
+		}
+		if (sleep_cnt >= 10)  {
+			test1[6] = '0' + (sleep_cnt / 10) % 10; // Get the tens place
+			}else{
+			test1[6] = ' ';
+		}
+
+		test1[7] = '0' + sleep_cnt % 10; // Get the ones place
+		ds_print_string(test1, MAX_COL, 1);
+		
 	}
 }
 

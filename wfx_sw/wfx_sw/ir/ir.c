@@ -1,5 +1,6 @@
 #include "ir.h"
 #include <avr/interrupt.h>
+#include <avr/sleep.h>
 #include "../ut/utilities.h"
 #include "../ds/ds.h"
 
@@ -26,7 +27,10 @@ catch case where fan stops and timer rolls over.
 */
 ISR(TIMER2_OVF_vect) {
 	timer2_overflow_counter++;
-	if (timer2_overflow_counter >= 15){
+	if (timer2_overflow_counter >= 15){ //at 1hz
+		//wake from sleep
+		SMCR = 0;
+		SMCR = SMCR | (1 << SM1) | (1 << SM0);
 		timer2_overflow_counter = 0;
 		ir_test_counter++;
 		if (!ir_trigger_1hz_flag_g){
@@ -56,6 +60,11 @@ ISR(TIMER2_OVF_vect) {
 void ir_init()
 {
 	cli();
+	//set control register to allow power save sleep mode to save power: (must set SE and call sleep to go to sleep)
+	SMCR = 0;
+	SMCR = SMCR | (1 << SM1) | (1 << SM0);
+	//set_sleep_mode(SLEEP_MODE_PWR_SAVE);
+	
 	//----------------------------------------------
 	//timer 1 for task management
 	// Set Timer1 in normal mode (WGM13:0 = 0)
