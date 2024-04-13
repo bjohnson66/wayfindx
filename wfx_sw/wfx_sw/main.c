@@ -9,7 +9,7 @@
  * @date: 2024/04/24
  */ 
 #ifndef F_CPU
-#define F_CPU 4000000UL /**< Define the CPU frequency to 8MHz. */
+#define F_CPU 8000000UL /**< Define the CPU frequency to 8MHz. */
 #endif
 
 //PORT Pin 2 PD2
@@ -40,10 +40,11 @@ int main(void)
     /* Main loop */
     while (1){
 		read_nmea_msg();
-		if (ir_trigger_1hz_flag_g == true){
-			task_1hz();
-			ir_trigger_1hz_flag_g = false;
-		}
+		ds_print_string(nf_output_message_line1, MAX_COL, 1);
+		//if (ir_trigger_1hz_flag_g == true){
+		//   task_1hz();
+			//ir_trigger_1hz_flag_g = false;
+		//}
 	}
 }
 
@@ -52,7 +53,7 @@ int main(void)
 void startup(){
 	//Initialize
 	// Set clock pre-scaler to divide by 4
-	clock_prescale_set(clock_div_4);
+	clock_prescale_set(clock_div_2);
 		
 	// Initialize computer software components (CSC's)
 	ds_init(); /**< Initialize display CSC. */
@@ -77,6 +78,9 @@ void startup(){
 
 void task_1hz(){
 	test_ir_display();
+	read_nmea_msg();
+	ds_print_string(nf_output_message_line1, MAX_COL, 1);
+
 	
 }
 

@@ -9,7 +9,8 @@
 #ifndef NF_TYPES_H_
 #define NF_TYPES_H_
 
-#define GGA_SIZE 37
+//37 + 8 commas
+#define GGA_SIZE 45
 
 typedef struct {
 	 char utc_time[10];          // UTC Time, e.g., "161229.487"

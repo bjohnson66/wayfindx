@@ -9,11 +9,13 @@
 #define NF_H_
 
 #include "../ut/ut_types.h"
+#include "../ds/ds.h"
 
 #define NF_INIT_SUCCESS 0
 #define NF_INIT_FAILURE 1
 
 //globals
+extern char nf_output_message_line1[MAX_COL];
 
 
 /**
