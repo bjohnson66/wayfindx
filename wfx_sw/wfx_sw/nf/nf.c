@@ -78,8 +78,8 @@ void get_serial_char(char* outputchar){
         if ( c & UART_FRAME_ERROR )
         {
             /* Framing Error detected, i.e no stop bit detected */
-			char* output = "NF Frame Error! ";
-			ds_print_string(output, MAX_COL, 1);
+			//char* output = "NF Frame Error! ";
+			//ds_print_string(output, MAX_COL, 1);
         }
         if ( c & UART_OVERRUN_ERROR )
         {
