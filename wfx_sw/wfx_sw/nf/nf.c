@@ -5,6 +5,7 @@
 #include <avr/interrupt.h>
 #include <string.h>
 #include "nf.h"
+#include "nf_types.h"
 #include "../lib/uart.h"
 #include "../ds/ds.h"
 
@@ -27,10 +28,13 @@
 
 
 //local static
-
-
-//functions
 char nmea_msg_id_buffer[NMEA_MSG_ID_SIZE];
+gga_struct_type nf_gga_msg = {0};
+
+//local function declarations
+void gga_init_from_buffer(const char *buffer);
+
+//function definitions
 
 uint8_t nf_init(){
 	cli();
@@ -69,8 +73,6 @@ void get_serial_char(char* outputchar){
     }
 	else
     {
-		char* output = "NF Has Data!    ";
-		ds_print_string(output, MAX_COL, 1);
         /*
             * new data available from UART
             * check for Frame or Overrun error
@@ -88,7 +90,7 @@ void get_serial_char(char* outputchar){
                 * not read by the interrupt handler before the next character arrived,
                 * one or more received characters have been dropped
                 */
-			char* output = "NF Overrun Error";
+			char* output = "           OR ER";
 			ds_print_string(output, MAX_COL, 1);
         }
         if ( c & UART_BUFFER_OVERFLOW )
@@ -97,7 +99,7 @@ void get_serial_char(char* outputchar){
                 * We are not reading the receive buffer fast enough,
                 * one or more received character have been dropped 
                 */
-			char* output = "NF Overflow Err!";
+			char* output = "OF ER           ";
 			ds_print_string(output, MAX_COL, 1);
         }
         /* 
@@ -119,13 +121,37 @@ void read_nmea_msg(){
 		}
 		//only need GCA and VTG for requirements. Drop others
 		if(strcmp(nmea_msg_id_buffer, GGA_TYPE)){
-			char* output = "GGA_TYPE";
-			ds_print_string(output, 8, 0);
+			//debug print GCA on bottom right
+			{
+				char debug_msg[16] = "             GGA";
+				ds_print_string(debug_msg, 16, 1);
+			}
+			char buffer[GGA_SIZE] = {0};
+			for(int i = 0; i < GGA_SIZE; i++){
+				get_serial_char(buffer +i); //load bytes into struct
+			}
+			gga_init_from_buffer(buffer);
+			ds_print_string(nf_gga_msg.position_fix_indicator, 1, 0);
+			ds_print_string(nf_gga_msg.longitude, 10, 1);
+			//read rest of message
+			char tempChar = 0;
+			while (tempChar != '\r') {
+				get_serial_char(&tempChar);
+			}
+
 		}else if(strcmp(nmea_msg_id_buffer, VTG_TYPE)){
-			char* output = "VTG_TYPE";
-			ds_print_string(output, 8, 0);
+			//debug print GCA on bottom right
+			{
+				char debug_msg[16] = "          VTG   ";
+				ds_print_string(debug_msg, 16, 1);
+			}
+						
+			char tempChar = 0; //read rest of msg
+			while (tempChar != '\r') {
+				get_serial_char(&tempChar);
+			}
 		}else {
-			char tempChar = 5;
+			char tempChar = 0;
 			//wait for end of message with <CR>
 			while (tempChar != '\r') {
 				get_serial_char(&tempChar);
@@ -134,4 +160,23 @@ void read_nmea_msg(){
 			
 		}
 	}
+}
+
+void scanBuffer(int value, const char* bufferIn, char* bufferOut){
+	for (int i =0; i < value; i++){
+		bufferOut[i] = bufferIn[i];
+	}
+}
+
+// Function to initialize struct members from a character buffer
+void gga_init_from_buffer(const char *buffer) {
+	// Use sscanf to parse the buffer and assign values to struct members
+	scanBuffer(10, buffer, nf_gga_msg.utc_time);
+	scanBuffer(9, buffer+10, nf_gga_msg.latitude);
+	scanBuffer(1, buffer+19, nf_gga_msg.ns_indicator);
+	scanBuffer(10, buffer+20,nf_gga_msg.longitude);
+	scanBuffer(1, buffer+30, nf_gga_msg.ew_indicator);
+	scanBuffer(1, buffer+31, nf_gga_msg.position_fix_indicator);
+	scanBuffer(2, buffer+32, nf_gga_msg.satellites_used);
+	scanBuffer(3, buffer+34, nf_gga_msg.hdop);	
 }

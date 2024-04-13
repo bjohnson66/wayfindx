@@ -26,4 +26,6 @@ void get_serial_char(char* outputchar);
 
 void read_nmea_msg();
 
+
+
 #endif /* NF_H_ */

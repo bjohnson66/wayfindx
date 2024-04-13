@@ -166,6 +166,9 @@
     <Compile Include="nf\nf.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="nf\nf_types.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="ut\utilities.c">
       <SubType>compile</SubType>
     </Compile>
