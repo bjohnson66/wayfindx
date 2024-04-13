@@ -22,4 +22,8 @@
  */
 uint8_t nf_init();
 
+void get_serial_char(char* outputchar);
+
+void read_nmea_msg();
+
 #endif /* NF_H_ */

@@ -23,8 +23,7 @@
 #include "ut/utilities.h" /**< Include utility functions. */
 #include "ut/ut_types.h" /**< Include common type definitions. */
 
-char* ir_test_string = "                ";
-
+void startup();
 void task_1hz();
 void test_ir_display();
 
@@ -36,6 +35,21 @@ void test_ir_display();
  */
 int main(void)
 {
+	startup();
+
+    /* Main loop */
+    while (1){
+		read_nmea_msg();
+		if (ir_trigger_1hz_flag_g == true){
+			task_1hz();
+			ir_trigger_1hz_flag_g = false;
+		}
+	}
+}
+
+
+
+void startup(){
 	//Initialize
 	// Set clock pre-scaler to divide by 4
 	clock_prescale_set(clock_div_4);
@@ -56,17 +70,10 @@ int main(void)
 	if (nf_init()){ /**<Initialize navigation fetch CSC. */
 		char* err = "Nav init failure";
 		ds_print_string(err, MAX_COL, 1);
-	}
-		
-    /* Main loop */
-    while (1){
-       _delay_ms(0.1f);
-		if (ir_trigger_1hz_flag_g == true){
-			task_1hz();
-			ir_trigger_1hz_flag_g = false;
-		}
+		while(1){};
 	}
 }
+
 
 void task_1hz(){
 	test_ir_display();
@@ -74,28 +81,29 @@ void task_1hz(){
 }
 
 void test_ir_display(){
+	char* ir_test_string = "                ";
 	//print counter to display
 	if (ir_test_counter >= 10000){
-		ir_test_string[3] = '0' + (ir_test_counter / 10000) % 10; // Get the ten thousands place
+		ir_test_string[11] = '0' + (ir_test_counter / 10000) % 10; // Get the ten thousands place
 		}else{
-		ir_test_string[3] = ' ';
+		ir_test_string[11] = ' ';
 	}
 	if (ir_test_counter >= 1000){
-		ir_test_string[4] = '0' + (ir_test_counter / 1000) % 10; // Get the thousands place
+		ir_test_string[12] = '0' + (ir_test_counter / 1000) % 10; // Get the thousands place
 		}else{
-		ir_test_string[4] = ' ';
+		ir_test_string[12] = ' ';
 	}
 	if (ir_test_counter >= 100) {
-		ir_test_string[5] = '0' + (ir_test_counter / 100) % 10; // Get the hundreds place
+		ir_test_string[13] = '0' + (ir_test_counter / 100) % 10; // Get the hundreds place
 		} else{
-		ir_test_string[5] = ' ';
+		ir_test_string[13] = ' ';
 	}
 	if (ir_test_counter >= 10)  {
-		ir_test_string[6] = '0' + (ir_test_counter / 10) % 10; // Get the tens place
+		ir_test_string[14] = '0' + (ir_test_counter / 10) % 10; // Get the tens place
 		}else{
-		ir_test_string[6] = ' ';
+		ir_test_string[14] = ' ';
 	}
 
-	ir_test_string[7] = '0' + ir_test_counter % 10; // Get the ones place
+	ir_test_string[15] = '0' + ir_test_counter % 10; // Get the ones place
 	ds_print_string(ir_test_string, MAX_COL, 0);
 }
