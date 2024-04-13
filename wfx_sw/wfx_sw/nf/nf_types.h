@@ -24,12 +24,12 @@
 
 extern char utc_time[GGA_UTC_BUFFER_SIZE];				// UTC Time, e.g., "161229.487"
 extern char latitude[GGA_LAT_BUFFER_SIZE];				// Latitude, e.g., "3723.2475"
+extern char ns_indicator[GGA_INDICATOR_SIZE];				// N/S Indicator, 'N' for north or 'S' for south
 extern char longitude[GGA_LONG_BUFFER_SIZE];				// Longitude, e.g., "12158.3416"
 extern char ew_indicator[GGA_INDICATOR_SIZE];				// E/W Indicator, 'E' for east or 'W' for west
 extern char position_fix_indicator[GGA_INDICATOR_SIZE];	// Position Fix Indicator, see Table 1-4
 extern char satellites_used[GGA_SV_USD_BUFFER_SIZE];		// Satellites Used, range 0 to 12 eg 07
 extern char hdop[GGA_HDOP_BUFFER_SIZE];					// HDOP (Horizontal Dilution of Precision), e.g., "1.0"
-extern char ns_indicator[GGA_INDICATOR_SIZE];				// N/S Indicator, 'N' for north or 'S' for south
 
 
 #endif /* NF_TYPES_H_ */
