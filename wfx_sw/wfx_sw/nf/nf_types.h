@@ -24,7 +24,6 @@
 
 extern char utc_time[GGA_UTC_BUFFER_SIZE];				// UTC Time, e.g., "161229.487"
 extern char latitude[GGA_LAT_BUFFER_SIZE];				// Latitude, e.g., "3723.2475"
-extern char ns_indicator[GGA_INDICATOR_SIZE];				// N/S Indicator, 'N' for north or 'S' for south
 extern char longitude[GGA_LONG_BUFFER_SIZE];				// Longitude, e.g., "12158.3416"
 extern char ew_indicator[GGA_INDICATOR_SIZE];				// E/W Indicator, 'E' for east or 'W' for west
 extern char position_fix_indicator[GGA_INDICATOR_SIZE];	// Position Fix Indicator, see Table 1-4
