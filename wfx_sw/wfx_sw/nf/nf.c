@@ -4,6 +4,7 @@
 
 #include <avr/interrupt.h>
 #include <string.h>
+#include <stdlib.h>
 #include "nf.h"
 #include "nf_types.h"
 #include "../lib/uart.h"
@@ -25,12 +26,21 @@
 #define OK_TO_SEND_TYPE "PSRF1"
 
 //global
+//GGA MESSAGE
+char utc_time[GGA_UTC_BUFFER_SIZE];				// UTC Time, e.g., "161229.487"
+char latitude[GGA_LAT_BUFFER_SIZE];				// Latitude, e.g., "3723.2475"
+char ns_indicator[GGA_INDICATOR_SIZE];				// N/S Indicator, 'N' for north or 'S' for south
+char longitude[GGA_LONG_BUFFER_SIZE];				// Longitude, e.g., "12158.3416"
+char ew_indicator[GGA_INDICATOR_SIZE];				// E/W Indicator, 'E' for east or 'W' for west
+char position_fix_indicator[GGA_INDICATOR_SIZE];	// Position Fix Indicator, see Table 1-4
+char satellites_used[GGA_SV_USD_BUFFER_SIZE];		// Satellites Used, range 0 to 12 eg 07
+char hdop[GGA_HDOP_BUFFER_SIZE];					// HDOP (Horizontal Dilution of Precision), e.g., "1.0"
+
 
 //local static
 char nmea_msg_id_buffer[NMEA_MSG_ID_SIZE];
 char gga_msg_buffer[GGA_SIZE];
 
-gga_struct_type nf_gga_msg;
 
 //local function declarations
 
@@ -48,11 +58,20 @@ uint8_t nf_init(){
     uart_init( UART_BAUD_SELECT(UART_BAUD_RATE,F_CPU) );
 	memset(nmea_msg_id_buffer,0,sizeof(char)*NMEA_MSG_ID_SIZE); //zeroize
 	memset(gga_msg_buffer, ' ',sizeof(char)*GGA_SIZE); //zeroize msg buffer
-	memset(&nf_gga_msg, 0, sizeof(gga_struct_type));
-		
-	sei(); //UART is interrupt based;	
 
+	// Initialize the arrays within gga_msg 
+	memset(utc_time, 0, GGA_UTC_BUFFER_SIZE * sizeof(char));
+	memset(latitude, 0, GGA_LAT_BUFFER_SIZE * sizeof(char));
+	memset(ns_indicator, 0, GGA_INDICATOR_SIZE * sizeof(char));
+	memset(longitude, 0, GGA_LONG_BUFFER_SIZE * sizeof(char));
+	memset(ew_indicator, 0, GGA_INDICATOR_SIZE * sizeof(char));
+	memset(position_fix_indicator, 0, GGA_INDICATOR_SIZE * sizeof(char));
+	memset(satellites_used, 0, GGA_SV_USD_BUFFER_SIZE * sizeof(char));
+	memset(hdop, 0, GGA_HDOP_BUFFER_SIZE * sizeof(char));
 	
+	
+	
+	sei(); //UART is interrupt based;	
 	return NF_INIT_SUCCESS;
 }
 
@@ -108,14 +127,6 @@ void get_serial_char(char* outputchar){
 	
 }
 
-void process_raw_gga(int* offset, const int data_size, char* buffer){
-		for(int i = 0; i < data_size; i ++){
-			nf_gga_msg.utc_time[i] = gga_msg_buffer[i + *offset];
-		}
-	    *offset += data_size;
-		*offset += 1; //eat comma
-}
-
 
 void read_nmea_msg_raw(){
 	char tempChar;
@@ -133,23 +144,37 @@ void read_nmea_msg_raw(){
 	//-----------------------------------------------------------------
 	//only need GGA and VTG for requirements. Drop others
 	if(strcmp(nmea_msg_id_buffer, GGA_TYPE) == 0){
-		//memset(gga_msg_buffer, ' ',sizeof(char)*GGA_SIZE); //zeroize msg buffer
+		memset(gga_msg_buffer, ' ',sizeof(char)*GGA_SIZE); //zeroize msg buffer
 
 		//scrape raw
-		for (counter = 0; counter < MAX_COL; counter ++){
+		for (counter = 0; counter < GGA_SIZE; counter ++){
 			get_serial_char(gga_msg_buffer+counter);
 		}
-		/*
-		//process
+		
+		//process message
 		int offset = 0;
+		//////////////////////////////////////////
+		//grab UTC if available
 		if (gga_msg_buffer[offset] != ','){
-			process_raw_gga(&offset, GGA_UTC_BUFFER_SIZE, nf_gga_msg.utc_time);
-		}else{
+			for (int i =0; i < GGA_UTC_BUFFER_SIZE; i++){
+				utc_time[i] = gga_msg_buffer[offset++];
+			}
+			
+			ds_print_string(utc_time, GGA_UTC_BUFFER_SIZE, 0);	
+		}else{ //otherwise skip comma from if statement
 			offset++;
 		}
-		*/
 		
-		ds_print_string(gga_msg_buffer, MAX_COL, 1);
-
+		//////////////////////////////////////////
+		//grab LAT if available
+		if (gga_msg_buffer[offset] != ','){
+			for (int i =0; i < GGA_LAT_BUFFER_SIZE; i++){
+				latitude[i] = gga_msg_buffer[offset++];
+			}
+			
+		}else{ //otherwise skip comma from if statement
+			offset++;
+		}	
+		ds_print_string(gga_msg_buffer+offset, GGA_LAT_BUFFER_SIZE, 1);
 	}
 }

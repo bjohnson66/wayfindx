@@ -39,11 +39,11 @@ int main(void)
 
     /* Main loop */
     while (1){
-		//read_nmea_msg();
+		//read_nmea_msg
 		read_nmea_msg_raw();
 		if (ir_trigger_1hz_flag_g == true){
-		   task_1hz();
-		   ir_trigger_1hz_flag_g = false;
+			task_1hz();
+			ir_trigger_1hz_flag_g = false;
 		}
 	}
 }
