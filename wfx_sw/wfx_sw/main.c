@@ -105,7 +105,7 @@ void update_display(){
 			line_str[4+i] = utc_time[i];
 		}
 		
-		line_str[14] = ns_indicator2[0];
+		line_str[14] = ns_indicator[0];
 		line_str[15] = ew_indicator[0];
 		
 		ds_print_string(line_str, MAX_COL, 1);

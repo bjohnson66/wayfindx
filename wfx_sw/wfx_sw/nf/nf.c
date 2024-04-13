@@ -29,13 +29,12 @@
 //GGA MESSAGE
 char utc_time[GGA_UTC_BUFFER_SIZE];				// UTC Time, e.g., "161229.487"
 char latitude[GGA_LAT_BUFFER_SIZE];				// Latitude, e.g., "3723.2475"
-//char ns_indicator[GGA_INDICATOR_SIZE];				// N/S Indicator, 'N' for north or 'S' for south
 char longitude[GGA_LONG_BUFFER_SIZE];				// Longitude, e.g., "12158.3416"
 char ew_indicator[GGA_INDICATOR_SIZE];				// E/W Indicator, 'E' for east or 'W' for west
 char position_fix_indicator[GGA_INDICATOR_SIZE];	// Position Fix Indicator, see Table 1-4
 char satellites_used[GGA_SV_USD_BUFFER_SIZE];		// Satellites Used, range 0 to 12 eg 07
 char hdop[GGA_HDOP_BUFFER_SIZE];					// HDOP (Horizontal Dilution of Precision), e.g., "1.0"
-char ns_indicator2[GGA_INDICATOR_SIZE];				// N/S Indicator, 'N' for north or 'S' for south
+char ns_indicator[GGA_INDICATOR_SIZE];				// N/S Indicator, 'N' for north or 'S' for south
 
 
 //local static
@@ -63,13 +62,12 @@ uint8_t nf_init(){
 	// Initialize the arrays within gga_msg 
 	memset(utc_time, 0, GGA_UTC_BUFFER_SIZE * sizeof(char));
 	memset(latitude, 0, GGA_LAT_BUFFER_SIZE * sizeof(char));
-	//memset(ns_indicator, 0, GGA_INDICATOR_SIZE * sizeof(char));
 	memset(longitude, 0, GGA_LONG_BUFFER_SIZE * sizeof(char));
 	memset(ew_indicator, 0, GGA_INDICATOR_SIZE * sizeof(char));
 	memset(position_fix_indicator, 0, GGA_INDICATOR_SIZE * sizeof(char));
 	memset(satellites_used, 0, GGA_SV_USD_BUFFER_SIZE * sizeof(char));
 	memset(hdop, 0, GGA_HDOP_BUFFER_SIZE * sizeof(char));
-	memset(ns_indicator2, 0, GGA_INDICATOR_SIZE * sizeof(char));
+	memset(ns_indicator, 0, GGA_INDICATOR_SIZE * sizeof(char));
 
 	
 	
@@ -180,7 +178,7 @@ void read_nmea_msg_raw(){
 		//////////////////////////////////////////
 		//grab NS indicator if available
 		if (gga_msg_buffer[offset] != ','){
-			ns_indicator2[0] = gga_msg_buffer[offset++];
+			ns_indicator[0] = gga_msg_buffer[offset++];
 			//ds_print_string(ew_indicator, GGA_INDICATOR_SIZE, 1);
 		}else{ //otherwise skip comma from if statement
 			offset++;
