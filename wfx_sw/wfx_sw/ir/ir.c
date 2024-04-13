@@ -8,7 +8,7 @@ boolean_t ir_trigger_1hz_flag_g = false;
 
 
 //local static
-uint8_t timer2_overflow_counter;
+static uint8_t timer2_overflow_counter;
 
 /**
  * @brief Interrupt Service Routine (ISR) for Timer/Counter0 overflow.
