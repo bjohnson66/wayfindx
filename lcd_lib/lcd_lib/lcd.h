@@ -80,10 +80,10 @@
  *
  */
 #ifndef LCD_LINES
-#define LCD_LINES           2     /**< number of visible lines of the display */
+#define LCD_LINES           4     /**< number of visible lines of the display */
 #endif
 #ifndef LCD_DISP_LENGTH
-#define LCD_DISP_LENGTH    16     /**< visibles characters per line of the display */
+#define LCD_DISP_LENGTH    20     /**< visibles characters per line of the display */
 #endif
 #ifndef LCD_LINE_LENGTH
 #define LCD_LINE_LENGTH  0x40     /**< internal line length of the display    */
