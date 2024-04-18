@@ -28,6 +28,9 @@ void startup();
 void task_1hz();
 void update_display();
 
+boolean_t mode;
+
+
 /**
  * @brief Main loop function.
  *
@@ -55,23 +58,29 @@ void startup(){
 	//Initialize
 	// Set clock pre-scaler to divide by 4
 	clock_prescale_set(clock_div_4);
+	
+	mode = STAT_MODE;
 		
 	// Initialize computer software components (CSC's)
 	ds_init(); /**< Initialize display CSC. */
-	{ //Welcome Screen - limited scope
-		char* welcome = "- - WayFindX - -";
+	{
+		char* welcome = "- - - - ~~~~ - - - -";
 		ds_print_string(welcome, MAX_COL, 0);
 	}
-	{
-		char* welcome = "- - - ~~~~ - - -";
+	{ //Welcome Screen - limited scope
+		char* welcome = "- - - WayFindX - - -";
 		ds_print_string(welcome, MAX_COL, 1);
+	}
+	{
+		char* welcome = "- - - - ~~~~ - - - -";
+		ds_print_string(welcome, MAX_COL, 2);
 	}
 	_delay_ms(0.1f);
 		
 	ir_init(); /**< Initialize interrupt routines. */
 	_delay_ms(0.1f);
 	if (nf_init()){ /**<Initialize navigation fetch CSC. */
-		char* err = "Nav init failure";
+		char* err = "  Nav init failure  ";
 		ds_print_string(err, MAX_COL, 1);
 		while(1){};
 	}
@@ -85,29 +94,50 @@ void task_1hz(){
 }
 
 void update_display(){
-	{
-			char* line_str = "SVXX FIXX DOPXXX";
-			line_str[2] = satellites_used[0];
-			line_str[3] = satellites_used[1];
-			
-			line_str[8] = position_fix_indicator[0];
-			
-			line_str[13] = hdop[0];
-			line_str[14] = hdop[1];
-			line_str[15] = hdop[2];
-			
-			ds_print_string(line_str, MAX_COL, 0);
-	}
-	
-	{
-		char* line_str = "UTC:XXXXXXXXX XX";
+	if (utc_time[0] == ' '){ //Until we solve for time
+		{
+			char* msg = "Acquiring Satellites";
+			ds_print_string(msg, MAX_COL, 3);
+		}
+	} else if (position_fix_indicator[0] != '1'){ //Display time once we solve for time
+		char* line_str = "UTC Time:XXXXXXXXX  ";
 		for (int i=0; i < GGA_UTC_BUFFER_SIZE; i++){
 			line_str[4+i] = utc_time[i];
 		}
-		
+						
 		line_str[14] = ns_indicator[0];
 		line_str[15] = ew_indicator[0];
+						
+		ds_print_string(line_str, MAX_COL, 0);
 		
-		ds_print_string(line_str, MAX_COL, 1);
-	}
+		char* msg = "Getting PVT Solution";
+		ds_print_string(msg, MAX_COL, 3);
+	} else{	//Once we get a fix, go into normal operation
+		if (mode == STAT_MODE){
+			{ //create custom scope to print first line
+				char* line_str = "SVXX FIXX DOPXXX    ";
+				line_str[2] = satellites_used[0];
+				line_str[3] = satellites_used[1];
+				
+				line_str[8] = position_fix_indicator[0];
+				
+				line_str[13] = hdop[0];
+				line_str[14] = hdop[1];
+				line_str[15] = hdop[2];
+				
+				ds_print_string(line_str, MAX_COL, 0);
+			}
+			{ //scope for second line
+				char* line_str = "UTC:XXXXXXXXX XX    ";
+				for (int i=0; i < GGA_UTC_BUFFER_SIZE; i++){
+					line_str[4+i] = utc_time[i];
+				}
+				
+				line_str[14] = ns_indicator[0];
+				line_str[15] = ew_indicator[0];
+				
+				ds_print_string(line_str, MAX_COL, 1);
+			}
+		} //end stat mode check
+	}//end else
 }

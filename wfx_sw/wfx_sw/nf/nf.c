@@ -60,14 +60,14 @@ uint8_t nf_init(){
 	memset(gga_msg_buffer, ' ',sizeof(char)*GGA_SIZE); //zeroize msg buffer
 
 	// Initialize the arrays within gga_msg 
-	memset(utc_time, 0, GGA_UTC_BUFFER_SIZE * sizeof(char));
-	memset(latitude, 0, GGA_LAT_BUFFER_SIZE * sizeof(char));
-	memset(ns_indicator, 0, GGA_INDICATOR_SIZE * sizeof(char));
-	memset(longitude, 0, GGA_LONG_BUFFER_SIZE * sizeof(char));
-	memset(ew_indicator, 0, GGA_INDICATOR_SIZE * sizeof(char));
-	memset(position_fix_indicator, 0, GGA_INDICATOR_SIZE * sizeof(char));
-	memset(satellites_used, 0, GGA_SV_USD_BUFFER_SIZE * sizeof(char));
-	memset(hdop, 0, GGA_HDOP_BUFFER_SIZE * sizeof(char));
+	memset(utc_time, ' ', GGA_UTC_BUFFER_SIZE * sizeof(char));
+	memset(latitude, ' ', GGA_LAT_BUFFER_SIZE * sizeof(char));
+	memset(ns_indicator, ' ', GGA_INDICATOR_SIZE * sizeof(char));
+	memset(longitude, ' ', GGA_LONG_BUFFER_SIZE * sizeof(char));
+	memset(ew_indicator, ' ', GGA_INDICATOR_SIZE * sizeof(char));
+	memset(position_fix_indicator, ' ', GGA_INDICATOR_SIZE * sizeof(char));
+	memset(satellites_used, ' ', GGA_SV_USD_BUFFER_SIZE * sizeof(char));
+	memset(hdop, ' ', GGA_HDOP_BUFFER_SIZE * sizeof(char));
 
 	
 	

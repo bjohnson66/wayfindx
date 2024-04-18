@@ -8,8 +8,8 @@
 #ifndef DS_H_
 #define DS_H_
 
-#define MAX_ROWS 2
-#define MAX_COL 16
+#define MAX_ROWS 4
+#define MAX_COL 20
 
 #include "../ut/ut_types.h"
 
