@@ -9,6 +9,7 @@
 #include "nf_types.h"
 #include "../lib/uart.h"
 #include "../ds/ds.h"
+#include <stdint-gcc.h>
 
 //defines
 #define UART_BAUD_RATE 9600
@@ -273,71 +274,47 @@ void read_nmea_msg_raw(){
 // Function to convert NMEA format coordinates to LLA form in degrees
 void convertNMEAtoLLA() {
 	// Convert latitude from NMEA format to degrees
-	int deg = 0;
-	float min = 0.0f;
-	
-	//convert lat char string to deg and min (more efficient than loop)
+	double deg = 0.0;
+	double min = 0.0;
+
+	// Convert the latitude from NMEA format to degrees and minutes
 	min += (0.00001 * (latitude[GGA_LAT_BUFFER_SIZE - 1] - '0'));
 	min += (0.0001 * (latitude[GGA_LAT_BUFFER_SIZE - 2] - '0'));
 	min += (0.001 * (latitude[GGA_LAT_BUFFER_SIZE - 3] - '0'));
-	min += (0.01 * (latitude[GGA_LAT_BUFFER_SIZE - 4] - '0'));
-	min += (0.1 * (latitude[GGA_LAT_BUFFER_SIZE - 6] - '0')); //skip 5 because decimal point char
-	min += (1 * (latitude[GGA_LAT_BUFFER_SIZE - 7] - '0'));
-	min += (10 * (latitude[GGA_LAT_BUFFER_SIZE - 8] - '0'));
-	deg += (100 * (latitude[GGA_LAT_BUFFER_SIZE - 9] - '0'));
-	deg += (1000 * (latitude[GGA_LAT_BUFFER_SIZE - 10] - '0'));
+	min += (0.01 * (latitude[GGA_LAT_BUFFER_SIZE - 5] - '0')); // Skip the decimal point
+	min += (0.1 * (latitude[GGA_LAT_BUFFER_SIZE - 6] - '0'));
+	min += (1.0 * (latitude[GGA_LAT_BUFFER_SIZE - 7] - '0'));
+	min += (10.0 * (latitude[GGA_LAT_BUFFER_SIZE - 8] - '0'));
+	deg += (1.0 * (latitude[GGA_LAT_BUFFER_SIZE - 9] - '0'));
+	deg += (10.0 * (latitude[GGA_LAT_BUFFER_SIZE - 10] - '0'));
 
+	latitudeLLA_float = deg + (min / 60.0f); // Combine degrees and minutes
 	
-	latitudeLLA_float = deg + min / 60.0;
-	if (ns_indicator[0] == 'S') {
-		latitudeLLA_float *= -1; // If south, make latitude negative
-	}
+	// Extract integer and decimal parts
+	uint16_t integer_part = (uint16_t)latitudeLLA_float;
+    float fractional_part = latitudeLLA_float - integer_part;
+    uint32_t decimal_part = (uint16_t)(fractional_part * 100000);
 	
-
-	// Convert longitude from NMEA format to degrees
-	deg = 0;
-	min = 0.0f;
-	
-	//convert longitude char string to deg and min (more efficient than loop)
-	min += (0.00001 * (longitude[GGA_LONG_BUFFER_SIZE - 1] - '0'));
-	min += (0.0001 * (longitude[GGA_LONG_BUFFER_SIZE - 2] - '0'));
-	min += (0.001 * (longitude[GGA_LONG_BUFFER_SIZE - 3] - '0'));
-	min += (0.01 * (longitude[GGA_LONG_BUFFER_SIZE - 4] - '0'));
-	min += (0.1 * (longitude[GGA_LONG_BUFFER_SIZE - 5] - '0'));
-	min += (0.1 * (longitude[GGA_LONG_BUFFER_SIZE - 6] - '0')); //skip 5 because decimal point char
-	min += (1 * (longitude[GGA_LONG_BUFFER_SIZE - 7] - '0'));
-	min += (10 * (longitude[GGA_LONG_BUFFER_SIZE - 8] - '0'));
-	deg += (100 * (longitude[GGA_LONG_BUFFER_SIZE - 9] - '0'));
-	deg += (1000 * (longitude[GGA_LONG_BUFFER_SIZE - 10] - '0'));
-	deg += (10000 * (longitude[GGA_LONG_BUFFER_SIZE - 11] - '0'));
-
-	longitudeLLA_float = deg + min / 60.0;
-	if (ew_indicator[0] == 'W') {
-		longitudeLLA_float *= -1; // If west, make longitude negative
-	}
-
-	// Assign altitude
-	//altitudeLLA_float = atof(altitudeLLA_str);
-	
-	//get string rep
-	int integer_part = 0;
-	int decimal_part = 0;
-	integer_part = (int)latitudeLLA_float;
-	decimal_part = (int)((latitudeLLA_float - integer_part) * 100000);
-
-	if (integer_part < 0) {
+	if (ns_indicator[0] =='S'){
 		latitudeLLA_str[0] = '-';
+		latitudeLLA_float *= -1;
 	} else{
 		latitudeLLA_str[0] = '+';
 	}
-	latitudeLLA_str[1] = (integer_part / 10) % 10;	//tens
-	latitudeLLA_str[2] = integer_part % 10;			//ones
-	latitudeLLA_str[3] = '.';						//dec
-	latitudeLLA_str[4] = (decimal_part / 10000);	//tenths
-	latitudeLLA_str[5] = (decimal_part / 1000);	//hundredths
-	latitudeLLA_str[6] = (decimal_part / 100);	//thousandths
-	latitudeLLA_str[7] = (decimal_part / 10) % 10;	//ten-thousandths
-	latitudeLLA_str[8] = (decimal_part % 10);	//hundred-thousandths
+	
+	// Convert integer part to string
+	latitudeLLA_str[1] = '0' + ((integer_part / 10) % 10); // Tens
+	latitudeLLA_str[2] = '0' + (integer_part % 10); // Ones
+
+	// Decimal point
+	latitudeLLA_str[3] = '.';
+
+    // Convert decimal part to string
+    latitudeLLA_str[4] = '0' + ((decimal_part / 10000) % 10); // Ten-thousands
+    latitudeLLA_str[5] = '0' + ((decimal_part / 100)% 10); // Thousands
+    latitudeLLA_str[6] = '0' + ((decimal_part / 100) % 10); // Hundreds
+    latitudeLLA_str[7] = '0' + ((decimal_part / 10) % 10); // Tens
+    latitudeLLA_str[8] = '0' + (decimal_part % 10); // Ones
 
 
 	
