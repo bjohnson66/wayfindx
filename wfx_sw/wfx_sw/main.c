@@ -94,50 +94,97 @@ void task_1hz(){
 }
 
 void update_display(){
+	char line0[MAX_COL] = SPACES;
+	char line1[MAX_COL] = SPACES;  
+	char line2[MAX_COL] = SPACES;
+	char line3[MAX_COL] = SPACES;
+
 	if (utc_time[0] == ' '){ //Until we solve for time
-		{
-			char* msg = "Acquiring Satellites";
-			ds_print_string(msg, MAX_COL, 3);
-		}
+		char* temp = "Acquiring Satellites";
+		for (int i = 0; i < MAX_COL; i++){
+			line3[i] = temp[i];
+		}		
 	} else if (position_fix_indicator[0] != '1'){ //Display time once we solve for time
-		char* line_str = "UTC Time:XXXXXXXXX  ";
+		line2[0] = 'U';
+		line2[1] = 'T';
+		line2[2] = 'C';
+		line2[3] = ':';
 		for (int i=0; i < GGA_UTC_BUFFER_SIZE; i++){
-			line_str[4+i] = utc_time[i];
+			line2[4+i] = utc_time[i];
 		}
-						
-		line_str[14] = ns_indicator[0];
-		line_str[15] = ew_indicator[0];
-						
-		ds_print_string(line_str, MAX_COL, 0);
 		
-		char* msg = "Getting PVT Solution";
-		ds_print_string(msg, MAX_COL, 3);
-	} else{	//Once we get a fix, go into normal operation
+		char* temp = "Getting PVT Solution";
+		for (int i = 0; i < MAX_COL; i++){
+			line3[i] = temp[i];
+		}
+		
+	} else if (position_fix_indicator[0] == '1') {	//Once we get a fix, go into normal operation
+		convertNMEAtoLLA();
+		
 		if (mode == STAT_MODE){
-			{ //create custom scope to print first line
-				char* line_str = "SVXX FIXX DOPXXX    ";
-				line_str[2] = satellites_used[0];
-				line_str[3] = satellites_used[1];
-				
-				line_str[8] = position_fix_indicator[0];
-				
-				line_str[13] = hdop[0];
-				line_str[14] = hdop[1];
-				line_str[15] = hdop[2];
-				
-				ds_print_string(line_str, MAX_COL, 0);
+			//line0
+			for (int i = 0; i < LLA_LONG_BUFFER_SIZE; i++){
+				line0[i] = latitudeLLA_str[i];
+			}		
+			
+							
+			line0[19] = mode + '0';
+			line0[18] = ':';
+			line0[17] = 'e';
+			line0[16] = 'd';
+			line0[15] = 'o';
+			line0[14] = 'M';
+			
+			//line1
+			for (int i = 0; i < GGA_LONG_BUFFER_SIZE; i++){
+				line1[i] = longitude[i];
 			}
-			{ //scope for second line
-				char* line_str = "UTC:XXXXXXXXX XX    ";
-				for (int i=0; i < GGA_UTC_BUFFER_SIZE; i++){
-					line_str[4+i] = utc_time[i];
-				}
-				
-				line_str[14] = ns_indicator[0];
-				line_str[15] = ew_indicator[0];
-				
-				ds_print_string(line_str, MAX_COL, 1);
+			
+			line1[MAX_COL-8] = 'H';
+			line1[MAX_COL-7] = 'D';
+			line1[MAX_COL-6] = 'O';
+			line1[MAX_COL-5] = 'P';
+			line1[MAX_COL-4] = ':';
+			line1[MAX_COL-3] = hdop[0];
+			line1[MAX_COL-2] = hdop[1];
+			line1[MAX_COL-1] = hdop[2];
+			
+			//line2 
+			line2[0] = 'U';
+			line2[1] = 'T';
+			line2[2] = 'C';
+			line2[3] = ':';
+			for (int i=0; i < GGA_UTC_BUFFER_SIZE; i++){
+				line2[4+i] = utc_time[i];
 			}
-		} //end stat mode check
+			
+			line2[MAX_COL-1] = satellites_used[1];
+			line2[MAX_COL-2] = satellites_used[0];
+			line2[MAX_COL-3] = ':';
+			line2[MAX_COL-4] = 'V';
+			line2[MAX_COL-5] = 'S';
+			line2[MAX_COL-6] = '#';
+			
+			//line3
+			line3[0] = 'V';
+			line3[1] = 'e';
+			line3[2] = 'l';
+			line3[3] = ':';
+			//put vel here once we get it done TODO
+			
+			line3[MAX_COL-9] = 'A';
+			line3[MAX_COL-8] = 'l';
+			line3[MAX_COL-7] = 't';
+
+		}else { //if mode != STAT_MODE
+			
+		} //end mode checks
 	}//end else
-}
+	
+	ds_print_string(line0, MAX_COL, 0);
+	ds_print_string(line1, MAX_COL, 1);
+	ds_print_string(line2, MAX_COL, 2);
+	ds_print_string(line3, MAX_COL, 3);
+
+	
+} //end update display

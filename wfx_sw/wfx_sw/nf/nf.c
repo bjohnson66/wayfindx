@@ -36,6 +36,12 @@ char position_fix_indicator[GGA_INDICATOR_SIZE];	// Position Fix Indicator, see 
 char satellites_used[GGA_SV_USD_BUFFER_SIZE];		// Satellites Used, range 0 to 12 eg 07
 char hdop[GGA_HDOP_BUFFER_SIZE];					// HDOP (Horizontal Dilution of Precision), e.g., "1.0"
 
+float latitudeLLA_float;   // Latitude in degrees
+float longitudeLLA_float;  // Longitude in degrees
+float altitudeLLA_float;   // Altitude in meters
+char latitudeLLA_str[LLA_LAT_BUFFER_SIZE];   // Latitude in degrees
+char longitudeLLA_str[LLA_LONG_BUFFER_SIZE];  // Longitude in degrees
+char altitudeLLA_str[LLA_ALT_BUFFER_SIZE];   // Altitude in meters
 
 //local static
 static char nmea_msg_id_buffer[NMEA_MSG_ID_SIZE];
@@ -43,6 +49,7 @@ static char gga_msg_buffer[GGA_SIZE];
 
 
 //local function declarations
+
 
 //function definitions
 
@@ -68,8 +75,14 @@ uint8_t nf_init(){
 	memset(position_fix_indicator, ' ', GGA_INDICATOR_SIZE * sizeof(char));
 	memset(satellites_used, ' ', GGA_SV_USD_BUFFER_SIZE * sizeof(char));
 	memset(hdop, ' ', GGA_HDOP_BUFFER_SIZE * sizeof(char));
-
 	
+	memset(latitudeLLA_str, ' ', LLA_LAT_BUFFER_SIZE * sizeof(char));
+	memset(longitudeLLA_str, ' ', LLA_LONG_BUFFER_SIZE * sizeof(char));
+	memset(altitudeLLA_str, ' ', LLA_ALT_BUFFER_SIZE * sizeof(char));
+
+	latitudeLLA_float = 0;  
+	longitudeLLA_float = 0;  
+	altitudeLLA_float = 0; 
 	
 	
 	sei(); //UART is interrupt based;	
@@ -96,8 +109,10 @@ void get_serial_char(char* outputchar){
 			if ( c & UART_FRAME_ERROR )
 			{
 				/* Framing Error detected, i.e no stop bit detected */
-				char* output = "NF Frame Error! ";
-				ds_print_string(output, MAX_COL, 0);
+				#ifdef _DEBUG_
+					char* output = "NF Frame Error! ";
+					ds_print_string(output, 16, 0);
+				#endif
 			}
 			if ( c & UART_OVERRUN_ERROR )
 			{
@@ -107,7 +122,7 @@ void get_serial_char(char* outputchar){
 					* one or more received characters have been dropped
 					*/
 				char* output = "           OR ER";
-				ds_print_string(output, MAX_COL, 0);
+				ds_print_string(output, 16, 0);
 			}
 			if ( c & UART_BUFFER_OVERFLOW )
 			{
@@ -170,6 +185,8 @@ void read_nmea_msg_raw(){
 			for (int i =0; i < GGA_LAT_BUFFER_SIZE; i++){
 				latitude[i] = gga_msg_buffer[offset++];
 			}
+			
+			//ds_print_string(latitude, GGA_LAT_BUFFER_SIZE, 0);
 		}else{ //otherwise skip comma from if statement
 			offset++;
 		}
@@ -193,7 +210,7 @@ void read_nmea_msg_raw(){
 				longitude[i] = gga_msg_buffer[offset++];
 			}
 			//ds_print_string(longitude, GGA_LONG_BUFFER_SIZE, 1);
-			}else{ //otherwise skip comma from if statement
+		}else{ //otherwise skip comma from if statement
 			offset++;
 		}
 		offset++; // skip comma
@@ -247,5 +264,84 @@ void read_nmea_msg_raw(){
 		}
 		offset++; // skip comma
 		
+	} //END GGA
+}
+
+
+
+
+// Function to convert NMEA format coordinates to LLA form in degrees
+void convertNMEAtoLLA() {
+	// Convert latitude from NMEA format to degrees
+	int deg = 0;
+	float min = 0.0f;
+	
+	//convert lat char string to deg and min (more efficient than loop)
+	min += (0.00001 * (latitude[GGA_LAT_BUFFER_SIZE - 1] - '0'));
+	min += (0.0001 * (latitude[GGA_LAT_BUFFER_SIZE - 2] - '0'));
+	min += (0.001 * (latitude[GGA_LAT_BUFFER_SIZE - 3] - '0'));
+	min += (0.01 * (latitude[GGA_LAT_BUFFER_SIZE - 4] - '0'));
+	min += (0.1 * (latitude[GGA_LAT_BUFFER_SIZE - 6] - '0')); //skip 5 because decimal point char
+	min += (1 * (latitude[GGA_LAT_BUFFER_SIZE - 7] - '0'));
+	min += (10 * (latitude[GGA_LAT_BUFFER_SIZE - 8] - '0'));
+	deg += (100 * (latitude[GGA_LAT_BUFFER_SIZE - 9] - '0'));
+	deg += (1000 * (latitude[GGA_LAT_BUFFER_SIZE - 10] - '0'));
+
+	
+	latitudeLLA_float = deg + min / 60.0;
+	if (ns_indicator[0] == 'S') {
+		latitudeLLA_float *= -1; // If south, make latitude negative
 	}
+	
+
+	// Convert longitude from NMEA format to degrees
+	deg = 0;
+	min = 0.0f;
+	
+	//convert longitude char string to deg and min (more efficient than loop)
+	min += (0.00001 * (longitude[GGA_LONG_BUFFER_SIZE - 1] - '0'));
+	min += (0.0001 * (longitude[GGA_LONG_BUFFER_SIZE - 2] - '0'));
+	min += (0.001 * (longitude[GGA_LONG_BUFFER_SIZE - 3] - '0'));
+	min += (0.01 * (longitude[GGA_LONG_BUFFER_SIZE - 4] - '0'));
+	min += (0.1 * (longitude[GGA_LONG_BUFFER_SIZE - 5] - '0'));
+	min += (0.1 * (longitude[GGA_LONG_BUFFER_SIZE - 6] - '0')); //skip 5 because decimal point char
+	min += (1 * (longitude[GGA_LONG_BUFFER_SIZE - 7] - '0'));
+	min += (10 * (longitude[GGA_LONG_BUFFER_SIZE - 8] - '0'));
+	deg += (100 * (longitude[GGA_LONG_BUFFER_SIZE - 9] - '0'));
+	deg += (1000 * (longitude[GGA_LONG_BUFFER_SIZE - 10] - '0'));
+	deg += (10000 * (longitude[GGA_LONG_BUFFER_SIZE - 11] - '0'));
+
+	longitudeLLA_float = deg + min / 60.0;
+	if (ew_indicator[0] == 'W') {
+		longitudeLLA_float *= -1; // If west, make longitude negative
+	}
+
+	// Assign altitude
+	//altitudeLLA_float = atof(altitudeLLA_str);
+	
+	//get string rep
+	int integer_part = 0;
+	int decimal_part = 0;
+	integer_part = (int)latitudeLLA_float;
+	decimal_part = (int)((latitudeLLA_float - integer_part) * 100000);
+
+	if (integer_part < 0) {
+		latitudeLLA_str[0] = '-';
+	} else{
+		latitudeLLA_str[0] = '+';
+	}
+	latitudeLLA_str[1] = (integer_part / 10) % 10;	//tens
+	latitudeLLA_str[2] = integer_part % 10;			//ones
+	latitudeLLA_str[3] = '.';						//dec
+	latitudeLLA_str[4] = (decimal_part / 10000);	//tenths
+	latitudeLLA_str[5] = (decimal_part / 1000);	//hundredths
+	latitudeLLA_str[6] = (decimal_part / 100);	//thousandths
+	latitudeLLA_str[7] = (decimal_part / 10) % 10;	//ten-thousandths
+	latitudeLLA_str[8] = (decimal_part % 10);	//hundred-thousandths
+
+
+	
+	
+	//snprintf(longitudeLLA_str, LLA_LAT_BUFFER_SIZE, "%f", longitudeLLA_float);
+
 }

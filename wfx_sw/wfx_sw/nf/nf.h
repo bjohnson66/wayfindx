@@ -28,5 +28,10 @@ void get_serial_char(char* outputchar);
 
 void read_nmea_msg_raw();
 
+/**
+ * @brief uitility funciton to convert NMEA to LLA
+ */
+void convertNMEAtoLLA();
+
 
 #endif /* NF_H_ */

@@ -10,6 +10,7 @@
 
 #define MAX_ROWS 4
 #define MAX_COL 20
+#define SPACES "                    "
 
 #include "../ut/ut_types.h"
 
