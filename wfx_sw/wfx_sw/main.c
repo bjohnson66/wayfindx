@@ -126,7 +126,6 @@ void update_display(){
 			for (int i = 0; i < LLA_LAT_BUFFER_SIZE; i++){
 				line0[i] = latitudeLLA_str[i];
 			}		
-			
 							
 			line0[19] = mode + '0';
 			line0[18] = ':';
@@ -136,8 +135,8 @@ void update_display(){
 			line0[14] = 'M';
 			
 			//line1
-			for (int i = 0; i < GGA_LAT_BUFFER_SIZE; i++){
-				line1[i] = latitude[i];
+			for (int i = 0; i < LLA_LONG_BUFFER_SIZE; i++){
+				line1[i] = longitudeLLA_str[i];
 			}
 			
 			line1[MAX_COL-8] = 'H';

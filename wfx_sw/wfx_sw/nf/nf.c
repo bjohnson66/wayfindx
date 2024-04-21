@@ -277,14 +277,13 @@ void convertNMEAtoLLA() {
 	double deg = 0.0;
 	double min = 0.0;
 
-	// Convert the latitude from NMEA format to degrees and minutes
-	min += (0.00001 * (latitude[GGA_LAT_BUFFER_SIZE - 1] - '0'));
-	min += (0.0001 * (latitude[GGA_LAT_BUFFER_SIZE - 2] - '0'));
-	min += (0.001 * (latitude[GGA_LAT_BUFFER_SIZE - 3] - '0'));
-	min += (0.01 * (latitude[GGA_LAT_BUFFER_SIZE - 5] - '0')); // Skip the decimal point
-	min += (0.1 * (latitude[GGA_LAT_BUFFER_SIZE - 6] - '0'));
-	min += (1.0 * (latitude[GGA_LAT_BUFFER_SIZE - 7] - '0'));
-	min += (10.0 * (latitude[GGA_LAT_BUFFER_SIZE - 8] - '0'));
+	// Convert the latitude from degrees and minutes to degree decimal
+	char tempBuffer[9] = {0};
+	for (int i = 0; i < 8; i++){
+		tempBuffer[i] = latitude[2+i];
+	}
+	min = atof(tempBuffer);
+	
 	deg += (1.0 * (latitude[GGA_LAT_BUFFER_SIZE - 9] - '0'));
 	deg += (10.0 * (latitude[GGA_LAT_BUFFER_SIZE - 10] - '0'));
 
@@ -293,7 +292,7 @@ void convertNMEAtoLLA() {
 	// Extract integer and decimal parts
 	uint16_t integer_part = (uint16_t)latitudeLLA_float;
     float fractional_part = latitudeLLA_float - integer_part;
-    uint32_t decimal_part = (uint16_t)(fractional_part * 100000);
+    uint32_t decimal_part = (uint32_t)(fractional_part * 100000);
 	
 	if (ns_indicator[0] =='S'){
 		latitudeLLA_str[0] = '-';
@@ -311,10 +310,56 @@ void convertNMEAtoLLA() {
 
     // Convert decimal part to string
     latitudeLLA_str[4] = '0' + ((decimal_part / 10000) % 10); // Ten-thousands
-    latitudeLLA_str[5] = '0' + ((decimal_part / 100)% 10); // Thousands
+    latitudeLLA_str[5] = '0' + ((decimal_part / 1000)% 10); // Thousands
     latitudeLLA_str[6] = '0' + ((decimal_part / 100) % 10); // Hundreds
     latitudeLLA_str[7] = '0' + ((decimal_part / 10) % 10); // Tens
     latitudeLLA_str[8] = '0' + (decimal_part % 10); // Ones
+	
+	
+	//long
+	deg = 0.0;
+	min = 0.0;
+
+	// Convert the longitude from degrees and minutes to degree decimal
+	char tempBuffer2[9] = {0};
+	for (int i = 0; i < 8; i++){
+		tempBuffer2[i] = longitude[3+i];
+	}
+	min = atof(tempBuffer2);
+	
+	deg += (1.0 * (longitude[2] - '0'));
+	deg += (10.0 * (longitude[1] - '0'));
+	deg += (100.0 * (longitude[0] - '0'));
+
+	longitudeLLA_float = deg + (min / 60.0f); // Combine degrees and minutes
+	
+	// Extract integer and decimal parts
+	integer_part = (uint16_t)longitudeLLA_float;
+	fractional_part = longitudeLLA_float - integer_part;
+	decimal_part = (uint32_t)(fractional_part * 100000);
+	
+	if (ns_indicator[0] =='S'){
+		longitudeLLA_str[0] = '-';
+		latitudeLLA_float *= -1;
+		} else{
+		longitudeLLA_str[0] = '+';
+	}
+	
+	// Convert integer part to string
+	longitudeLLA_str[1] = '0' + ((integer_part / 100) % 10); // Tens
+	longitudeLLA_str[2] = '0' + ((integer_part / 10) % 10); // Tens
+	longitudeLLA_str[3] = '0' + (integer_part % 10); // Ones
+
+	// Decimal point
+	longitudeLLA_str[4] = '.';
+
+	// Convert decimal part to string
+	longitudeLLA_str[5] = '0' + ((decimal_part / 10000) % 10); // Ten-thousands
+	longitudeLLA_str[6] = '0' + ((decimal_part / 1000)% 10); // Thousands
+	longitudeLLA_str[7] = '0' + ((decimal_part / 100) % 10); // Hundreds
+	longitudeLLA_str[8] = '0' + ((decimal_part / 10) % 10); // Tens
+	longitudeLLA_str[9] = '0' + (decimal_part % 10); // Ones
+
 
 
 	
