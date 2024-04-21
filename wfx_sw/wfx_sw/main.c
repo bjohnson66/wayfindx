@@ -170,6 +170,9 @@ void update_display(){
 			line3[2] = 'l';
 			line3[3] = ':';
 			//put vel here once we get it done TODO
+			for (int i =0; i < 6; i++){
+				line3[4+i] = speed[i];
+			}
 			
 			line3[MAX_COL-9] = 'A';
 			line3[MAX_COL-8] = 'l';

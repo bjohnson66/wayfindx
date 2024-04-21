@@ -25,6 +25,7 @@
 #define GGA_NUM_INDICATORS_ACTIVE 3
 #define GGA_NUM_ITEMS_ACTIVE 8
 #define GGA_ALTITUDE_BUFFER_SIZE 7
+#define VTG_SPEED_BUFER_SIZE 7
 
 #define GGA_SIZE (GGA_UTC_BUFFER_SIZE + GGA_LAT_BUFFER_SIZE + GGA_LONG_BUFFER_SIZE + GGA_SV_USD_BUFFER_SIZE + GGA_HDOP_BUFFER_SIZE + GGA_NUM_INDICATORS_ACTIVE + GGA_NUM_ITEMS_ACTIVE)
 
@@ -47,4 +48,7 @@ extern char latitudeLLA_str[LLA_LAT_BUFFER_SIZE];   // Latitude in degrees
 extern char longitudeLLA_str[LLA_LONG_BUFFER_SIZE];  // Longitude in degrees
 extern char altitudeLLA_str[LLA_ALT_BUFFER_SIZE];   // Altitude in meters
 
+
+
+extern char speed[VTG_SPEED_BUFER_SIZE];   //in km/hr
 #endif /* NF_TYPES_H_ */

@@ -37,6 +37,7 @@ char position_fix_indicator[GGA_INDICATOR_SIZE];	// Position Fix Indicator, see 
 char satellites_used[GGA_SV_USD_BUFFER_SIZE];		// Satellites Used, range 0 to 12 eg 07
 char hdop[GGA_HDOP_BUFFER_SIZE];					// HDOP (Horizontal Dilution of Precision), e.g., "1.0"
 char msl_altitude[GGA_ALTITUDE_BUFFER_SIZE];					// HDOP (Horizontal Dilution of Precision), e.g., "1.0"
+char speed[VTG_SPEED_BUFER_SIZE];
 
 float latitudeLLA_float;   // Latitude in degrees
 float longitudeLLA_float;  // Longitude in degrees
@@ -86,7 +87,8 @@ uint8_t nf_init(){
 
 	// Initialize the arrays within gga_msg 
 	memset(utc_time, ' ', GGA_UTC_BUFFER_SIZE * sizeof(char));
-	
+	memset(speed, ' ', VTG_SPEED_BUFER_SIZE * sizeof(char));
+
     nf_clear_nav_strings();
 
 
@@ -173,8 +175,7 @@ void read_nmea_msg_raw(){
 		//scrape raw
 		for (counter = 0; counter < GGA_SIZE; counter ++){
 			get_serial_char(gga_msg_buffer+counter);
-		}
-		
+		}		
 		//process message
 		int offset = 0;
 		//////////////////////////////////////////
@@ -285,6 +286,21 @@ void read_nmea_msg_raw(){
 		
 		
 	} //END GGA
+	else if (strcmp(nmea_msg_id_buffer, VTG_TYPE) == 0){
+			for (uint8_t comma_counter = 6; comma_counter >0; comma_counter--){
+				do{
+					get_serial_char(&tempChar);
+				} while (tempChar != ',');
+			}
+			memset(speed, ' ', VTG_SPEED_BUFER_SIZE * sizeof(char));
+			//should be at speed now
+			int i = 0;
+			get_serial_char(&tempChar);//eat comma
+			while ((tempChar != ',') && (i < VTG_SPEED_BUFER_SIZE)){
+				speed[i++] = tempChar;
+				get_serial_char(&tempChar);
+			}
+	}//end VTG msg
 }
 
 
