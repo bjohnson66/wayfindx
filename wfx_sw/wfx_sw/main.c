@@ -23,12 +23,11 @@
 #include "nf/nf_types.h"
 #include "ut/utilities.h" /**< Include utility functions. */
 #include "ut/ut_types.h" /**< Include common type definitions. */
+#include <string.h>
 
 void startup();
 void task_1hz();
 void update_display();
-
-boolean_t mode;
 
 
 /**
@@ -58,9 +57,7 @@ void startup(){
 	//Initialize
 	// Set clock pre-scaler to divide by 4
 	clock_prescale_set(clock_div_4);
-	
-	mode = STAT_MODE;
-		
+			
 	// Initialize computer software components (CSC's)
 	ds_init(); /**< Initialize display CSC. */
 	{
@@ -121,24 +118,26 @@ void update_display(){
 	} else if (position_fix_indicator[0] == '1') {	//Once we get a fix, go into normal operation
 		convertNMEAtoLLA();
 		
-		if (mode == STAT_MODE){
-			//line0
-			for (int i = 0; i < LLA_LAT_BUFFER_SIZE; i++){
-				line0[i] = latitudeLLA_str[i];
-			}		
-							
-			line0[19] = mode + '0';
-			line0[18] = ':';
-			line0[17] = 'e';
-			line0[16] = 'd';
-			line0[15] = 'o';
-			line0[14] = 'M';
-			
+		//Mode agnostic parts
+		//line0
+		for (int i = 0; i < LLA_LAT_BUFFER_SIZE; i++){
+			line0[i] = latitudeLLA_str[i];
+		}
+		
+		line0[19] = ut_mode + '0';
+		line0[18] = ':';
+		line0[17] = 'e';
+		line0[16] = 'd';
+		line0[15] = 'o';
+		line0[14] = 'M';
+		
+		for (int i = 0; i < LLA_LONG_BUFFER_SIZE; i++){
+			line1[i] = longitudeLLA_str[i];
+		}
+		
+		//mode-specific parts
+		if (ut_mode == STAT_MODE){
 			//line1
-			for (int i = 0; i < LLA_LONG_BUFFER_SIZE; i++){
-				line1[i] = longitudeLLA_str[i];
-			}
-			
 			line1[MAX_COL-8] = 'H';
 			line1[MAX_COL-7] = 'D';
 			line1[MAX_COL-6] = 'O';
@@ -182,6 +181,40 @@ void update_display(){
 			}
 			
 		}else { //if mode != STAT_MODE
+			//line 1
+			switch (ut_operation){
+				case SAVE_OP:
+					strncpy(line1+(MAX_COL-5), SAVE_STR, 5);
+					break;
+				case CLEAR_OP:
+					strncpy(line1+(MAX_COL-5), CLEAR_STR, 5);
+					break;
+				case RESET_OP:
+					strncpy(line1+(MAX_COL-5), RESET_STR, 5);
+					break;
+				default:
+					strncpy(line1+(MAX_COL-5), "Error", 5);
+					break; 
+			}
+			//line2
+			line2[MAX_COL-4] = 'M';
+			line2[MAX_COL-3] = 'e';
+			line2[MAX_COL-2] = 'm';
+			line2[MAX_COL-1] = ut_memory_0idx + '0';
+			
+			for (int i = 0; i < LLA_LAT_BUFFER_SIZE; i++){
+				line2[i] = latitudeLLA_str[i];
+			}
+			for (int i = 0; i < LLA_LONG_BUFFER_SIZE; i++){
+				line3[i] = longitudeLLA_str[i];
+			}
+
+			//line3
+			line3[MAX_COL-10]= 'D';
+			line3[MAX_COL-9]= 'i';
+			line3[MAX_COL-8]= 's';
+			line3[MAX_COL-7]= 't';			
+			
 			
 		} //end mode checks
 	}//end else

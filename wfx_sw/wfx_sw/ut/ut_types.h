@@ -18,7 +18,4 @@ typedef unsigned char boolean_t;  /**< Boolean type (true/false). */
 #define false 0  /**< Definition of false as integer value 0. */
 #define true 1   /**< Definition of true as integer value 1. */
 
-#define STAT_MODE 0
-#define NAV_MODE 1
-
 #endif /* UT_TYPES_H_ */

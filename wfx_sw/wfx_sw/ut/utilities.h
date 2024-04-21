@@ -12,6 +12,22 @@
 
 #define NOP asm("nop");
 
+#define STAT_MODE 2
+#define NAV_MODE 1
+
+#define SAVE_OP 0
+#define CLEAR_OP 1
+#define RESET_OP 3
+
+#define SAVE_STR  " SAVE"
+#define CLEAR_STR "CLEAR"
+#define RESET_STR "RESET"
+
+
+extern boolean_t ut_mode;
+extern uint8_t ut_operation;
+extern uint8_t ut_memory_0idx;
+
 /**
  * @brief Initializes the pins on startup.
  */
