@@ -24,6 +24,7 @@
 #define GGA_HDOP_BUFFER_SIZE 3
 #define GGA_NUM_INDICATORS_ACTIVE 3
 #define GGA_NUM_ITEMS_ACTIVE 8
+#define GGA_ALTITUDE_BUFFER_SIZE 7
 
 #define GGA_SIZE (GGA_UTC_BUFFER_SIZE + GGA_LAT_BUFFER_SIZE + GGA_LONG_BUFFER_SIZE + GGA_SV_USD_BUFFER_SIZE + GGA_HDOP_BUFFER_SIZE + GGA_NUM_INDICATORS_ACTIVE + GGA_NUM_ITEMS_ACTIVE)
 
@@ -35,6 +36,7 @@ extern char ew_indicator[GGA_INDICATOR_SIZE];				// E/W Indicator, 'E' for east 
 extern char position_fix_indicator[GGA_INDICATOR_SIZE];	// Position Fix Indicator, see Table 1-4
 extern char satellites_used[GGA_SV_USD_BUFFER_SIZE];		// Satellites Used, range 0 to 12 eg 07
 extern char hdop[GGA_HDOP_BUFFER_SIZE];					// HDOP (Horizontal Dilution of Precision), e.g., "1.0"
+extern char msl_altitude[GGA_ALTITUDE_BUFFER_SIZE];		// Altitude above sea level in meters one decimal of precision.
 
 extern float latitudeLLA_float;   // Latitude in degrees
 extern float longitudeLLA_float;  // Longitude in degrees

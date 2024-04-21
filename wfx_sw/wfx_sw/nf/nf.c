@@ -36,6 +36,7 @@ char ew_indicator[GGA_INDICATOR_SIZE];				// E/W Indicator, 'E' for east or 'W' 
 char position_fix_indicator[GGA_INDICATOR_SIZE];	// Position Fix Indicator, see Table 1-4
 char satellites_used[GGA_SV_USD_BUFFER_SIZE];		// Satellites Used, range 0 to 12 eg 07
 char hdop[GGA_HDOP_BUFFER_SIZE];					// HDOP (Horizontal Dilution of Precision), e.g., "1.0"
+char msl_altitude[GGA_ALTITUDE_BUFFER_SIZE];					// HDOP (Horizontal Dilution of Precision), e.g., "1.0"
 
 float latitudeLLA_float;   // Latitude in degrees
 float longitudeLLA_float;  // Longitude in degrees
@@ -65,7 +66,8 @@ void nf_clear_nav_strings(){
 	    memset(position_fix_indicator, ' ', GGA_INDICATOR_SIZE * sizeof(char));
 	    memset(satellites_used, ' ', GGA_SV_USD_BUFFER_SIZE * sizeof(char));
 	    memset(hdop, ' ', GGA_HDOP_BUFFER_SIZE * sizeof(char));
-	    
+	    memset(msl_altitude, ' ', GGA_ALTITUDE_BUFFER_SIZE * sizeof(char));
+
 	    memset(latitudeLLA_str, ' ', LLA_LAT_BUFFER_SIZE * sizeof(char));
 	    memset(longitudeLLA_str, ' ', LLA_LONG_BUFFER_SIZE * sizeof(char));
 	    memset(altitudeLLA_str, ' ', LLA_ALT_BUFFER_SIZE * sizeof(char));
@@ -153,6 +155,7 @@ void get_serial_char(char* outputchar){
 
 
 void read_nmea_msg_raw(){
+	//nf_clear_nav_strings();
 	char tempChar;
 	do {
 		get_serial_char(&tempChar);
@@ -266,10 +269,20 @@ void read_nmea_msg_raw(){
 				hdop[i] = gga_msg_buffer[offset++];
 			}
 			//ds_print_string(hdop, GGA_HDOP_BUFFER_SIZE, 0);
-			}else{ //otherwise skip comma from if statement
+		}else{ //otherwise skip comma from if statement
 			offset++;
 		}
-		offset++; // skip comma
+		offset++;
+		//end of known sizes. Alt is dynamic
+		tempChar = 0;
+		int i = 0;
+		get_serial_char(&tempChar);//eat comma
+		get_serial_char(&tempChar);
+		while ((tempChar != ',') && (i < GGA_ALTITUDE_BUFFER_SIZE)){
+			msl_altitude[i++] = tempChar;
+			get_serial_char(&tempChar);
+		}
+		
 		
 	} //END GGA
 }
@@ -368,8 +381,5 @@ void convertNMEAtoLLA() {
 
 
 
-	
-	
-	//snprintf(longitudeLLA_str, LLA_LAT_BUFFER_SIZE, "%f", longitudeLLA_float);
-
+	altitudeLLA_float = atof(msl_altitude); 
 }

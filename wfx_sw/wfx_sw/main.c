@@ -174,7 +174,10 @@ void update_display(){
 			line3[MAX_COL-9] = 'A';
 			line3[MAX_COL-8] = 'l';
 			line3[MAX_COL-7] = 't';
-
+			for (int i = 0; i < 6; i ++){
+				line3[MAX_COL-6+i] = msl_altitude[i];
+			}
+			
 		}else { //if mode != STAT_MODE
 			
 		} //end mode checks
