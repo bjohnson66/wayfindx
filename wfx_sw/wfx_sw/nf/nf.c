@@ -54,6 +54,23 @@ static char gga_msg_buffer[GGA_SIZE];
 
 //function definitions
 
+//Clear all strings but utc time
+void nf_clear_nav_strings(){
+	    memset(nmea_msg_id_buffer,0,sizeof(char)*NMEA_MSG_ID_SIZE); //zeroize
+	    memset(gga_msg_buffer, ' ',sizeof(char)*GGA_SIZE); //zeroize msg buffer
+	    memset(latitude, ' ', GGA_LAT_BUFFER_SIZE * sizeof(char));
+	    memset(ns_indicator, ' ', GGA_INDICATOR_SIZE * sizeof(char));
+	    memset(longitude, ' ', GGA_LONG_BUFFER_SIZE * sizeof(char));
+	    memset(ew_indicator, ' ', GGA_INDICATOR_SIZE * sizeof(char));
+	    memset(position_fix_indicator, ' ', GGA_INDICATOR_SIZE * sizeof(char));
+	    memset(satellites_used, ' ', GGA_SV_USD_BUFFER_SIZE * sizeof(char));
+	    memset(hdop, ' ', GGA_HDOP_BUFFER_SIZE * sizeof(char));
+	    
+	    memset(latitudeLLA_str, ' ', LLA_LAT_BUFFER_SIZE * sizeof(char));
+	    memset(longitudeLLA_str, ' ', LLA_LONG_BUFFER_SIZE * sizeof(char));
+	    memset(altitudeLLA_str, ' ', LLA_ALT_BUFFER_SIZE * sizeof(char));
+}
+
 uint8_t nf_init(){
 	cli();
 	 /*
@@ -64,22 +81,12 @@ uint8_t nf_init(){
      *  UART_BAUD_SELECT_DOUBLE_SPEED() ( double speed mode)
      */
     uart_init( UART_BAUD_SELECT(UART_BAUD_RATE,F_CPU) );
-	memset(nmea_msg_id_buffer,0,sizeof(char)*NMEA_MSG_ID_SIZE); //zeroize
-	memset(gga_msg_buffer, ' ',sizeof(char)*GGA_SIZE); //zeroize msg buffer
 
 	// Initialize the arrays within gga_msg 
 	memset(utc_time, ' ', GGA_UTC_BUFFER_SIZE * sizeof(char));
-	memset(latitude, ' ', GGA_LAT_BUFFER_SIZE * sizeof(char));
-	memset(ns_indicator, ' ', GGA_INDICATOR_SIZE * sizeof(char));
-	memset(longitude, ' ', GGA_LONG_BUFFER_SIZE * sizeof(char));
-	memset(ew_indicator, ' ', GGA_INDICATOR_SIZE * sizeof(char));
-	memset(position_fix_indicator, ' ', GGA_INDICATOR_SIZE * sizeof(char));
-	memset(satellites_used, ' ', GGA_SV_USD_BUFFER_SIZE * sizeof(char));
-	memset(hdop, ' ', GGA_HDOP_BUFFER_SIZE * sizeof(char));
 	
-	memset(latitudeLLA_str, ' ', LLA_LAT_BUFFER_SIZE * sizeof(char));
-	memset(longitudeLLA_str, ' ', LLA_LONG_BUFFER_SIZE * sizeof(char));
-	memset(altitudeLLA_str, ' ', LLA_ALT_BUFFER_SIZE * sizeof(char));
+    nf_clear_nav_strings();
+
 
 	latitudeLLA_float = 0;  
 	longitudeLLA_float = 0;  
@@ -150,8 +157,7 @@ void read_nmea_msg_raw(){
 	do {
 		get_serial_char(&tempChar);
 	} while (tempChar != '$');
-	
-	memset(nmea_msg_id_buffer,0,sizeof(char)*NMEA_MSG_ID_SIZE); //zeroize buffer
+
 	for (int i = 0; i < NMEA_MSG_ID_SIZE; i++){
 		get_serial_char(nmea_msg_id_buffer + i);
 	}
