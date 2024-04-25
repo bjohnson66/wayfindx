@@ -34,6 +34,7 @@ void ut_init()
 	for (int i = 0; i < NUM_BUTTONS; i++){
 		btn_on_time[i] = 0;
 		btn_off_time[i] = 0;
+		prev_state[i] = false;
 	}
 
 
@@ -61,27 +62,29 @@ void ut_poll_btns(){
 
 	// Iterate through each button
 	for (int i = 0; i < NUM_BUTTONS; i ++){
+		btn_state[i] = false; // Set button state to released
+
 		if (is_button_pressed(&PIND, i + 2)) {
 			// Increment button logic high count if pressed
 			btn_on_time[i]++;
 			btn_off_time[i] = 0;
+			// Check if button press threshold is reached
+			if (btn_on_time[i] >= ON_TIME_THRESHHOLD) {
+				btn_state[i] = true; // Set button state to pressed
+				btn_on_time[i] = 0;
+				DEBUG_LIGHT_OFF
+			}
+
 		}else{
 			btn_off_time[i]++;
+			if (btn_off_time[i] >= RESET_TIME_THRESHHOLD){
+				btn_on_time[i] = 0;
+				btn_off_time[i] = 0;
+				DEBUG_LIGHT_ON
+			}
 		}
 
-		btn_state[i] = false; // Set button state to released
-		// Check if button press threshold is reached
-		if (btn_on_time[i] >= ON_TIME_THRESHHOLD) {
-			btn_state[i] = true; // Set button state to pressed
-			btn_on_time[i] = 0;
-			DEBUG_LIGHT_OFF
-		}
 
-		if (btn_off_time[i] >= RESET_TIME_THRESHHOLD){
-			btn_on_time[i] = 0;
-			btn_off_time[i] = 0;
-			DEBUG_LIGHT_ON
-		}
 			
 	} //end for loop
 
