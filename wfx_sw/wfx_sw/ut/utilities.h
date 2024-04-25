@@ -34,9 +34,6 @@
 #define ON_TIME_THRESHHOLD (uint16_t)100   
 #define RESET_TIME_THRESHHOLD (uint16_t)30  
 
-#define DEBUG_LED_PIN PB0
-#define DEBUG_LIGHT_ON PORTB |= (1 << DEBUG_LED_PIN);
-#define DEBUG_LIGHT_OFF PORTB &= ~(1 << DEBUG_LED_PIN);
 
 extern boolean_t ut_mode;
 extern uint8_t ut_operation;
@@ -48,9 +45,8 @@ extern uint8_t ut_memory_0idx;
 void ut_init();
 
 /**
- * @brief Checks status of each button sequentially. Will only take one action if more than one button is pressed.
-		  Post polling action takes place in the following order: MODE_SELECT_BTN, MEM_SELECT_BTN, OP_SELECT_BTN, ACTION_BTN
-		  The first action to trigger is the only action taken (a virtual short).
+ * @brief Checks status of each button sequentially. Action triggers on button release. Is ot be called in background via interrupt
+		  Post polling action takes place in the following order: MODE_SELECT_BTN, MEM_SELECT_BTN, OP_SELECT_BTN
  */
 void ut_poll_btns();
 

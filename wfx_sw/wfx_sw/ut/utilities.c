@@ -54,13 +54,10 @@ void ut_init()
     PORTD |= (1 << MEM_SELECT_BTN);
     PORTD |= (1 << MODE_SELECT_BTN);
 
-
-    DDRB |= (1 << DEBUG_LED_PIN);
-
-
 	return;
 }
 
+//triggers button on release, called by interrupt
 void ut_poll_btns(){
 	// Iterate through each button
 	for (int i = 0; i < NUM_BUTTONS; i ++){
@@ -75,7 +72,6 @@ void ut_poll_btns(){
 				btn_state[i] = true; // Set button state to pressed
 				btn_on_time[i] = 0;
 				btn_off_time[i] = 0;
-				DEBUG_LIGHT_OFF
 			}
 
 		}else{
@@ -84,7 +80,6 @@ void ut_poll_btns(){
 				btn_state[i] = false; // Set button state to released
 				btn_on_time[i] = 0;
 				btn_off_time[i] = 0;
-				DEBUG_LIGHT_ON
 			}
 		}
 
@@ -97,15 +92,15 @@ void ut_poll_btns(){
 	if (!(btn_state[MODE_SELECT_BTN - 2]) && (prev_state[MODE_SELECT_BTN - 2])) {
 		// Mode select button pressed
 		ut_mode ^= 1;  //toggle mode
-	} else if (!(btn_state[MEM_SELECT_BTN - 2]) && (prev_state[MEM_SELECT_BTN - 2])) {
+	} else if ((ut_mode != STAT_MODE) && !(btn_state[MEM_SELECT_BTN - 2]) && (prev_state[MEM_SELECT_BTN - 2])) {
 		// Memory select button pressed
 		ut_memory_0idx = (ut_memory_0idx + 1)%MAX_MEM_INDEX; //cycle memory index selected
 
-	} else if (!(btn_state[OP_SELECT_BTN - 2]) && (prev_state[OP_SELECT_BTN - 2])) {
+	} else if ((ut_mode != STAT_MODE) && !(btn_state[OP_SELECT_BTN - 2]) && (prev_state[OP_SELECT_BTN - 2])) {
 		// Operation select button pressed
 		ut_operation = (ut_operation + 1)%NUM_OPERATIONS; //cycle operation selected
 
-	} else if (!(btn_state[ACTION_BTN - 2]) && (prev_state[ACTION_BTN - 2])) {
+	} else if ((ut_mode != STAT_MODE) && !(btn_state[ACTION_BTN - 2]) && (prev_state[ACTION_BTN - 2])) {
 		// Action button pressed
 		//#TODO Implement action for action button press
 	}
