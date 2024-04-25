@@ -12,6 +12,8 @@ static uint16_t num_button_polls;
 static uint16_t btn_on_time[NUM_BUTTONS]; // Array to store button logic high counts
 static uint8_t btn_off_time[NUM_BUTTONS]; // Array to store button states after debouncing
 static boolean_t prev_state[NUM_BUTTONS];
+static boolean_t btn_state[NUM_BUTTONS]; // Array to store button states after debouncing
+
 
 //local functions
 boolean_t is_button_pressed(volatile uint8_t *port, uint8_t pin);
@@ -35,6 +37,8 @@ void ut_init()
 		btn_on_time[i] = 0;
 		btn_off_time[i] = 0;
 		prev_state[i] = false;
+		btn_state[i] = false;
+
 	}
 
 
@@ -58,11 +62,9 @@ void ut_init()
 }
 
 void ut_poll_btns(){
-	boolean_t btn_state[NUM_BUTTONS] = {false}; // Array to store button states after debouncing
-
 	// Iterate through each button
 	for (int i = 0; i < NUM_BUTTONS; i ++){
-		btn_state[i] = false; // Set button state to released
+		prev_state[i] = btn_state[i];
 
 		if (is_button_pressed(&PIND, i + 2)) {
 			// Increment button logic high count if pressed
@@ -72,12 +74,14 @@ void ut_poll_btns(){
 			if (btn_on_time[i] >= ON_TIME_THRESHHOLD) {
 				btn_state[i] = true; // Set button state to pressed
 				btn_on_time[i] = 0;
+				btn_off_time[i] = 0;
 				DEBUG_LIGHT_OFF
 			}
 
 		}else{
 			btn_off_time[i]++;
 			if (btn_off_time[i] >= RESET_TIME_THRESHHOLD){
+				btn_state[i] = false; // Set button state to released
 				btn_on_time[i] = 0;
 				btn_off_time[i] = 0;
 				DEBUG_LIGHT_ON
@@ -90,18 +94,18 @@ void ut_poll_btns(){
 
 
 	// Check for virtual short and take action accordingly
-	if (btn_state[MODE_SELECT_BTN - 2]) {
+	if (!(btn_state[MODE_SELECT_BTN - 2]) && (prev_state[MODE_SELECT_BTN - 2])) {
 		// Mode select button pressed
 		ut_mode ^= 1;  //toggle mode
-	} else if (btn_state[MEM_SELECT_BTN - 2]) {
+	} else if (!(btn_state[MEM_SELECT_BTN - 2]) && (prev_state[MEM_SELECT_BTN - 2])) {
 		// Memory select button pressed
 		ut_memory_0idx = (ut_memory_0idx + 1)%MAX_MEM_INDEX; //cycle memory index selected
 
-	} else if (btn_state[OP_SELECT_BTN - 2]) {
+	} else if (!(btn_state[OP_SELECT_BTN - 2]) && (prev_state[OP_SELECT_BTN - 2])) {
 		// Operation select button pressed
 		ut_operation = (ut_operation + 1)%NUM_OPERATIONS; //cycle operation selected
 
-	} else if (btn_state[ACTION_BTN - 2]) {
+	} else if (!(btn_state[ACTION_BTN - 2]) && (prev_state[ACTION_BTN - 2])) {
 		// Action button pressed
 		//#TODO Implement action for action button press
 	}

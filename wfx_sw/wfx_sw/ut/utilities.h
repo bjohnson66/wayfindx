@@ -31,8 +31,8 @@
 #define OP_SELECT_BTN PIND3
 #define ACTION_BTN PIND2
 
-#define ON_TIME_THRESHHOLD (uint16_t)180   
-#define RESET_TIME_THRESHHOLD (uint16_t)10  
+#define ON_TIME_THRESHHOLD (uint16_t)100   
+#define RESET_TIME_THRESHHOLD (uint16_t)30  
 
 #define DEBUG_LED_PIN PB0
 #define DEBUG_LIGHT_ON PORTB |= (1 << DEBUG_LED_PIN);
