@@ -9,9 +9,11 @@ uint8_t ut_memory_0idx;
 
 //local static variables
 static uint16_t num_button_polls;
-static uint16_t btn_counts[NUM_BUTTONS]; // Array to store button logic high counts
+static uint16_t btn_on_time[NUM_BUTTONS]; // Array to store button logic high counts
+static uint8_t btn_off_time[NUM_BUTTONS]; // Array to store button states after debouncing
+static boolean_t prev_state[NUM_BUTTONS];
 
-//local static functions
+//local functions
 boolean_t is_button_pressed(volatile uint8_t *port, uint8_t pin);
 
 
@@ -30,7 +32,8 @@ void ut_init()
 	//init local static
 	num_button_polls = 0;
 	for (int i = 0; i < NUM_BUTTONS; i++){
-		btn_counts[i] = 0;
+		btn_on_time[i] = 0;
+		btn_off_time[i] = 0;
 	}
 
 
@@ -55,28 +58,33 @@ void ut_init()
 
 void ut_poll_btns(){
 	boolean_t btn_state[NUM_BUTTONS] = {false}; // Array to store button states after debouncing
-	num_button_polls++;
 
 	// Iterate through each button
 	for (int i = 0; i < NUM_BUTTONS; i ++){
 		if (is_button_pressed(&PIND, i + 2)) {
 			// Increment button logic high count if pressed
-			btn_counts[i]++;
+			btn_on_time[i]++;
+			btn_off_time[i] = 0;
+		}else{
+			btn_off_time[i]++;
 		}
 
 		btn_state[i] = false; // Set button state to released
-		//once we have debounced enough times
-		if (num_button_polls >= DEBOUNCE_TIME){
-			DEBUG_LIGHT_ON
-			// Check if button press threshold is reached
-			if (btn_counts[i] >= MIN_THRESHOLD) {
-				btn_state[i] = true; // Set button state to pressed
-				DEBUG_LIGHT_OFF
-			}
-			btn_counts[i] = 0;
+		// Check if button press threshold is reached
+		if (btn_on_time[i] >= ON_TIME_THRESHHOLD) {
+			btn_state[i] = true; // Set button state to pressed
+			btn_on_time[i] = 0;
+			DEBUG_LIGHT_OFF
 		}
+
+		if (btn_off_time[i] >= RESET_TIME_THRESHHOLD){
+			btn_on_time[i] = 0;
+			btn_off_time[i] = 0;
+			DEBUG_LIGHT_ON
+		}
+			
 	} //end for loop
-	num_button_polls %= DEBOUNCE_TIME;
+
 
 	// Check for virtual short and take action accordingly
 	if (btn_state[MODE_SELECT_BTN - 2]) {
