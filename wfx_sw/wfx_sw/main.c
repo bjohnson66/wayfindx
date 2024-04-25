@@ -39,7 +39,6 @@ void update_display();
 int main(void)
 {
 	startup();
-
     /* Main loop */
     while (1){
 		//read_nmea_msg

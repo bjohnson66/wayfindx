@@ -5,11 +5,12 @@
 #include <avr/interrupt.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdint-gcc.h>
 #include "nf.h"
 #include "nf_types.h"
 #include "../lib/uart.h"
 #include "../ds/ds.h"
-#include <stdint-gcc.h>
+#include "../ut/utilities.h"
 
 //defines
 #define UART_BAUD_RATE 9600
@@ -301,6 +302,9 @@ void read_nmea_msg_raw(){
 				get_serial_char(&tempChar);
 			}
 	}//end VTG msg
+
+	//poll buttons between messages
+	//ut_poll_btns();
 }
 
 

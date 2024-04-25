@@ -8,17 +8,15 @@ boolean_t ir_trigger_1hz_flag_g = false;
 
 
 //local static
-static uint8_t timer2_overflow_counter;
+static uint8_t timer2_overflow_counter;
 
-/**
- * @brief Interrupt Service Routine (ISR) for Timer/Counter0 overflow.
- * Handles PWM generation and toggles PORTD,5.
- */
 /*
-ISR(TIMER0_OVF_vect) { // INT0 ISR
-	
-}
+Poll all four buttons in background set state if we have polled enough times
 */
+ISR(TIMER0_OVF_vect) {
+	ut_poll_btns();
+	TCNT0 = 0;
+}
 
 /*
 catch case where fan stops and timer rolls over.
@@ -35,16 +33,6 @@ ISR(TIMER2_OVF_vect) {
 }
 
 /**
- * @brief Interrupt Service Routine (ISR) for Timer/Counter2 overflow.
- * Sets the update RPM flag.
- */
-/*
-ISR(TIMER2_OVF_vect) {
-
-}
-*/
-
-/**
  * @brief Initializes interrupt system functionality.
  * - Configures Timer2 for time management.
  */
@@ -52,19 +40,31 @@ void ir_init()
 {
 	cli();
 	//----------------------------------------------
-	//timer 1 for task management
-	// Set Timer1 in normal mode (WGM13:0 = 0)
-	//Set up timer2 for periodic display of RPMs to smooth out reading
+	//timer 0 for task management
+	OCR0A = 2;        // Set TOP (maximum value for counter)
+ 
+	TCNT0 = 0x00;		//set counter to zero
+	TCCR0A = 0x00;		//set TCCR1A to zero before configuring timer0
+	TCCR0B = 0x00;
+	// TOP is defined as OCR0A when WGM2:0 = 5
+
+	// Set pre-scaler to /8
+	TCCR0B |= (1 << CS01);
+	// Enable Timer0 Overflow Interrupt
+	TIMSK0 |= (1 << TOIE0);
+	// Initialize Timer0 count
+	TCNT0 = 0;
+
+
+	//Set up timer2 for 1 hz task
 	// Set Timer2 in normal mode (WGM22:0 = 0)
 	TCCR2A = 0x00;
 	TCCR2B = 0x00;
-
 	// Set pre-scaler to clk/1024 for smoothing
 	TCCR2B |= (1 << CS22) | (1 << CS21) | (1 << CS20); // Pre-scaler = 64
-
 	// Enable Timer2 Overflow Interrupt
 	TIMSK2 |= (1 << TOIE2);
-	
-	sei(); // Enable interrupts.
 
+
+	sei(); // Enable interrupts.
 }
