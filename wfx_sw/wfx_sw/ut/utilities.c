@@ -21,12 +21,17 @@ static boolean_t btn_state[NUM_BUTTONS]; // Array to store button states after d
 //local functions
 boolean_t is_button_pressed(volatile uint8_t *port, uint8_t pin);
 
-//load 10 positions from non-vol memory
+//load position from non-vol memory
 void ut_load_from_non_vol(uint8_t index, float* longitude, float* latitude){
 	//TODO, load ith element of array from non-vol... or whole array at once if possible?
 	*longitude = 0.0f;
 	*latitude = 0.0f;
 }
+
+void ut_write_to_non_vol(uint8_t index){
+	//TODO, look at index and read from ut_long_mem_floats and ut_lat_mem_floats
+}
+
 
 void ut_convert_lat_float_to_string(float lat_float, char* lat_string){
 	//passed by value; will not change float from where function is called
@@ -195,8 +200,9 @@ void ut_poll_btns(){
 				ut_convert_lat_float_to_string(ut_lat_mem_floats[ut_memory_0idx], ut_lat_mem_str);
 				ut_convert_long_float_to_string(ut_long_mem_floats[ut_memory_0idx], ut_long_mem_str);
 
-				//TODO; write to SD card
-				
+				//write to SD card
+				ut_write_to_non_vol(ut_memory_0idx);
+
 			break;
 			case CLEAR_OP:
 				 //Load into global array
@@ -207,7 +213,8 @@ void ut_poll_btns(){
 				 ut_convert_lat_float_to_string(ut_lat_mem_floats[ut_memory_0idx], ut_lat_mem_str);
 				 ut_convert_long_float_to_string(ut_long_mem_floats[ut_memory_0idx], ut_long_mem_str);
 
-				 //TODO; write to SD card
+				 //write to SD card
+				 ut_write_to_non_vol(ut_memory_0idx);
  
 			break;
 			case RESET_OP:
@@ -220,8 +227,8 @@ void ut_poll_btns(){
 					ut_convert_lat_float_to_string(ut_lat_mem_floats[i], ut_lat_mem_str);
 					ut_convert_long_float_to_string(ut_long_mem_floats[i], ut_long_mem_str);
 
-					//TODO; write to SD card
-
+					//write to SD card
+					ut_write_to_non_vol(i);
 				}
 			break;
 			default: //not reachable; error will show on screen (see main)
