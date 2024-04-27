@@ -116,33 +116,36 @@ void get_serial_char(char* outputchar){
 				* new data available from UART
 				* check for Frame or Overrun error
 				*/
-			if ( c & UART_FRAME_ERROR )
-			{
-				/* Framing Error detected, i.e no stop bit detected */
-				#ifdef _DEBUG_
-					char* output = "NF Frame Error! ";
+			#ifdef __DEBUG__
+				if ( c & UART_FRAME_ERROR )
+				{
+					/* Framing Error detected, i.e no stop bit detected */
+					#ifdef _DEBUG_
+						char* output = "NF Frame Error! ";
+						ds_print_string(output, 16, 0);
+					#endif
+				}
+				if ( c & UART_OVERRUN_ERROR )
+				{
+					/* 
+						* Overrun, a character already present in the UART UDR register was 
+						* not read by the interrupt handler before the next character arrived,
+						* one or more received characters have been dropped
+						*/
+					char* output = "           OR ER";
 					ds_print_string(output, 16, 0);
-				#endif
-			}
-			if ( c & UART_OVERRUN_ERROR )
-			{
-				/* 
-					* Overrun, a character already present in the UART UDR register was 
-					* not read by the interrupt handler before the next character arrived,
-					* one or more received characters have been dropped
-					*/
-				char* output = "           OR ER";
-				ds_print_string(output, 16, 0);
-			}
-			if ( c & UART_BUFFER_OVERFLOW )
-			{
-				/* 
-					* We are not reading the receive buffer fast enough,
-					* one or more received character have been dropped 
-					*/
-				char* output = "OF ER";
-				ds_print_string(output, 5, 0);
-			}
+				}
+				if ( c & UART_BUFFER_OVERFLOW )
+				{
+					/* 
+						* We are not reading the receive buffer fast enough,
+						* one or more received character have been dropped 
+						*/
+					char* output = "OF ER";
+					ds_print_string(output, 5, 0);
+				}
+			#endif
+
 			/* 
 			* send received character back
 			*/
