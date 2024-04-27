@@ -43,16 +43,16 @@ void ut_init()
 
 
     // Set PD2, PD3, PD4, PD5 pins as inputs
-	DDRD &= ~(1 << ACTION_BTN);
-	DDRD &= ~(1 << OP_SELECT_BTN);
-	DDRD &= ~(1 << MEM_SELECT_BTN);
-	DDRD &= ~(1 << MODE_SELECT_BTN);
+	DDRC &= ~(1 << ACTION_BTN);
+	DDRC &= ~(1 << OP_SELECT_BTN);
+	DDRC &= ~(1 << MEM_SELECT_BTN);
+	DDRC &= ~(1 << MODE_SELECT_BTN);
 	
-	 // Enable pull-up resistors for PD2, PD3, PD4, PD5 pins
-    PORTD |= (1 << ACTION_BTN);
-    PORTD |= (1 << OP_SELECT_BTN);
-    PORTD |= (1 << MEM_SELECT_BTN);
-    PORTD |= (1 << MODE_SELECT_BTN);
+	 // Enable pull-up resistors for PC0, PC1, PC2, PC3 pins
+    PORTC |= (1 << ACTION_BTN);
+    PORTC |= (1 << OP_SELECT_BTN);
+    PORTC |= (1 << MEM_SELECT_BTN);
+    PORTC |= (1 << MODE_SELECT_BTN);
 
 	return;
 }
@@ -63,7 +63,7 @@ void ut_poll_btns(){
 	for (int i = 0; i < NUM_BUTTONS; i ++){
 		prev_state[i] = btn_state[i];
 
-		if (is_button_pressed(&PIND, i + 2)) {
+		if (is_button_pressed(&PINC, i)) {
 			// Increment button logic high count if pressed
 			btn_on_time[i]++;
 			btn_off_time[i] = 0;
@@ -89,18 +89,18 @@ void ut_poll_btns(){
 
 
 	// Check for virtual short and take action accordingly
-	if (!(btn_state[MODE_SELECT_BTN - 2]) && (prev_state[MODE_SELECT_BTN - 2])) {
+	if (!(btn_state[MODE_SELECT_BTN]) && (prev_state[MODE_SELECT_BTN])) {
 		// Mode select button pressed
 		ut_mode ^= 1;  //toggle mode
-	} else if ((ut_mode != STAT_MODE) && !(btn_state[MEM_SELECT_BTN - 2]) && (prev_state[MEM_SELECT_BTN - 2])) {
+	} else if ((ut_mode != STAT_MODE) && !(btn_state[MEM_SELECT_BTN]) && (prev_state[MEM_SELECT_BTN])) {
 		// Memory select button pressed
 		ut_memory_0idx = (ut_memory_0idx + 1)%MAX_MEM_INDEX; //cycle memory index selected
 
-	} else if ((ut_mode != STAT_MODE) && !(btn_state[OP_SELECT_BTN - 2]) && (prev_state[OP_SELECT_BTN - 2])) {
+	} else if ((ut_mode != STAT_MODE) && !(btn_state[OP_SELECT_BTN]) && (prev_state[OP_SELECT_BTN])) {
 		// Operation select button pressed
 		ut_operation = (ut_operation + 1)%NUM_OPERATIONS; //cycle operation selected
 
-	} else if ((ut_mode != STAT_MODE) && !(btn_state[ACTION_BTN - 2]) && (prev_state[ACTION_BTN - 2])) {
+	} else if ((ut_mode != STAT_MODE) && !(btn_state[ACTION_BTN]) && (prev_state[ACTION_BTN])) {
 		// Action button pressed
 		//#TODO Implement action for action button press
 	}

@@ -128,7 +128,7 @@
 #if LCD_IO_MODE
 
 #ifndef LCD_PORT
-#define LCD_PORT         PORTC        /**< port for the LCD lines   */
+#define LCD_PORT         PORTD        /**< port for the LCD lines   */
 #endif
 #ifndef LCD_DATA0_PORT
 #define LCD_DATA0_PORT   LCD_PORT     /**< port for 4bit data bit 0 */
@@ -143,13 +143,13 @@
 #define LCD_DATA3_PORT   LCD_PORT     /**< port for 4bit data bit 3 */
 #endif
 #ifndef LCD_DATA0_PIN
-#define LCD_DATA0_PIN    0            /**< pin for 4bit data bit 0  */
+#define LCD_DATA0_PIN    6            /**< pin for 4bit data bit 0  */
 #endif
 #ifndef LCD_DATA1_PIN
-#define LCD_DATA1_PIN    1            /**< pin for 4bit data bit 1  */
+#define LCD_DATA1_PIN    5            /**< pin for 4bit data bit 1  */
 #endif
 #ifndef LCD_DATA2_PIN
-#define LCD_DATA2_PIN    2            /**< pin for 4bit data bit 2  */
+#define LCD_DATA2_PIN    4            /**< pin for 4bit data bit 2  */
 #endif
 #ifndef LCD_DATA3_PIN
 #define LCD_DATA3_PIN    3            /**< pin for 4bit data bit 3  */
