@@ -14,9 +14,6 @@
 #define NF_INIT_SUCCESS 0
 #define NF_INIT_FAILURE 1
 
-//globals
-extern char nf_output_message_line1[MAX_COL];
-
 
 /**
  * @brief Initializes serial for NMEA inputs from NEO6-M GPS receiver Module

@@ -80,13 +80,21 @@ void startup(){
 		ds_print_string(err, MAX_COL, 1);
 		while(1){};
 	}
-	_delay_ms(0.1f);
+	_delay_ms(0.6f);
 	ut_init(); /**< Initialize utilities CSC. */
 }
 
 
 void task_1hz(){
 	update_display();
+	//Condition where USART if out of sync with NEO6-M
+	if ((position_fix_indicator[0] == '1') && (speed[0] == ' ') && (speed[1] == ' ')){
+		/* Re-Initialize navigation fetch CSC. */
+		do {
+			char* err = "Nav module off sync!";
+			ds_print_string(err, MAX_COL, 1);
+		} while(nf_init());
+	}
 }
 
 void update_display(){
@@ -201,11 +209,11 @@ void update_display(){
 			line2[MAX_COL-2] = 'm';
 			line2[MAX_COL-1] = ut_memory_0idx + '0';
 			
-			for (int i = 0; i < LLA_LAT_BUFFER_SIZE; i++){
-				line2[i] = latitudeLLA_str[i];
+			for (int i = 0; i < LLA_LAT_BUFFER_SIZE-2; i++){
+				line2[i] = ut_lat_mem_str[i];
 			}
 			for (int i = 0; i < LLA_LONG_BUFFER_SIZE; i++){
-				line3[i] = longitudeLLA_str[i];
+				line3[i] = ut_long_mem_str[i];
 			}
 
 			//line3

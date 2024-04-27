@@ -48,7 +48,6 @@ extern char latitudeLLA_str[LLA_LAT_BUFFER_SIZE];   // Latitude in degrees
 extern char longitudeLLA_str[LLA_LONG_BUFFER_SIZE];  // Longitude in degrees
 extern char altitudeLLA_str[LLA_ALT_BUFFER_SIZE];   // Altitude in meters
 
-
-
 extern char speed[VTG_SPEED_BUFER_SIZE];   //in km/hr
+
 #endif /* NF_TYPES_H_ */

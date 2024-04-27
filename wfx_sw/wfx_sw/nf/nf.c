@@ -52,9 +52,6 @@ static char nmea_msg_id_buffer[NMEA_MSG_ID_SIZE];
 static char gga_msg_buffer[GGA_SIZE];
 
 
-//local function declarations
-
-
 //function definitions
 
 //Clear all strings but utc time
@@ -147,8 +144,8 @@ void get_serial_char(char* outputchar){
 				ds_print_string(output, 5, 0);
 			}
 			/* 
-				* send received character back
-				*/
+			* send received character back
+			*/
 			*outputchar = (unsigned char)c;
 			return;
 		}
@@ -301,6 +298,7 @@ void read_nmea_msg_raw(){
 				speed[i++] = tempChar;
 				get_serial_char(&tempChar);
 			}
+
 	}//end VTG msg
 
 	//poll buttons between messages
@@ -327,18 +325,12 @@ void convertNMEAtoLLA() {
 	deg += (10.0 * (latitude[GGA_LAT_BUFFER_SIZE - 10] - '0'));
 
 	latitudeLLA_float = deg + (min / 60.0f); // Combine degrees and minutes
-	
+
+
 	// Extract integer and decimal parts
 	uint16_t integer_part = (uint16_t)latitudeLLA_float;
     float fractional_part = latitudeLLA_float - integer_part;
     uint32_t decimal_part = (uint32_t)(fractional_part * 100000);
-	
-	if (ns_indicator[0] =='S'){
-		latitudeLLA_str[0] = '-';
-		latitudeLLA_float *= -1;
-	} else{
-		latitudeLLA_str[0] = '+';
-	}
 	
 	// Convert integer part to string
 	latitudeLLA_str[1] = '0' + ((integer_part / 10) % 10); // Tens
@@ -354,6 +346,13 @@ void convertNMEAtoLLA() {
     latitudeLLA_str[7] = '0' + ((decimal_part / 10) % 10); // Tens
     latitudeLLA_str[8] = '0' + (decimal_part % 10); // Ones
 	
+	if (ns_indicator[0] =='S'){
+		latitudeLLA_str[0] = '-';
+		latitudeLLA_float *= -1;
+		} else{
+		latitudeLLA_str[0] = '+';
+	}
+
 	
 	//long
 	deg = 0.0;
@@ -371,21 +370,14 @@ void convertNMEAtoLLA() {
 	deg += (100.0 * (longitude[0] - '0'));
 
 	longitudeLLA_float = deg + (min / 60.0f); // Combine degrees and minutes
-	
+
 	// Extract integer and decimal parts
 	integer_part = (uint16_t)longitudeLLA_float;
 	fractional_part = longitudeLLA_float - integer_part;
 	decimal_part = (uint32_t)(fractional_part * 100000);
-	
-	if (ns_indicator[0] =='S'){
-		longitudeLLA_str[0] = '-';
-		latitudeLLA_float *= -1;
-		} else{
-		longitudeLLA_str[0] = '+';
-	}
-	
+
 	// Convert integer part to string
-	longitudeLLA_str[1] = '0' + ((integer_part / 100) % 10); // Tens
+	longitudeLLA_str[1] = '0' + ((integer_part / 100) % 10); // Hundreds
 	longitudeLLA_str[2] = '0' + ((integer_part / 10) % 10); // Tens
 	longitudeLLA_str[3] = '0' + (integer_part % 10); // Ones
 
@@ -399,7 +391,12 @@ void convertNMEAtoLLA() {
 	longitudeLLA_str[8] = '0' + ((decimal_part / 10) % 10); // Tens
 	longitudeLLA_str[9] = '0' + (decimal_part % 10); // Ones
 
-
+	if (ns_indicator[0] =='S'){
+		longitudeLLA_str[0] = '-';
+		latitudeLLA_float *= -1;
+		} else{
+		longitudeLLA_str[0] = '+';
+	}
 
 	altitudeLLA_float = atof(msl_altitude); 
 }

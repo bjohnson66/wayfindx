@@ -1,11 +1,15 @@
-#include "utilities.h"
-#include "../ds/ds.h"
 #include <avr/io.h>
+#include "utilities.h"
 
 //global variables
 boolean_t ut_mode;
 uint8_t ut_operation;
 uint8_t ut_memory_0idx;
+float ut_lat_mem_floats[MAX_MEM_INDEX];
+float ut_long_mem_floats[MAX_MEM_INDEX];
+char ut_lat_mem_str[LLA_LAT_BUFFER_SIZE];
+char ut_long_mem_str[LLA_LONG_BUFFER_SIZE];
+
 
 //local static variables
 static uint16_t num_button_polls;
@@ -14,9 +18,76 @@ static uint8_t btn_off_time[NUM_BUTTONS]; // Array to store button states after 
 static boolean_t prev_state[NUM_BUTTONS];
 static boolean_t btn_state[NUM_BUTTONS]; // Array to store button states after debouncing
 
-
 //local functions
 boolean_t is_button_pressed(volatile uint8_t *port, uint8_t pin);
+
+//load 10 positions from non-vol memory
+void ut_load_from_non_vol(uint8_t index, float* longitude, float* latitude){
+	//TODO, load ith element of array from non-vol... or whole array at once if possible?
+	*longitude = 0.0f;
+	*latitude = 0.0f;
+}
+
+void ut_convert_lat_float_to_string(float lat_float, char* lat_string){
+	//passed by value; will not change float from where function is called
+	if (lat_float < 0){
+		lat_string[0] = '-';
+		lat_float *= -1; //make positive for integer math 
+	} else{
+		lat_string[0] = '+';
+	}
+
+	// Extract integer and decimal parts
+	uint16_t integer_part = (uint16_t)(lat_float);
+	float fractional_part = lat_float - integer_part;
+	uint32_t decimal_part = (uint32_t)(fractional_part * 100000);
+
+
+	// Convert integer part to string
+	lat_string[1] = '0' + ((integer_part / 10) % 10); // Tens
+	lat_string[2] = '0' + (integer_part % 10); // Ones
+
+	// Decimal point
+	lat_string[3] = '.';
+
+	// Convert decimal part to string
+	lat_string[4] = '0' + ((decimal_part / 10000) % 10); // Ten-thousands
+	lat_string[5] = '0' + ((decimal_part / 1000)% 10); // Thousands
+	lat_string[6] = '0' + ((decimal_part / 100) % 10); // Hundreds
+	lat_string[7] = '0' + ((decimal_part / 10) % 10); // Tens
+	lat_string[8] = '0' + (decimal_part % 10); // Ones
+}
+
+void ut_convert_long_float_to_string(float long_float, char* long_string){
+	//passed by value; will not change float from where function is called
+	if (long_float < 0){
+		long_string[0] = '-';
+		long_float *= -1; //make positive for integer math
+	} else{
+		long_string[0] = '+';
+	}
+
+	// Extract integer and decimal parts
+	uint16_t integer_part = (uint16_t)(long_float);
+	float fractional_part = long_float - integer_part;
+	uint32_t decimal_part = (uint32_t)(fractional_part * 100000);
+
+
+	// Convert integer part to string
+	long_string[1] = '0' + ((integer_part / 100) % 10); // Hundreds
+	long_string[2] = '0' + ((integer_part / 10) % 10); // Tens
+	long_string[3] = '0' + (integer_part % 10); // Ones
+
+	// Decimal point
+	long_string[4] = '.';
+
+	// Convert decimal part to string
+	long_string[5] = '0' + ((decimal_part / 10000) % 10); // Ten-thousands
+	long_string[6] = '0' + ((decimal_part / 1000)% 10); // Thousands
+	long_string[7] = '0' + ((decimal_part / 100) % 10); // Hundreds
+	long_string[8] = '0' + ((decimal_part / 10) % 10); // Tens
+	long_string[9] = '0' + (decimal_part % 10); // Ones
+}
 
 
 /*
@@ -26,10 +97,18 @@ boolean_t is_button_pressed(volatile uint8_t *port, uint8_t pin);
 */
 void ut_init()
 {
+	//read from SD card
+	for (int i = 0; i < MAX_MEM_INDEX; i++){
+		ut_load_from_non_vol(i, ut_long_mem_floats+i, ut_lat_mem_floats+i);
+	}
+
 	//initialize globals
 	ut_mode = NAV_MODE;
 	ut_operation = SAVE_OP;
 	ut_memory_0idx = 0;
+
+	ut_convert_lat_float_to_string(ut_lat_mem_floats[ut_memory_0idx], ut_lat_mem_str);
+	ut_convert_long_float_to_string(ut_long_mem_floats[ut_memory_0idx], ut_long_mem_str);
 
 	//init local static
 	num_button_polls = 0;
@@ -53,7 +132,7 @@ void ut_init()
     PORTC |= (1 << OP_SELECT_BTN);
     PORTC |= (1 << MEM_SELECT_BTN);
     PORTC |= (1 << MODE_SELECT_BTN);
-
+	
 	return;
 }
 
@@ -95,6 +174,9 @@ void ut_poll_btns(){
 	} else if ((ut_mode != STAT_MODE) && !(btn_state[MEM_SELECT_BTN]) && (prev_state[MEM_SELECT_BTN])) {
 		// Memory select button pressed
 		ut_memory_0idx = (ut_memory_0idx + 1)%MAX_MEM_INDEX; //cycle memory index selected
+		//update strings to reflect selected mem location
+		ut_convert_lat_float_to_string(ut_lat_mem_floats[ut_memory_0idx], ut_lat_mem_str);  
+		ut_convert_long_float_to_string(ut_long_mem_floats[ut_memory_0idx], ut_long_mem_str);
 
 	} else if ((ut_mode != STAT_MODE) && !(btn_state[OP_SELECT_BTN]) && (prev_state[OP_SELECT_BTN])) {
 		// Operation select button pressed
@@ -103,6 +185,48 @@ void ut_poll_btns(){
 	} else if ((ut_mode != STAT_MODE) && !(btn_state[ACTION_BTN]) && (prev_state[ACTION_BTN])) {
 		// Action button pressed
 		//#TODO Implement action for action button press
+		switch (ut_operation){
+			case SAVE_OP:
+				//Load into global array
+				ut_lat_mem_floats[ut_memory_0idx] = latitudeLLA_float;
+				ut_long_mem_floats[ut_memory_0idx] = longitudeLLA_float;
+
+				//update string
+				ut_convert_lat_float_to_string(ut_lat_mem_floats[ut_memory_0idx], ut_lat_mem_str);
+				ut_convert_long_float_to_string(ut_long_mem_floats[ut_memory_0idx], ut_long_mem_str);
+
+				//TODO; write to SD card
+				
+			break;
+			case CLEAR_OP:
+				 //Load into global array
+				 ut_lat_mem_floats[ut_memory_0idx] = 0.0f;
+				 ut_long_mem_floats[ut_memory_0idx] = 0.0f;
+
+				 //update string
+				 ut_convert_lat_float_to_string(ut_lat_mem_floats[ut_memory_0idx], ut_lat_mem_str);
+				 ut_convert_long_float_to_string(ut_long_mem_floats[ut_memory_0idx], ut_long_mem_str);
+
+				 //TODO; write to SD card
+ 
+			break;
+			case RESET_OP:
+				for (int i  = 0; i < MAX_MEM_INDEX; i++){
+					//Load into global array
+					ut_lat_mem_floats[i] = 0.0f;
+					ut_long_mem_floats[i] = 0.0f;
+
+					//update string
+					ut_convert_lat_float_to_string(ut_lat_mem_floats[i], ut_lat_mem_str);
+					ut_convert_long_float_to_string(ut_long_mem_floats[i], ut_long_mem_str);
+
+					//TODO; write to SD card
+
+				}
+			break;
+			default: //not reachable; error will show on screen (see main)
+			break;
+		}
 	}
 }
 

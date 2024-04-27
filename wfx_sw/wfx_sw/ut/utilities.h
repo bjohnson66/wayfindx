@@ -9,6 +9,7 @@
 #define UTILITIES_H
 
 #include "ut_types.h"
+#include "../nf/nf_types.h"
 
 #define NOP asm("nop");
 
@@ -38,6 +39,11 @@
 extern boolean_t ut_mode;
 extern uint8_t ut_operation;
 extern uint8_t ut_memory_0idx;
+extern float ut_lat_mem_floats[MAX_MEM_INDEX];
+extern float ut_long_mem_floats[MAX_MEM_INDEX];
+extern char ut_lat_mem_str[LLA_LAT_BUFFER_SIZE];
+extern char ut_long_mem_str[LLA_LONG_BUFFER_SIZE];
+
 
 /**
  * @brief Initializes the pins on startup.
