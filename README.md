@@ -32,5 +32,7 @@ The project encountered various challenges including serial communication, inter
 For detailed documentation and code implementation, refer to the project source code and comments.
 
 See /docs for relevant hardware, software, and misc documentation.
+
 [Doxygen HTML Documentation](https://raw.githubusercontent.com/bjohnson66/wayfindx/main/docs/Doxygen/html/index.html)
+
 [Doxygen PDF Documentatoin](https://github.com/bjohnson66/wayfindx/blob/88b1bcc49ac1252769d0535202fbb5b85fcedd5b/docs/Doxygen/doxygen_latex_pdf_out.pdf)
