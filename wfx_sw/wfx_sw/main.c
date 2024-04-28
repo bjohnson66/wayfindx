@@ -129,7 +129,6 @@ void startup(){
  * This function is called once per second and performs tasks such as updating the display.
  */
 void task_1hz(){
-	update_display();
 	//Condition where USART if out of sync with NEO6-M
 	if ((position_fix_indicator[0] == '1') && (speed[0] == ' ') && (speed[1] == ' ')){
 		/* Re-Initialize navigation fetch CSC. */
@@ -137,7 +136,11 @@ void task_1hz(){
 			char* err = "Nav module off sync!";
 			ds_print_string(err, MAX_COL, 1);
 		} while(nf_init());
+	}else if(ut_mode == NAV_MODE) {
+		//if not corrupted; do distance calculation if in nav mode
+		ut_update_dist();
 	}
+	update_display();
 }
 
 /**
@@ -296,16 +299,16 @@ void update_display(){
 			line3[MAX_COL-10]= 'D';
 			line3[MAX_COL-9]= 'i';
 			line3[MAX_COL-8]= 's';
-			line3[MAX_COL-7]= 't';			
-			
-			
-		} //end mode checks
-	}//end else
+			line3[MAX_COL-7]= 't';
+			for (int i = 0; i < DISTANCE_SIG_FIG; i++){
+				line3[MAX_COL-(6-i)] = ut_distance_str[i];
+			}
+		} //end mode checks (stat mode)
+	}//end normal operation
 	
 	ds_print_string(line0, MAX_COL, 0);
 	ds_print_string(line1, MAX_COL, 1);
 	ds_print_string(line2, MAX_COL, 2);
 	ds_print_string(line3, MAX_COL, 3);
-
 	
 } //end update display

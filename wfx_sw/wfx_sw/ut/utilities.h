@@ -38,6 +38,9 @@
 #define ON_TIME_THRESHHOLD (uint16_t)100   /**< Button press threshold time. */
 #define RESET_TIME_THRESHHOLD (uint16_t)30  /**< Button release threshold time. */
 
+#define	RADIUS_OF_EARTH	6371.0f //**<Radius of the Earth see: https://solarsystem.nasa.gov/planets/earth/in-depth.amp */
+#define DISTANCE_SIG_FIG 6 //**<Number of characters available for distance calculation */
+
 #define DDR_SPI DDRB
 #define PORT_SPI PORTB
 #define CS PINB2
@@ -56,6 +59,7 @@ extern float ut_lat_mem_floats[MAX_MEM_INDEX]; /**< Array to store latitude memo
 extern float ut_long_mem_floats[MAX_MEM_INDEX]; /**< Array to store longitude memory floats. */
 extern char ut_lat_mem_str[LLA_LAT_BUFFER_SIZE]; /**< Array to store latitude memory strings. */
 extern char ut_long_mem_str[LLA_LONG_BUFFER_SIZE]; /**< Array to store longitude memory strings. */
+extern char ut_distance_str[DISTANCE_SIG_FIG];	/**< Array of characters to store distance between user and selected memory location (in km). */
 
 /**
  * @brief Initializes the pins for buttons, loads from SD card, and initializes stored locations on startup.
@@ -68,6 +72,11 @@ void ut_init();
  * Post-polling action takes place in the following order: MODE_SELECT_BTN, MEM_SELECT_BTN, OP_SELECT_BTN.
  */
 void ut_poll_btns();
+
+/**
+ * @brief Performs distance calculation between user's current position and the position stored at the selected memory index
+ */
+void ut_update_dist();
 
 void SPI_init();
 void SD_powerUpSeq();

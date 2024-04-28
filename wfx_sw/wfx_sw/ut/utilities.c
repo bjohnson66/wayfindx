@@ -1,9 +1,12 @@
-#include <avr/io.h>
-#include "utilities.h"
-#include<util/delay.h>
 #ifndef F_CPU
 #define F_CPU 4000000UL /**< Define the CPU frequency to 4MHz. */
 #endif
+#include <avr/io.h>
+#include <math.h>
+#include <stdlib.h>
+#include <string.h>
+#include <util/delay.h>
+#include "utilities.h"
 
 //global variables
 boolean_t ut_mode; /**< Current mode */
@@ -13,6 +16,7 @@ float ut_lat_mem_floats[MAX_MEM_INDEX]; /**< Array to store latitude */
 float ut_long_mem_floats[MAX_MEM_INDEX]; /**< Array to store longitude */
 char ut_lat_mem_str[LLA_LAT_BUFFER_SIZE]; /**< String to store latitude */
 char ut_long_mem_str[LLA_LONG_BUFFER_SIZE]; /**< String to store longitude */
+char ut_distance_str[DISTANCE_SIG_FIG]; /**< String to store distance */
 
 
 //local static variables
@@ -154,10 +158,10 @@ void ut_init()
 	ut_mode = NAV_MODE;
 	ut_operation = SAVE_OP;
 	ut_memory_0idx = 0;
-
 	ut_convert_lat_float_to_string(ut_lat_mem_floats[ut_memory_0idx], ut_lat_mem_str);
 	ut_convert_long_float_to_string(ut_long_mem_floats[ut_memory_0idx], ut_long_mem_str);
-
+	memset(ut_distance_str, ' ', DISTANCE_SIG_FIG * sizeof(char));
+	
 	//init local static
 	num_button_polls = 0;
 	for (int i = 0; i < NUM_BUTTONS; i++){
@@ -297,6 +301,7 @@ boolean_t is_button_pressed(volatile uint8_t *port, uint8_t pin) {
 	}
 	return false;
 }
+
 void SPI_init(){
 	    // set CS, MOSI and SCK to output
 	    DDR_SPI |= (1 << CS) | (1 << MOSI) | (1 << SCK);
@@ -336,4 +341,57 @@ void SD_powerUpSeq()
 	// deselect SD card
 	CS_DISABLE();
 	SPI_transfer(0xFF);
+}
+
+/**
+ * @brief A function that converts a degree value to an equivalent radian value
+ */
+float deg2rad(float deg) {
+	return deg * (M_PI / 180);
+}
+
+// Function to convert a float distance value to a string
+void float_to_string(float value, char *str, int max_size) {
+	uint16_t whole_part = (int)value;
+	float fractional_part = value - whole_part;
+	uint8_t i;
+
+	// Convert the whole part to string
+	itoa(whole_part, str, 10); // Assuming you have itoa function available
+
+	// Find the position of the decimal point
+	for (i = 0; str[i] != '\0'; i++) {
+		if ((str[i] == '\0') || (i >= max_size)) {
+			break;
+		}
+	}
+	
+	if (i < max_size){
+		// Add decimal point
+		str[i++] = '.';
+		
+		if (i < max_size){
+			//grab as many decimals as we can
+			for (i = i; i < max_size; i++){
+				fractional_part *= 10;
+				str[i] = '0'+ (uint8_t)fractional_part;
+				fractional_part -= (str[i] - '0');
+			}
+		}
+	}
+}
+
+/**
+ * @brief Performs distance calculation between user's current position and the position stored at the selected memory index
+ *		  Uses Haversine formula; ouptuts in Km (updates the value of the ut_distance global variable)
+ */
+void ut_update_dist(){
+	float dlat = deg2rad(ut_lat_mem_floats[ut_memory_0idx] - latitudeLLA_float);
+	float dlon = deg2rad(ut_long_mem_floats[ut_memory_0idx] - longitudeLLA_float);
+	float a = sin(dlat / 2) * sin(dlat / 2) +
+	cos(deg2rad(latitudeLLA_float)) * cos(deg2rad(ut_lat_mem_floats[ut_memory_0idx])) * sin(dlon / 2) * sin(dlon / 2);
+	float c = 2 * atan2(sqrt(a), sqrt(1 - a));
+	float distance = (RADIUS_OF_EARTH + (altitudeLLA_float/1000) ) * c; //assume common altitude which has to be converted from m to KM
+	//convert to string and copy to ut_distance_str;
+	float_to_string(distance, ut_distance_str, DISTANCE_SIG_FIG);
 }
