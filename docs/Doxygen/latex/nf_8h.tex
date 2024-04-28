@@ -1,0 +1,138 @@
+\doxysection{G\+:/\+Project\+\_\+\+Files/\+Way\+Find\+X/wfx\+\_\+sw/wfx\+\_\+sw/nf/nf.h File Reference}
+\hypertarget{nf_8h}{}\label{nf_8h}\index{G:/Project\_Files/WayFindX/wfx\_sw/wfx\_sw/nf/nf.h@{G:/Project\_Files/WayFindX/wfx\_sw/wfx\_sw/nf/nf.h}}
+
+
+Header file containing common functions and definitions for the navigation fetch (NV) CSC.  
+
+
+{\ttfamily \#include "{}../ut/ut\+\_\+types.\+h"{}}\newline
+{\ttfamily \#include "{}../ds/ds.\+h"{}}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{nf_8h_aa96c37b85716478237cb55379d8587b3}{NF\+\_\+\+INIT\+\_\+\+SUCCESS}}~0
+\item 
+\#define \mbox{\hyperlink{nf_8h_a0c2606ad27544efe524fea489624349d}{NF\+\_\+\+INIT\+\_\+\+FAILURE}}~1
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{ut__types_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\+\_\+t}} \mbox{\hyperlink{nf_8h_a46e0e51d93e441c2d619a6e425f8ec23}{nf\+\_\+init}} ()
+\begin{DoxyCompactList}\small\item\em Initialize the navigation fetch module. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{nf_8h_a83b7e3f37cf87c92c13d34609da05fc7}{get\+\_\+serial\+\_\+char}} (char \texorpdfstring{$\ast$}{*}outputchar)
+\begin{DoxyCompactList}\small\item\em Read a single character from the serial communication. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{nf_8h_ae55a7f4b0e82e1a7203ee6e5a174e0a6}{read\+\_\+nmea\+\_\+msg\+\_\+raw}} ()
+\begin{DoxyCompactList}\small\item\em Read a raw NMEA message from the serial communication and extracts relevant data. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{nf_8h_a240730b10fbf7d2330e7ba4cff1268ef}{convert\+NMEAto\+LLA}} ()
+\begin{DoxyCompactList}\small\item\em Convert NMEA format coordinates to Latitude, Longitude, and Altitude (LLA) format. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Header file containing common functions and definitions for the navigation fetch (NV) CSC. 
+
+This file provides declarations for common utility functions and definitions associated with NV 
+
+Definition in file \mbox{\hyperlink{nf_8h_source}{nf.\+h}}.
+
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{nf_8h_a0c2606ad27544efe524fea489624349d}\label{nf_8h_a0c2606ad27544efe524fea489624349d} 
+\index{nf.h@{nf.h}!NF\_INIT\_FAILURE@{NF\_INIT\_FAILURE}}
+\index{NF\_INIT\_FAILURE@{NF\_INIT\_FAILURE}!nf.h@{nf.h}}
+\doxysubsubsection{\texorpdfstring{NF\_INIT\_FAILURE}{NF\_INIT\_FAILURE}}
+{\footnotesize\ttfamily \#define NF\+\_\+\+INIT\+\_\+\+FAILURE~1}
+
+
+
+Definition at line \mbox{\hyperlink{nf_8h_source_l00015}{15}} of file \mbox{\hyperlink{nf_8h_source}{nf.\+h}}.
+
+\Hypertarget{nf_8h_aa96c37b85716478237cb55379d8587b3}\label{nf_8h_aa96c37b85716478237cb55379d8587b3} 
+\index{nf.h@{nf.h}!NF\_INIT\_SUCCESS@{NF\_INIT\_SUCCESS}}
+\index{NF\_INIT\_SUCCESS@{NF\_INIT\_SUCCESS}!nf.h@{nf.h}}
+\doxysubsubsection{\texorpdfstring{NF\_INIT\_SUCCESS}{NF\_INIT\_SUCCESS}}
+{\footnotesize\ttfamily \#define NF\+\_\+\+INIT\+\_\+\+SUCCESS~0}
+
+
+
+Definition at line \mbox{\hyperlink{nf_8h_source_l00014}{14}} of file \mbox{\hyperlink{nf_8h_source}{nf.\+h}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{nf_8h_a240730b10fbf7d2330e7ba4cff1268ef}\label{nf_8h_a240730b10fbf7d2330e7ba4cff1268ef} 
+\index{nf.h@{nf.h}!convertNMEAtoLLA@{convertNMEAtoLLA}}
+\index{convertNMEAtoLLA@{convertNMEAtoLLA}!nf.h@{nf.h}}
+\doxysubsubsection{\texorpdfstring{convertNMEAtoLLA()}{convertNMEAtoLLA()}}
+{\footnotesize\ttfamily void convert\+NMEAto\+LLA (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Convert NMEA format coordinates to Latitude, Longitude, and Altitude (LLA) format. 
+
+Convert NMEA format coordinates to Latitude, Longitude, and Altitude (LLA) format. 
+
+Definition at line \mbox{\hyperlink{nf_8c_source_l00334}{334}} of file \mbox{\hyperlink{nf_8c_source}{nf.\+c}}.
+
+\Hypertarget{nf_8h_a83b7e3f37cf87c92c13d34609da05fc7}\label{nf_8h_a83b7e3f37cf87c92c13d34609da05fc7} 
+\index{nf.h@{nf.h}!get\_serial\_char@{get\_serial\_char}}
+\index{get\_serial\_char@{get\_serial\_char}!nf.h@{nf.h}}
+\doxysubsubsection{\texorpdfstring{get\_serial\_char()}{get\_serial\_char()}}
+{\footnotesize\ttfamily void get\+\_\+serial\+\_\+char (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{outputchar }\end{DoxyParamCaption})}
+
+
+
+Read a single character from the serial communication. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em outputchar} & Pointer to the character variable to store the read character.\\
+\hline
+\end{DoxyParams}
+Read a single character from the serial communication.
+
+
+\begin{DoxyParams}{Parameters}
+{\em outputchar} & Pointer to the character variable to store the read character. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{nf_8c_source_l00114}{114}} of file \mbox{\hyperlink{nf_8c_source}{nf.\+c}}.
+
+\Hypertarget{nf_8h_a46e0e51d93e441c2d619a6e425f8ec23}\label{nf_8h_a46e0e51d93e441c2d619a6e425f8ec23} 
+\index{nf.h@{nf.h}!nf\_init@{nf\_init}}
+\index{nf\_init@{nf\_init}!nf.h@{nf.h}}
+\doxysubsubsection{\texorpdfstring{nf\_init()}{nf\_init()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{ut__types_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\+\_\+t}} nf\+\_\+init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Initialize the navigation fetch module. 
+
+\begin{DoxyReturn}{Returns}
+0 if initialization is successful
+\end{DoxyReturn}
+Initialize the navigation fetch module.
+
+\begin{DoxyReturn}{Returns}
+0 if initialization is successful, otherwise returns 1. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{nf_8c_source_l00082}{82}} of file \mbox{\hyperlink{nf_8c_source}{nf.\+c}}.
+
+\Hypertarget{nf_8h_ae55a7f4b0e82e1a7203ee6e5a174e0a6}\label{nf_8h_ae55a7f4b0e82e1a7203ee6e5a174e0a6} 
+\index{nf.h@{nf.h}!read\_nmea\_msg\_raw@{read\_nmea\_msg\_raw}}
+\index{read\_nmea\_msg\_raw@{read\_nmea\_msg\_raw}!nf.h@{nf.h}}
+\doxysubsubsection{\texorpdfstring{read\_nmea\_msg\_raw()}{read\_nmea\_msg\_raw()}}
+{\footnotesize\ttfamily void read\+\_\+nmea\+\_\+msg\+\_\+raw (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Read a raw NMEA message from the serial communication and extracts relevant data. 
+
+Read a raw NMEA message from the serial communication and extracts relevant data. 
+
+Definition at line \mbox{\hyperlink{nf_8c_source_l00176}{176}} of file \mbox{\hyperlink{nf_8c_source}{nf.\+c}}.
+

@@ -1,0 +1,49 @@
+\doxysection{nf\+\_\+types.\+h}
+\hypertarget{nf__types_8h_source}{}\label{nf__types_8h_source}\index{G:/Project\_Files/WayFindX/wfx\_sw/wfx\_sw/nf/nf\_types.h@{G:/Project\_Files/WayFindX/wfx\_sw/wfx\_sw/nf/nf\_types.h}}
+\mbox{\hyperlink{nf__types_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{nf__types_8h_source_l00001}00001\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{nf__types_8h_source_l00002}00002\ \textcolor{comment}{\ *\ nf\_types.h}}
+\DoxyCodeLine{\Hypertarget{nf__types_8h_source_l00003}00003\ \textcolor{comment}{\ *\ @brief\ Header\ file\ containing\ common\ types\ and\ definitions\ for\ the\ navigation\ fetch\ (NV)\ CSC.}}
+\DoxyCodeLine{\Hypertarget{nf__types_8h_source_l00004}00004\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{nf__types_8h_source_l00005}00005\ \textcolor{comment}{\ *\ This\ file\ provides\ definitions\ for\ common\ data\ types\ and\ sizes\ associated\ with\ the\ NV\ CSC.}}
+\DoxyCodeLine{\Hypertarget{nf__types_8h_source_l00006}00006\ \textcolor{comment}{\ */}\ }
+\DoxyCodeLine{\Hypertarget{nf__types_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{nf__types_8h_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{nf__types_8h_source_l00009}00009\ \textcolor{preprocessor}{\#ifndef\ NF\_TYPES\_H\_}}
+\DoxyCodeLine{\Hypertarget{nf__types_8h_source_l00010}00010\ \textcolor{preprocessor}{\#define\ NF\_TYPES\_H\_}}
+\DoxyCodeLine{\Hypertarget{nf__types_8h_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{nf__types_8h_source_l00012}\mbox{\hyperlink{nf__types_8h_a7643e7ae5added653e365153b5963266}{00012}}\ \textcolor{preprocessor}{\#define\ GGA\_INDICATOR\_SIZE\ 1\ }}
+\DoxyCodeLine{\Hypertarget{nf__types_8h_source_l00014}\mbox{\hyperlink{nf__types_8h_a548e32055b21b64df9a5c859e1be38d4}{00014}}\ \textcolor{preprocessor}{\#define\ LLA\_LONG\_BUFFER\_SIZE\ 10\ }}
+\DoxyCodeLine{\Hypertarget{nf__types_8h_source_l00015}\mbox{\hyperlink{nf__types_8h_a7b3c9ba3ceea8208b4b82e11a41722e8}{00015}}\ \textcolor{preprocessor}{\#define\ LLA\_LAT\_BUFFER\_SIZE\ 11\ }}
+\DoxyCodeLine{\Hypertarget{nf__types_8h_source_l00016}\mbox{\hyperlink{nf__types_8h_ab4f841a356deae9515d41ec3475c0df9}{00016}}\ \textcolor{preprocessor}{\#define\ LLA\_ALT\_BUFFER\_SIZE\ 6\ }}
+\DoxyCodeLine{\Hypertarget{nf__types_8h_source_l00018}00018\ \textcolor{comment}{//\ Size\ definitions\ for\ components\ of\ the\ GGA\ message}}
+\DoxyCodeLine{\Hypertarget{nf__types_8h_source_l00019}\mbox{\hyperlink{nf__types_8h_a6a57cc51508294dc1f698134ef135fca}{00019}}\ \textcolor{preprocessor}{\#define\ GGA\_UTC\_BUFFER\_SIZE\ 9\ }}
+\DoxyCodeLine{\Hypertarget{nf__types_8h_source_l00020}\mbox{\hyperlink{nf__types_8h_a0842303ff8c3ce0f6f7d4a3fd1e01e34}{00020}}\ \textcolor{preprocessor}{\#define\ GGA\_LAT\_BUFFER\_SIZE\ 10\ }}
+\DoxyCodeLine{\Hypertarget{nf__types_8h_source_l00021}\mbox{\hyperlink{nf__types_8h_ac381d72b86b91fda940a713324d1a06c}{00021}}\ \textcolor{preprocessor}{\#define\ GGA\_LONG\_BUFFER\_SIZE\ 11\ }}
+\DoxyCodeLine{\Hypertarget{nf__types_8h_source_l00022}\mbox{\hyperlink{nf__types_8h_aeedaf01277ff05253f5403f875c6559c}{00022}}\ \textcolor{preprocessor}{\#define\ GGA\_SV\_USD\_BUFFER\_SIZE\ 2\ }}
+\DoxyCodeLine{\Hypertarget{nf__types_8h_source_l00023}\mbox{\hyperlink{nf__types_8h_ac4eb68e9d99d7d28128f8e910c3c3355}{00023}}\ \textcolor{preprocessor}{\#define\ GGA\_HDOP\_BUFFER\_SIZE\ 3\ }}
+\DoxyCodeLine{\Hypertarget{nf__types_8h_source_l00024}\mbox{\hyperlink{nf__types_8h_a5c282150f25cd6a19e4a2321bd24a8f6}{00024}}\ \textcolor{preprocessor}{\#define\ GGA\_NUM\_INDICATORS\_ACTIVE\ 3\ }}
+\DoxyCodeLine{\Hypertarget{nf__types_8h_source_l00025}\mbox{\hyperlink{nf__types_8h_a6be44d9df4b99a3ce0e3496a0fe5cfda}{00025}}\ \textcolor{preprocessor}{\#define\ GGA\_NUM\_ITEMS\_ACTIVE\ 8\ }}
+\DoxyCodeLine{\Hypertarget{nf__types_8h_source_l00026}\mbox{\hyperlink{nf__types_8h_a246ae5f6d5b8f3f8c50a719751c7524f}{00026}}\ \textcolor{preprocessor}{\#define\ GGA\_ALTITUDE\_BUFFER\_SIZE\ 7\ }}
+\DoxyCodeLine{\Hypertarget{nf__types_8h_source_l00027}\mbox{\hyperlink{nf__types_8h_abd35c851b0a935f251dc21fc3258f633}{00027}}\ \textcolor{preprocessor}{\#define\ VTG\_SPEED\_BUFER\_SIZE\ 7\ }}
+\DoxyCodeLine{\Hypertarget{nf__types_8h_source_l00029}\mbox{\hyperlink{nf__types_8h_a1caaf7dd0c969d9446ac2511616e3ea0}{00029}}\ \textcolor{preprocessor}{\#define\ GGA\_SIZE\ (GGA\_UTC\_BUFFER\_SIZE\ +\ GGA\_LAT\_BUFFER\_SIZE\ +\ GGA\_LONG\_BUFFER\_SIZE\ +\ GGA\_SV\_USD\_BUFFER\_SIZE\ +\ GGA\_HDOP\_BUFFER\_SIZE\ +\ GGA\_NUM\_INDICATORS\_ACTIVE\ +\ GGA\_NUM\_ITEMS\_ACTIVE)\ }}
+\DoxyCodeLine{\Hypertarget{nf__types_8h_source_l00031}00031\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{nf__types_8h_a04f4eb5a82d1357a4eb496d39eb2a1e1}{utc\_time}}[\mbox{\hyperlink{nf__types_8h_a6a57cc51508294dc1f698134ef135fca}{GGA\_UTC\_BUFFER\_SIZE}}];\ }
+\DoxyCodeLine{\Hypertarget{nf__types_8h_source_l00032}00032\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{nf__types_8h_aa9973386b0ff84d65394ae6270388afe}{latitude}}[\mbox{\hyperlink{nf__types_8h_a0842303ff8c3ce0f6f7d4a3fd1e01e34}{GGA\_LAT\_BUFFER\_SIZE}}];\ }
+\DoxyCodeLine{\Hypertarget{nf__types_8h_source_l00033}00033\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{nf__types_8h_ac0e4c6aebc5ff7f774f4f13a723af8db}{ns\_indicator}}[\mbox{\hyperlink{nf__types_8h_a7643e7ae5added653e365153b5963266}{GGA\_INDICATOR\_SIZE}}];\ }
+\DoxyCodeLine{\Hypertarget{nf__types_8h_source_l00034}00034\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{nf__types_8h_ae2012471fd2dd8dc217f3e7d806d0d95}{longitude}}[\mbox{\hyperlink{nf__types_8h_ac381d72b86b91fda940a713324d1a06c}{GGA\_LONG\_BUFFER\_SIZE}}];\ }
+\DoxyCodeLine{\Hypertarget{nf__types_8h_source_l00035}00035\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{nf__types_8h_a25a8bb14f20296eff4c98490fae67978}{ew\_indicator}}[\mbox{\hyperlink{nf__types_8h_a7643e7ae5added653e365153b5963266}{GGA\_INDICATOR\_SIZE}}];\ }
+\DoxyCodeLine{\Hypertarget{nf__types_8h_source_l00036}00036\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{nf__types_8h_a1c6f8013e13671bf149f567796ccadd3}{position\_fix\_indicator}}[\mbox{\hyperlink{nf__types_8h_a7643e7ae5added653e365153b5963266}{GGA\_INDICATOR\_SIZE}}];\ }
+\DoxyCodeLine{\Hypertarget{nf__types_8h_source_l00037}00037\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{nf__types_8h_a53f37284c2ee716cc91fd42713bd0734}{satellites\_used}}[\mbox{\hyperlink{nf__types_8h_aeedaf01277ff05253f5403f875c6559c}{GGA\_SV\_USD\_BUFFER\_SIZE}}];\ }
+\DoxyCodeLine{\Hypertarget{nf__types_8h_source_l00038}00038\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{nf__types_8h_a8f67c3a8d11cba796e4781ddea44cb41}{hdop}}[\mbox{\hyperlink{nf__types_8h_ac4eb68e9d99d7d28128f8e910c3c3355}{GGA\_HDOP\_BUFFER\_SIZE}}];\ }
+\DoxyCodeLine{\Hypertarget{nf__types_8h_source_l00039}00039\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{nf__types_8h_a8fee6de5535ad8c1f73c459ea72bf3f7}{msl\_altitude}}[\mbox{\hyperlink{nf__types_8h_a246ae5f6d5b8f3f8c50a719751c7524f}{GGA\_ALTITUDE\_BUFFER\_SIZE}}];\ }
+\DoxyCodeLine{\Hypertarget{nf__types_8h_source_l00041}00041\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{nf__types_8h_adbd5273b1e99f5b4005bcb4f9b6f5050}{latitudeLLA\_float}};\ }
+\DoxyCodeLine{\Hypertarget{nf__types_8h_source_l00042}00042\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{nf__types_8h_a192af038de165e9f7b3ca83740db90f3}{longitudeLLA\_float}};\ }
+\DoxyCodeLine{\Hypertarget{nf__types_8h_source_l00043}00043\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{nf__types_8h_a553dd75259e14ab3f8c3b5abea69b879}{altitudeLLA\_float}};\ }
+\DoxyCodeLine{\Hypertarget{nf__types_8h_source_l00045}00045\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{nf__types_8h_afad30d0a84aab488b3ca8e3703def0e0}{latitudeLLA\_str}}[\mbox{\hyperlink{nf__types_8h_a7b3c9ba3ceea8208b4b82e11a41722e8}{LLA\_LAT\_BUFFER\_SIZE}}];\ }
+\DoxyCodeLine{\Hypertarget{nf__types_8h_source_l00046}00046\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{nf__types_8h_ab357be618b2eed6d26b6ca8acd6b25a2}{longitudeLLA\_str}}[\mbox{\hyperlink{nf__types_8h_a548e32055b21b64df9a5c859e1be38d4}{LLA\_LONG\_BUFFER\_SIZE}}];\ }
+\DoxyCodeLine{\Hypertarget{nf__types_8h_source_l00047}00047\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{nf__types_8h_a3c8c5d6525b207beb2ea17dd19b46362}{altitudeLLA\_str}}[\mbox{\hyperlink{nf__types_8h_ab4f841a356deae9515d41ec3475c0df9}{LLA\_ALT\_BUFFER\_SIZE}}];\ }
+\DoxyCodeLine{\Hypertarget{nf__types_8h_source_l00049}00049\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{nf__types_8h_abef17e6bb3bcc2da5ff899c5ba5ef1d4}{speed}}[\mbox{\hyperlink{nf__types_8h_abd35c851b0a935f251dc21fc3258f633}{VTG\_SPEED\_BUFER\_SIZE}}];\ }
+\DoxyCodeLine{\Hypertarget{nf__types_8h_source_l00051}00051\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ NF\_TYPES\_H\_\ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

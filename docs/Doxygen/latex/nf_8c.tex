@@ -1,0 +1,457 @@
+\doxysection{G\+:/\+Project\+\_\+\+Files/\+Way\+Find\+X/wfx\+\_\+sw/wfx\+\_\+sw/nf/nf.c File Reference}
+\hypertarget{nf_8c}{}\label{nf_8c}\index{G:/Project\_Files/WayFindX/wfx\_sw/wfx\_sw/nf/nf.c@{G:/Project\_Files/WayFindX/wfx\_sw/wfx\_sw/nf/nf.c}}
+{\ttfamily \#include $<$avr/interrupt.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$stdint-\/gcc.\+h$>$}\newline
+{\ttfamily \#include "{}nf.\+h"{}}\newline
+{\ttfamily \#include "{}nf\+\_\+types.\+h"{}}\newline
+{\ttfamily \#include "{}../lib/uart.\+h"{}}\newline
+{\ttfamily \#include "{}../ds/ds.\+h"{}}\newline
+{\ttfamily \#include "{}../ut/utilities.\+h"{}}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{nf_8c_a43bafb28b29491ec7f871319b5a3b2f8}{F\+\_\+\+CPU}}~4000000\+UL
+\item 
+\#define \mbox{\hyperlink{nf_8c_a615aed21aa6825462b7c17b0c238ffe2}{UART\+\_\+\+BAUD\+\_\+\+RATE}}~9600
+\item 
+\#define \mbox{\hyperlink{nf_8c_af57aa64603bed8c0907a477392a0cb8d}{NMEA\+\_\+\+MSG\+\_\+\+ID\+\_\+\+SIZE}}~5
+\item 
+\#define \mbox{\hyperlink{nf_8c_a01e581cdda863d88d79437db072e3abf}{GGA\+\_\+\+TYPE}}~"{}GPGGA"{}
+\item 
+\#define \mbox{\hyperlink{nf_8c_a1f1ef17c1d3c1f7a15e29fe41728816c}{GLL\+\_\+\+TYPE}}~"{}GPGLL"{}
+\item 
+\#define \mbox{\hyperlink{nf_8c_a3cf9f5d739f4b068c20bc612af05f666}{GSA\+\_\+\+TYPE}}~"{}GPGSA"{}
+\item 
+\#define \mbox{\hyperlink{nf_8c_ac1c92384b7769987bfba1f452f03933f}{GSV\+\_\+\+TYPE}}~"{}GPGSV"{}
+\item 
+\#define \mbox{\hyperlink{nf_8c_a8dc60aecea2f6a4dbce378f9de70b267}{MSS\+\_\+\+TYPE}}~"{}GPMSS"{}
+\item 
+\#define \mbox{\hyperlink{nf_8c_aa1cd8accff7a31f1f0cc07b1b34b3cce}{RMC\+\_\+\+TYPE}}~"{}GPRMC"{}
+\item 
+\#define \mbox{\hyperlink{nf_8c_a3ae147811129df22ffe66e245e179cc8}{VTG\+\_\+\+TYPE}}~"{}GPVTG"{}
+\item 
+\#define \mbox{\hyperlink{nf_8c_a310f7c8e88e98f4936fb14e746dd6c88}{ZDA\+\_\+\+TYPE}}~"{}GPZDA"{}
+\item 
+\#define \mbox{\hyperlink{nf_8c_a17c25eb8cfa2d35e9e9856359eec864a}{OK\+\_\+\+TO\+\_\+\+SEND\+\_\+\+TYPE}}~"{}PSRF1"{}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{nf_8c_a1556c6c2030fcad658aa2f175e7b0a71}{nf\+\_\+clear\+\_\+nav\+\_\+strings}} ()
+\begin{DoxyCompactList}\small\item\em Clear all navigation strings except UTC time. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{ut__types_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\+\_\+t}} \mbox{\hyperlink{nf_8c_a46e0e51d93e441c2d619a6e425f8ec23}{nf\+\_\+init}} ()
+\begin{DoxyCompactList}\small\item\em Initialize the navigation fetch module. This function initializes UART communication and clears navigation strings. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{nf_8c_a83b7e3f37cf87c92c13d34609da05fc7}{get\+\_\+serial\+\_\+char}} (char \texorpdfstring{$\ast$}{*}outputchar)
+\begin{DoxyCompactList}\small\item\em Read a single character from the serial communication. This function blocks until a character is received. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{nf_8c_ae55a7f4b0e82e1a7203ee6e5a174e0a6}{read\+\_\+nmea\+\_\+msg\+\_\+raw}} ()
+\begin{DoxyCompactList}\small\item\em Read a raw NMEA message from the serial communication. This function reads a raw NMEA message and processes GGA and VTG messages. Additionally, it polls buttons between messages. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{nf_8c_a240730b10fbf7d2330e7ba4cff1268ef}{convert\+NMEAto\+LLA}} ()
+\begin{DoxyCompactList}\small\item\em Convert NMEA format coordinates to Latitude, Longitude, and Altitude (LLA) format. This function converts NMEA format coordinates to LLA format and stores them in global variables. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+char \mbox{\hyperlink{nf_8c_a04f4eb5a82d1357a4eb496d39eb2a1e1}{utc\+\_\+time}} \mbox{[}\mbox{\hyperlink{nf__types_8h_a6a57cc51508294dc1f698134ef135fca}{GGA\+\_\+\+UTC\+\_\+\+BUFFER\+\_\+\+SIZE}}\mbox{]}
+\item 
+char \mbox{\hyperlink{nf_8c_aa9973386b0ff84d65394ae6270388afe}{latitude}} \mbox{[}\mbox{\hyperlink{nf__types_8h_a0842303ff8c3ce0f6f7d4a3fd1e01e34}{GGA\+\_\+\+LAT\+\_\+\+BUFFER\+\_\+\+SIZE}}\mbox{]}
+\item 
+char \mbox{\hyperlink{nf_8c_ac0e4c6aebc5ff7f774f4f13a723af8db}{ns\+\_\+indicator}} \mbox{[}\mbox{\hyperlink{nf__types_8h_a7643e7ae5added653e365153b5963266}{GGA\+\_\+\+INDICATOR\+\_\+\+SIZE}}\mbox{]}
+\item 
+char \mbox{\hyperlink{nf_8c_ae2012471fd2dd8dc217f3e7d806d0d95}{longitude}} \mbox{[}\mbox{\hyperlink{nf__types_8h_ac381d72b86b91fda940a713324d1a06c}{GGA\+\_\+\+LONG\+\_\+\+BUFFER\+\_\+\+SIZE}}\mbox{]}
+\item 
+char \mbox{\hyperlink{nf_8c_a25a8bb14f20296eff4c98490fae67978}{ew\+\_\+indicator}} \mbox{[}\mbox{\hyperlink{nf__types_8h_a7643e7ae5added653e365153b5963266}{GGA\+\_\+\+INDICATOR\+\_\+\+SIZE}}\mbox{]}
+\item 
+char \mbox{\hyperlink{nf_8c_a1c6f8013e13671bf149f567796ccadd3}{position\+\_\+fix\+\_\+indicator}} \mbox{[}\mbox{\hyperlink{nf__types_8h_a7643e7ae5added653e365153b5963266}{GGA\+\_\+\+INDICATOR\+\_\+\+SIZE}}\mbox{]}
+\item 
+char \mbox{\hyperlink{nf_8c_a53f37284c2ee716cc91fd42713bd0734}{satellites\+\_\+used}} \mbox{[}\mbox{\hyperlink{nf__types_8h_aeedaf01277ff05253f5403f875c6559c}{GGA\+\_\+\+SV\+\_\+\+USD\+\_\+\+BUFFER\+\_\+\+SIZE}}\mbox{]}
+\item 
+char \mbox{\hyperlink{nf_8c_a8f67c3a8d11cba796e4781ddea44cb41}{hdop}} \mbox{[}\mbox{\hyperlink{nf__types_8h_ac4eb68e9d99d7d28128f8e910c3c3355}{GGA\+\_\+\+HDOP\+\_\+\+BUFFER\+\_\+\+SIZE}}\mbox{]}
+\item 
+char \mbox{\hyperlink{nf_8c_a8fee6de5535ad8c1f73c459ea72bf3f7}{msl\+\_\+altitude}} \mbox{[}\mbox{\hyperlink{nf__types_8h_a246ae5f6d5b8f3f8c50a719751c7524f}{GGA\+\_\+\+ALTITUDE\+\_\+\+BUFFER\+\_\+\+SIZE}}\mbox{]}
+\item 
+char \mbox{\hyperlink{nf_8c_abef17e6bb3bcc2da5ff899c5ba5ef1d4}{speed}} \mbox{[}\mbox{\hyperlink{nf__types_8h_abd35c851b0a935f251dc21fc3258f633}{VTG\+\_\+\+SPEED\+\_\+\+BUFER\+\_\+\+SIZE}}\mbox{]}
+\item 
+float \mbox{\hyperlink{nf_8c_adbd5273b1e99f5b4005bcb4f9b6f5050}{latitude\+LLA\+\_\+float}}
+\item 
+float \mbox{\hyperlink{nf_8c_a192af038de165e9f7b3ca83740db90f3}{longitude\+LLA\+\_\+float}}
+\item 
+float \mbox{\hyperlink{nf_8c_a553dd75259e14ab3f8c3b5abea69b879}{altitude\+LLA\+\_\+float}}
+\item 
+char \mbox{\hyperlink{nf_8c_afad30d0a84aab488b3ca8e3703def0e0}{latitude\+LLA\+\_\+str}} \mbox{[}\mbox{\hyperlink{nf__types_8h_a7b3c9ba3ceea8208b4b82e11a41722e8}{LLA\+\_\+\+LAT\+\_\+\+BUFFER\+\_\+\+SIZE}}\mbox{]}
+\item 
+char \mbox{\hyperlink{nf_8c_ab357be618b2eed6d26b6ca8acd6b25a2}{longitude\+LLA\+\_\+str}} \mbox{[}\mbox{\hyperlink{nf__types_8h_a548e32055b21b64df9a5c859e1be38d4}{LLA\+\_\+\+LONG\+\_\+\+BUFFER\+\_\+\+SIZE}}\mbox{]}
+\item 
+char \mbox{\hyperlink{nf_8c_a3c8c5d6525b207beb2ea17dd19b46362}{altitude\+LLA\+\_\+str}} \mbox{[}\mbox{\hyperlink{nf__types_8h_ab4f841a356deae9515d41ec3475c0df9}{LLA\+\_\+\+ALT\+\_\+\+BUFFER\+\_\+\+SIZE}}\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{nf_8c_a43bafb28b29491ec7f871319b5a3b2f8}\label{nf_8c_a43bafb28b29491ec7f871319b5a3b2f8} 
+\index{nf.c@{nf.c}!F\_CPU@{F\_CPU}}
+\index{F\_CPU@{F\_CPU}!nf.c@{nf.c}}
+\doxysubsubsection{\texorpdfstring{F\_CPU}{F\_CPU}}
+{\footnotesize\ttfamily \#define F\+\_\+\+CPU~4000000\+UL}
+
+Define the CPU frequency to 4MHz. 
+
+Definition at line \mbox{\hyperlink{nf_8c_source_l00002}{2}} of file \mbox{\hyperlink{nf_8c_source}{nf.\+c}}.
+
+\Hypertarget{nf_8c_a01e581cdda863d88d79437db072e3abf}\label{nf_8c_a01e581cdda863d88d79437db072e3abf} 
+\index{nf.c@{nf.c}!GGA\_TYPE@{GGA\_TYPE}}
+\index{GGA\_TYPE@{GGA\_TYPE}!nf.c@{nf.c}}
+\doxysubsubsection{\texorpdfstring{GGA\_TYPE}{GGA\_TYPE}}
+{\footnotesize\ttfamily \#define GGA\+\_\+\+TYPE~"{}GPGGA"{}}
+
+
+
+Definition at line \mbox{\hyperlink{nf_8c_source_l00020}{20}} of file \mbox{\hyperlink{nf_8c_source}{nf.\+c}}.
+
+\Hypertarget{nf_8c_a1f1ef17c1d3c1f7a15e29fe41728816c}\label{nf_8c_a1f1ef17c1d3c1f7a15e29fe41728816c} 
+\index{nf.c@{nf.c}!GLL\_TYPE@{GLL\_TYPE}}
+\index{GLL\_TYPE@{GLL\_TYPE}!nf.c@{nf.c}}
+\doxysubsubsection{\texorpdfstring{GLL\_TYPE}{GLL\_TYPE}}
+{\footnotesize\ttfamily \#define GLL\+\_\+\+TYPE~"{}GPGLL"{}}
+
+
+
+Definition at line \mbox{\hyperlink{nf_8c_source_l00021}{21}} of file \mbox{\hyperlink{nf_8c_source}{nf.\+c}}.
+
+\Hypertarget{nf_8c_a3cf9f5d739f4b068c20bc612af05f666}\label{nf_8c_a3cf9f5d739f4b068c20bc612af05f666} 
+\index{nf.c@{nf.c}!GSA\_TYPE@{GSA\_TYPE}}
+\index{GSA\_TYPE@{GSA\_TYPE}!nf.c@{nf.c}}
+\doxysubsubsection{\texorpdfstring{GSA\_TYPE}{GSA\_TYPE}}
+{\footnotesize\ttfamily \#define GSA\+\_\+\+TYPE~"{}GPGSA"{}}
+
+
+
+Definition at line \mbox{\hyperlink{nf_8c_source_l00022}{22}} of file \mbox{\hyperlink{nf_8c_source}{nf.\+c}}.
+
+\Hypertarget{nf_8c_ac1c92384b7769987bfba1f452f03933f}\label{nf_8c_ac1c92384b7769987bfba1f452f03933f} 
+\index{nf.c@{nf.c}!GSV\_TYPE@{GSV\_TYPE}}
+\index{GSV\_TYPE@{GSV\_TYPE}!nf.c@{nf.c}}
+\doxysubsubsection{\texorpdfstring{GSV\_TYPE}{GSV\_TYPE}}
+{\footnotesize\ttfamily \#define GSV\+\_\+\+TYPE~"{}GPGSV"{}}
+
+
+
+Definition at line \mbox{\hyperlink{nf_8c_source_l00023}{23}} of file \mbox{\hyperlink{nf_8c_source}{nf.\+c}}.
+
+\Hypertarget{nf_8c_a8dc60aecea2f6a4dbce378f9de70b267}\label{nf_8c_a8dc60aecea2f6a4dbce378f9de70b267} 
+\index{nf.c@{nf.c}!MSS\_TYPE@{MSS\_TYPE}}
+\index{MSS\_TYPE@{MSS\_TYPE}!nf.c@{nf.c}}
+\doxysubsubsection{\texorpdfstring{MSS\_TYPE}{MSS\_TYPE}}
+{\footnotesize\ttfamily \#define MSS\+\_\+\+TYPE~"{}GPMSS"{}}
+
+
+
+Definition at line \mbox{\hyperlink{nf_8c_source_l00024}{24}} of file \mbox{\hyperlink{nf_8c_source}{nf.\+c}}.
+
+\Hypertarget{nf_8c_af57aa64603bed8c0907a477392a0cb8d}\label{nf_8c_af57aa64603bed8c0907a477392a0cb8d} 
+\index{nf.c@{nf.c}!NMEA\_MSG\_ID\_SIZE@{NMEA\_MSG\_ID\_SIZE}}
+\index{NMEA\_MSG\_ID\_SIZE@{NMEA\_MSG\_ID\_SIZE}!nf.c@{nf.c}}
+\doxysubsubsection{\texorpdfstring{NMEA\_MSG\_ID\_SIZE}{NMEA\_MSG\_ID\_SIZE}}
+{\footnotesize\ttfamily \#define NMEA\+\_\+\+MSG\+\_\+\+ID\+\_\+\+SIZE~5}
+
+
+
+Definition at line \mbox{\hyperlink{nf_8c_source_l00017}{17}} of file \mbox{\hyperlink{nf_8c_source}{nf.\+c}}.
+
+\Hypertarget{nf_8c_a17c25eb8cfa2d35e9e9856359eec864a}\label{nf_8c_a17c25eb8cfa2d35e9e9856359eec864a} 
+\index{nf.c@{nf.c}!OK\_TO\_SEND\_TYPE@{OK\_TO\_SEND\_TYPE}}
+\index{OK\_TO\_SEND\_TYPE@{OK\_TO\_SEND\_TYPE}!nf.c@{nf.c}}
+\doxysubsubsection{\texorpdfstring{OK\_TO\_SEND\_TYPE}{OK\_TO\_SEND\_TYPE}}
+{\footnotesize\ttfamily \#define OK\+\_\+\+TO\+\_\+\+SEND\+\_\+\+TYPE~"{}PSRF1"{}}
+
+
+
+Definition at line \mbox{\hyperlink{nf_8c_source_l00028}{28}} of file \mbox{\hyperlink{nf_8c_source}{nf.\+c}}.
+
+\Hypertarget{nf_8c_aa1cd8accff7a31f1f0cc07b1b34b3cce}\label{nf_8c_aa1cd8accff7a31f1f0cc07b1b34b3cce} 
+\index{nf.c@{nf.c}!RMC\_TYPE@{RMC\_TYPE}}
+\index{RMC\_TYPE@{RMC\_TYPE}!nf.c@{nf.c}}
+\doxysubsubsection{\texorpdfstring{RMC\_TYPE}{RMC\_TYPE}}
+{\footnotesize\ttfamily \#define RMC\+\_\+\+TYPE~"{}GPRMC"{}}
+
+
+
+Definition at line \mbox{\hyperlink{nf_8c_source_l00025}{25}} of file \mbox{\hyperlink{nf_8c_source}{nf.\+c}}.
+
+\Hypertarget{nf_8c_a615aed21aa6825462b7c17b0c238ffe2}\label{nf_8c_a615aed21aa6825462b7c17b0c238ffe2} 
+\index{nf.c@{nf.c}!UART\_BAUD\_RATE@{UART\_BAUD\_RATE}}
+\index{UART\_BAUD\_RATE@{UART\_BAUD\_RATE}!nf.c@{nf.c}}
+\doxysubsubsection{\texorpdfstring{UART\_BAUD\_RATE}{UART\_BAUD\_RATE}}
+{\footnotesize\ttfamily \#define UART\+\_\+\+BAUD\+\_\+\+RATE~9600}
+
+
+
+Definition at line \mbox{\hyperlink{nf_8c_source_l00016}{16}} of file \mbox{\hyperlink{nf_8c_source}{nf.\+c}}.
+
+\Hypertarget{nf_8c_a3ae147811129df22ffe66e245e179cc8}\label{nf_8c_a3ae147811129df22ffe66e245e179cc8} 
+\index{nf.c@{nf.c}!VTG\_TYPE@{VTG\_TYPE}}
+\index{VTG\_TYPE@{VTG\_TYPE}!nf.c@{nf.c}}
+\doxysubsubsection{\texorpdfstring{VTG\_TYPE}{VTG\_TYPE}}
+{\footnotesize\ttfamily \#define VTG\+\_\+\+TYPE~"{}GPVTG"{}}
+
+
+
+Definition at line \mbox{\hyperlink{nf_8c_source_l00026}{26}} of file \mbox{\hyperlink{nf_8c_source}{nf.\+c}}.
+
+\Hypertarget{nf_8c_a310f7c8e88e98f4936fb14e746dd6c88}\label{nf_8c_a310f7c8e88e98f4936fb14e746dd6c88} 
+\index{nf.c@{nf.c}!ZDA\_TYPE@{ZDA\_TYPE}}
+\index{ZDA\_TYPE@{ZDA\_TYPE}!nf.c@{nf.c}}
+\doxysubsubsection{\texorpdfstring{ZDA\_TYPE}{ZDA\_TYPE}}
+{\footnotesize\ttfamily \#define ZDA\+\_\+\+TYPE~"{}GPZDA"{}}
+
+
+
+Definition at line \mbox{\hyperlink{nf_8c_source_l00027}{27}} of file \mbox{\hyperlink{nf_8c_source}{nf.\+c}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{nf_8c_a240730b10fbf7d2330e7ba4cff1268ef}\label{nf_8c_a240730b10fbf7d2330e7ba4cff1268ef} 
+\index{nf.c@{nf.c}!convertNMEAtoLLA@{convertNMEAtoLLA}}
+\index{convertNMEAtoLLA@{convertNMEAtoLLA}!nf.c@{nf.c}}
+\doxysubsubsection{\texorpdfstring{convertNMEAtoLLA()}{convertNMEAtoLLA()}}
+{\footnotesize\ttfamily void convert\+NMEAto\+LLA (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Convert NMEA format coordinates to Latitude, Longitude, and Altitude (LLA) format. This function converts NMEA format coordinates to LLA format and stores them in global variables. 
+
+Convert NMEA format coordinates to Latitude, Longitude, and Altitude (LLA) format. 
+
+Definition at line \mbox{\hyperlink{nf_8c_source_l00334}{334}} of file \mbox{\hyperlink{nf_8c_source}{nf.\+c}}.
+
+\Hypertarget{nf_8c_a83b7e3f37cf87c92c13d34609da05fc7}\label{nf_8c_a83b7e3f37cf87c92c13d34609da05fc7} 
+\index{nf.c@{nf.c}!get\_serial\_char@{get\_serial\_char}}
+\index{get\_serial\_char@{get\_serial\_char}!nf.c@{nf.c}}
+\doxysubsubsection{\texorpdfstring{get\_serial\_char()}{get\_serial\_char()}}
+{\footnotesize\ttfamily void get\+\_\+serial\+\_\+char (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{outputchar }\end{DoxyParamCaption})}
+
+
+
+Read a single character from the serial communication. This function blocks until a character is received. 
+
+Read a single character from the serial communication.
+
+
+\begin{DoxyParams}{Parameters}
+{\em outputchar} & Pointer to the character variable to store the read character. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{nf_8c_source_l00114}{114}} of file \mbox{\hyperlink{nf_8c_source}{nf.\+c}}.
+
+\Hypertarget{nf_8c_a1556c6c2030fcad658aa2f175e7b0a71}\label{nf_8c_a1556c6c2030fcad658aa2f175e7b0a71} 
+\index{nf.c@{nf.c}!nf\_clear\_nav\_strings@{nf\_clear\_nav\_strings}}
+\index{nf\_clear\_nav\_strings@{nf\_clear\_nav\_strings}!nf.c@{nf.c}}
+\doxysubsubsection{\texorpdfstring{nf\_clear\_nav\_strings()}{nf\_clear\_nav\_strings()}}
+{\footnotesize\ttfamily void nf\+\_\+clear\+\_\+nav\+\_\+strings (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Clear all navigation strings except UTC time. 
+
+
+
+Definition at line \mbox{\hyperlink{nf_8c_source_l00060}{60}} of file \mbox{\hyperlink{nf_8c_source}{nf.\+c}}.
+
+\Hypertarget{nf_8c_a46e0e51d93e441c2d619a6e425f8ec23}\label{nf_8c_a46e0e51d93e441c2d619a6e425f8ec23} 
+\index{nf.c@{nf.c}!nf\_init@{nf\_init}}
+\index{nf\_init@{nf\_init}!nf.c@{nf.c}}
+\doxysubsubsection{\texorpdfstring{nf\_init()}{nf\_init()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{ut__types_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\+\_\+t}} nf\+\_\+init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Initialize the navigation fetch module. This function initializes UART communication and clears navigation strings. 
+
+Initialize the navigation fetch module.
+
+\begin{DoxyReturn}{Returns}
+0 if initialization is successful, otherwise returns 1. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{nf_8c_source_l00082}{82}} of file \mbox{\hyperlink{nf_8c_source}{nf.\+c}}.
+
+\Hypertarget{nf_8c_ae55a7f4b0e82e1a7203ee6e5a174e0a6}\label{nf_8c_ae55a7f4b0e82e1a7203ee6e5a174e0a6} 
+\index{nf.c@{nf.c}!read\_nmea\_msg\_raw@{read\_nmea\_msg\_raw}}
+\index{read\_nmea\_msg\_raw@{read\_nmea\_msg\_raw}!nf.c@{nf.c}}
+\doxysubsubsection{\texorpdfstring{read\_nmea\_msg\_raw()}{read\_nmea\_msg\_raw()}}
+{\footnotesize\ttfamily void read\+\_\+nmea\+\_\+msg\+\_\+raw (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Read a raw NMEA message from the serial communication. This function reads a raw NMEA message and processes GGA and VTG messages. Additionally, it polls buttons between messages. 
+
+Read a raw NMEA message from the serial communication and extracts relevant data. 
+
+Definition at line \mbox{\hyperlink{nf_8c_source_l00176}{176}} of file \mbox{\hyperlink{nf_8c_source}{nf.\+c}}.
+
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{nf_8c_a553dd75259e14ab3f8c3b5abea69b879}\label{nf_8c_a553dd75259e14ab3f8c3b5abea69b879} 
+\index{nf.c@{nf.c}!altitudeLLA\_float@{altitudeLLA\_float}}
+\index{altitudeLLA\_float@{altitudeLLA\_float}!nf.c@{nf.c}}
+\doxysubsubsection{\texorpdfstring{altitudeLLA\_float}{altitudeLLA\_float}}
+{\footnotesize\ttfamily float altitude\+LLA\+\_\+float}
+
+Altitude in meters 
+
+Definition at line \mbox{\hyperlink{nf_8c_source_l00045}{45}} of file \mbox{\hyperlink{nf_8c_source}{nf.\+c}}.
+
+\Hypertarget{nf_8c_a3c8c5d6525b207beb2ea17dd19b46362}\label{nf_8c_a3c8c5d6525b207beb2ea17dd19b46362} 
+\index{nf.c@{nf.c}!altitudeLLA\_str@{altitudeLLA\_str}}
+\index{altitudeLLA\_str@{altitudeLLA\_str}!nf.c@{nf.c}}
+\doxysubsubsection{\texorpdfstring{altitudeLLA\_str}{altitudeLLA\_str}}
+{\footnotesize\ttfamily char altitude\+LLA\+\_\+str\mbox{[}\mbox{\hyperlink{nf__types_8h_ab4f841a356deae9515d41ec3475c0df9}{LLA\+\_\+\+ALT\+\_\+\+BUFFER\+\_\+\+SIZE}}\mbox{]}}
+
+Altitude in meters 
+
+Definition at line \mbox{\hyperlink{nf_8c_source_l00048}{48}} of file \mbox{\hyperlink{nf_8c_source}{nf.\+c}}.
+
+\Hypertarget{nf_8c_a25a8bb14f20296eff4c98490fae67978}\label{nf_8c_a25a8bb14f20296eff4c98490fae67978} 
+\index{nf.c@{nf.c}!ew\_indicator@{ew\_indicator}}
+\index{ew\_indicator@{ew\_indicator}!nf.c@{nf.c}}
+\doxysubsubsection{\texorpdfstring{ew\_indicator}{ew\_indicator}}
+{\footnotesize\ttfamily char ew\+\_\+indicator\mbox{[}\mbox{\hyperlink{nf__types_8h_a7643e7ae5added653e365153b5963266}{GGA\+\_\+\+INDICATOR\+\_\+\+SIZE}}\mbox{]}}
+
+E/W Indicator, \textquotesingle{}E\textquotesingle{} for east or \textquotesingle{}W\textquotesingle{} for west 
+
+Definition at line \mbox{\hyperlink{nf_8c_source_l00036}{36}} of file \mbox{\hyperlink{nf_8c_source}{nf.\+c}}.
+
+\Hypertarget{nf_8c_a8f67c3a8d11cba796e4781ddea44cb41}\label{nf_8c_a8f67c3a8d11cba796e4781ddea44cb41} 
+\index{nf.c@{nf.c}!hdop@{hdop}}
+\index{hdop@{hdop}!nf.c@{nf.c}}
+\doxysubsubsection{\texorpdfstring{hdop}{hdop}}
+{\footnotesize\ttfamily char hdop\mbox{[}\mbox{\hyperlink{nf__types_8h_ac4eb68e9d99d7d28128f8e910c3c3355}{GGA\+\_\+\+HDOP\+\_\+\+BUFFER\+\_\+\+SIZE}}\mbox{]}}
+
+HDOP (Horizontal Dilution of Precision), e.\+g., "{}1.\+0"{} 
+
+Definition at line \mbox{\hyperlink{nf_8c_source_l00039}{39}} of file \mbox{\hyperlink{nf_8c_source}{nf.\+c}}.
+
+\Hypertarget{nf_8c_aa9973386b0ff84d65394ae6270388afe}\label{nf_8c_aa9973386b0ff84d65394ae6270388afe} 
+\index{nf.c@{nf.c}!latitude@{latitude}}
+\index{latitude@{latitude}!nf.c@{nf.c}}
+\doxysubsubsection{\texorpdfstring{latitude}{latitude}}
+{\footnotesize\ttfamily char latitude\mbox{[}\mbox{\hyperlink{nf__types_8h_a0842303ff8c3ce0f6f7d4a3fd1e01e34}{GGA\+\_\+\+LAT\+\_\+\+BUFFER\+\_\+\+SIZE}}\mbox{]}}
+
+Latitude, e.\+g., "{}3723.\+2475"{} 
+
+Definition at line \mbox{\hyperlink{nf_8c_source_l00033}{33}} of file \mbox{\hyperlink{nf_8c_source}{nf.\+c}}.
+
+\Hypertarget{nf_8c_adbd5273b1e99f5b4005bcb4f9b6f5050}\label{nf_8c_adbd5273b1e99f5b4005bcb4f9b6f5050} 
+\index{nf.c@{nf.c}!latitudeLLA\_float@{latitudeLLA\_float}}
+\index{latitudeLLA\_float@{latitudeLLA\_float}!nf.c@{nf.c}}
+\doxysubsubsection{\texorpdfstring{latitudeLLA\_float}{latitudeLLA\_float}}
+{\footnotesize\ttfamily float latitude\+LLA\+\_\+float}
+
+Latitude in degrees 
+
+Definition at line \mbox{\hyperlink{nf_8c_source_l00043}{43}} of file \mbox{\hyperlink{nf_8c_source}{nf.\+c}}.
+
+\Hypertarget{nf_8c_afad30d0a84aab488b3ca8e3703def0e0}\label{nf_8c_afad30d0a84aab488b3ca8e3703def0e0} 
+\index{nf.c@{nf.c}!latitudeLLA\_str@{latitudeLLA\_str}}
+\index{latitudeLLA\_str@{latitudeLLA\_str}!nf.c@{nf.c}}
+\doxysubsubsection{\texorpdfstring{latitudeLLA\_str}{latitudeLLA\_str}}
+{\footnotesize\ttfamily char latitude\+LLA\+\_\+str\mbox{[}\mbox{\hyperlink{nf__types_8h_a7b3c9ba3ceea8208b4b82e11a41722e8}{LLA\+\_\+\+LAT\+\_\+\+BUFFER\+\_\+\+SIZE}}\mbox{]}}
+
+Latitude in degrees 
+
+Definition at line \mbox{\hyperlink{nf_8c_source_l00046}{46}} of file \mbox{\hyperlink{nf_8c_source}{nf.\+c}}.
+
+\Hypertarget{nf_8c_ae2012471fd2dd8dc217f3e7d806d0d95}\label{nf_8c_ae2012471fd2dd8dc217f3e7d806d0d95} 
+\index{nf.c@{nf.c}!longitude@{longitude}}
+\index{longitude@{longitude}!nf.c@{nf.c}}
+\doxysubsubsection{\texorpdfstring{longitude}{longitude}}
+{\footnotesize\ttfamily char longitude\mbox{[}\mbox{\hyperlink{nf__types_8h_ac381d72b86b91fda940a713324d1a06c}{GGA\+\_\+\+LONG\+\_\+\+BUFFER\+\_\+\+SIZE}}\mbox{]}}
+
+Longitude, e.\+g., "{}12158.\+3416"{} 
+
+Definition at line \mbox{\hyperlink{nf_8c_source_l00035}{35}} of file \mbox{\hyperlink{nf_8c_source}{nf.\+c}}.
+
+\Hypertarget{nf_8c_a192af038de165e9f7b3ca83740db90f3}\label{nf_8c_a192af038de165e9f7b3ca83740db90f3} 
+\index{nf.c@{nf.c}!longitudeLLA\_float@{longitudeLLA\_float}}
+\index{longitudeLLA\_float@{longitudeLLA\_float}!nf.c@{nf.c}}
+\doxysubsubsection{\texorpdfstring{longitudeLLA\_float}{longitudeLLA\_float}}
+{\footnotesize\ttfamily float longitude\+LLA\+\_\+float}
+
+Longitude in degrees 
+
+Definition at line \mbox{\hyperlink{nf_8c_source_l00044}{44}} of file \mbox{\hyperlink{nf_8c_source}{nf.\+c}}.
+
+\Hypertarget{nf_8c_ab357be618b2eed6d26b6ca8acd6b25a2}\label{nf_8c_ab357be618b2eed6d26b6ca8acd6b25a2} 
+\index{nf.c@{nf.c}!longitudeLLA\_str@{longitudeLLA\_str}}
+\index{longitudeLLA\_str@{longitudeLLA\_str}!nf.c@{nf.c}}
+\doxysubsubsection{\texorpdfstring{longitudeLLA\_str}{longitudeLLA\_str}}
+{\footnotesize\ttfamily char longitude\+LLA\+\_\+str\mbox{[}\mbox{\hyperlink{nf__types_8h_a548e32055b21b64df9a5c859e1be38d4}{LLA\+\_\+\+LONG\+\_\+\+BUFFER\+\_\+\+SIZE}}\mbox{]}}
+
+Longitude in degrees 
+
+Definition at line \mbox{\hyperlink{nf_8c_source_l00047}{47}} of file \mbox{\hyperlink{nf_8c_source}{nf.\+c}}.
+
+\Hypertarget{nf_8c_a8fee6de5535ad8c1f73c459ea72bf3f7}\label{nf_8c_a8fee6de5535ad8c1f73c459ea72bf3f7} 
+\index{nf.c@{nf.c}!msl\_altitude@{msl\_altitude}}
+\index{msl\_altitude@{msl\_altitude}!nf.c@{nf.c}}
+\doxysubsubsection{\texorpdfstring{msl\_altitude}{msl\_altitude}}
+{\footnotesize\ttfamily char msl\+\_\+altitude\mbox{[}\mbox{\hyperlink{nf__types_8h_a246ae5f6d5b8f3f8c50a719751c7524f}{GGA\+\_\+\+ALTITUDE\+\_\+\+BUFFER\+\_\+\+SIZE}}\mbox{]}}
+
+Mean Sea Level Altitude, e.\+g., "{}1.\+0"{} 
+
+Definition at line \mbox{\hyperlink{nf_8c_source_l00040}{40}} of file \mbox{\hyperlink{nf_8c_source}{nf.\+c}}.
+
+\Hypertarget{nf_8c_ac0e4c6aebc5ff7f774f4f13a723af8db}\label{nf_8c_ac0e4c6aebc5ff7f774f4f13a723af8db} 
+\index{nf.c@{nf.c}!ns\_indicator@{ns\_indicator}}
+\index{ns\_indicator@{ns\_indicator}!nf.c@{nf.c}}
+\doxysubsubsection{\texorpdfstring{ns\_indicator}{ns\_indicator}}
+{\footnotesize\ttfamily char ns\+\_\+indicator\mbox{[}\mbox{\hyperlink{nf__types_8h_a7643e7ae5added653e365153b5963266}{GGA\+\_\+\+INDICATOR\+\_\+\+SIZE}}\mbox{]}}
+
+N/S Indicator, \textquotesingle{}N\textquotesingle{} for north or \textquotesingle{}S\textquotesingle{} for south 
+
+Definition at line \mbox{\hyperlink{nf_8c_source_l00034}{34}} of file \mbox{\hyperlink{nf_8c_source}{nf.\+c}}.
+
+\Hypertarget{nf_8c_a1c6f8013e13671bf149f567796ccadd3}\label{nf_8c_a1c6f8013e13671bf149f567796ccadd3} 
+\index{nf.c@{nf.c}!position\_fix\_indicator@{position\_fix\_indicator}}
+\index{position\_fix\_indicator@{position\_fix\_indicator}!nf.c@{nf.c}}
+\doxysubsubsection{\texorpdfstring{position\_fix\_indicator}{position\_fix\_indicator}}
+{\footnotesize\ttfamily char position\+\_\+fix\+\_\+indicator\mbox{[}\mbox{\hyperlink{nf__types_8h_a7643e7ae5added653e365153b5963266}{GGA\+\_\+\+INDICATOR\+\_\+\+SIZE}}\mbox{]}}
+
+Position Fix Indicator, see Table 1-\/4 
+
+Definition at line \mbox{\hyperlink{nf_8c_source_l00037}{37}} of file \mbox{\hyperlink{nf_8c_source}{nf.\+c}}.
+
+\Hypertarget{nf_8c_a53f37284c2ee716cc91fd42713bd0734}\label{nf_8c_a53f37284c2ee716cc91fd42713bd0734} 
+\index{nf.c@{nf.c}!satellites\_used@{satellites\_used}}
+\index{satellites\_used@{satellites\_used}!nf.c@{nf.c}}
+\doxysubsubsection{\texorpdfstring{satellites\_used}{satellites\_used}}
+{\footnotesize\ttfamily char satellites\+\_\+used\mbox{[}\mbox{\hyperlink{nf__types_8h_aeedaf01277ff05253f5403f875c6559c}{GGA\+\_\+\+SV\+\_\+\+USD\+\_\+\+BUFFER\+\_\+\+SIZE}}\mbox{]}}
+
+Satellites Used, range 0 to 12 eg 07 
+
+Definition at line \mbox{\hyperlink{nf_8c_source_l00038}{38}} of file \mbox{\hyperlink{nf_8c_source}{nf.\+c}}.
+
+\Hypertarget{nf_8c_abef17e6bb3bcc2da5ff899c5ba5ef1d4}\label{nf_8c_abef17e6bb3bcc2da5ff899c5ba5ef1d4} 
+\index{nf.c@{nf.c}!speed@{speed}}
+\index{speed@{speed}!nf.c@{nf.c}}
+\doxysubsubsection{\texorpdfstring{speed}{speed}}
+{\footnotesize\ttfamily char speed\mbox{[}\mbox{\hyperlink{nf__types_8h_abd35c851b0a935f251dc21fc3258f633}{VTG\+\_\+\+SPEED\+\_\+\+BUFER\+\_\+\+SIZE}}\mbox{]}}
+
+Speed, e.\+g., "{}0.\+0"{} 
+
+Definition at line \mbox{\hyperlink{nf_8c_source_l00041}{41}} of file \mbox{\hyperlink{nf_8c_source}{nf.\+c}}.
+
+\Hypertarget{nf_8c_a04f4eb5a82d1357a4eb496d39eb2a1e1}\label{nf_8c_a04f4eb5a82d1357a4eb496d39eb2a1e1} 
+\index{nf.c@{nf.c}!utc\_time@{utc\_time}}
+\index{utc\_time@{utc\_time}!nf.c@{nf.c}}
+\doxysubsubsection{\texorpdfstring{utc\_time}{utc\_time}}
+{\footnotesize\ttfamily char utc\+\_\+time\mbox{[}\mbox{\hyperlink{nf__types_8h_a6a57cc51508294dc1f698134ef135fca}{GGA\+\_\+\+UTC\+\_\+\+BUFFER\+\_\+\+SIZE}}\mbox{]}}
+
+UTC Time, e.\+g., "{}161229.\+487"{} 
+
+Definition at line \mbox{\hyperlink{nf_8c_source_l00032}{32}} of file \mbox{\hyperlink{nf_8c_source}{nf.\+c}}.
+

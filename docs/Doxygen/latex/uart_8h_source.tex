@@ -1,0 +1,99 @@
+\doxysection{uart.\+h}
+\hypertarget{uart_8h_source}{}\label{uart_8h_source}\index{G:/Project\_Files/WayFindX/wfx\_sw/wfx\_sw/lib/uart.h@{G:/Project\_Files/WayFindX/wfx\_sw/wfx\_sw/lib/uart.h}}
+\mbox{\hyperlink{uart_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ UART\_H}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ UART\_H}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00003}00003\ \textcolor{comment}{/************************************************************************}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00004}00004\ \textcolor{comment}{Title:\ \ \ \ Interrupt\ UART\ library\ with\ receive/transmit\ circular\ buffers}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00005}00005\ \textcolor{comment}{Author:\ \ \ Peter\ Fleury\ <pfleury@gmx.ch>\ \ http://tinyurl.com/peterfleury}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00006}00006\ \textcolor{comment}{File:\ \ \ \ \ \$Id:\ uart.h,v\ 1.13\ 2015/01/11\ 13:53:25\ peter\ Exp\ \$}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00007}00007\ \textcolor{comment}{Software:\ AVR-\/GCC\ 4.x,\ AVR\ Libc\ 1.4\ or\ higher}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00008}00008\ \textcolor{comment}{Hardware:\ any\ AVR\ with\ built-\/in\ UART/USART}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00009}00009\ \textcolor{comment}{Usage:\ \ \ \ see\ Doxygen\ manual}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00010}00010\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00011}00011\ \textcolor{comment}{LICENSE:}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00012}00012\ \textcolor{comment}{\ \ \ \ Copyright\ (C)\ 2015\ Peter\ Fleury,\ GNU\ General\ Public\ License\ Version\ 3}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00013}00013\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00014}00014\ \textcolor{comment}{\ \ \ \ This\ program\ is\ free\ software;\ you\ can\ redistribute\ it\ and/or\ modify}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00015}00015\ \textcolor{comment}{\ \ \ \ it\ under\ the\ terms\ of\ the\ GNU\ General\ Public\ License\ as\ published\ by}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00016}00016\ \textcolor{comment}{\ \ \ \ the\ Free\ Software\ Foundation;\ either\ version\ 3\ of\ the\ License,\ or}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00017}00017\ \textcolor{comment}{\ \ \ \ any\ later\ version.}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00018}00018\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00019}00019\ \textcolor{comment}{\ \ \ \ This\ program\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00020}00020\ \textcolor{comment}{\ \ \ \ but\ WITHOUT\ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00021}00021\ \textcolor{comment}{\ \ \ \ MERCHANTABILITY\ or\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00022}00022\ \textcolor{comment}{\ \ \ \ GNU\ General\ Public\ License\ for\ more\ details.}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00023}00023\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00024}00024\ \textcolor{comment}{************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00050}00050\ \textcolor{preprocessor}{\#include\ <avr/pgmspace.h>}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00052}00052\ \textcolor{preprocessor}{\#if\ (\_\_GNUC\_\_\ *\ 100\ +\ \_\_GNUC\_MINOR\_\_)\ <\ 405}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00053}00053\ \textcolor{preprocessor}{\#error\ "{}This\ library\ requires\ AVR-\/GCC\ 4.5\ or\ later,\ update\ to\ newer\ AVR-\/GCC\ compiler\ !"{}}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00054}00054\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00055}00055\ }
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00060}00060\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00061}00061\ \textcolor{comment}{**\ constants\ and\ macros}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00062}00062\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00063}00063\ }
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00064}00064\ }
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00069}\mbox{\hyperlink{group__pfleury__uart_ga367ff7b5de225ed936a63239ad4adb0b}{00069}}\ \textcolor{preprocessor}{\#define\ UART\_BAUD\_SELECT(baudRate,xtalCpu)\ \ (((xtalCpu)\ +\ 8UL\ *\ (baudRate))\ /\ (16UL\ *\ (baudRate))\ -\/1UL)}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00070}00070\ }
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00075}\mbox{\hyperlink{group__pfleury__uart_ga1a02d45130520cb651ab313e69039382}{00075}}\ \textcolor{preprocessor}{\#define\ UART\_BAUD\_SELECT\_DOUBLE\_SPEED(baudRate,xtalCpu)\ (\ ((((xtalCpu)\ +\ 4UL\ *\ (baudRate))\ /\ (8UL\ *\ (baudRate))\ -\/1UL))\ |\ 0x8000)}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00076}00076\ }
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00082}00082\ \textcolor{preprocessor}{\#ifndef\ UART\_RX\_BUFFER\_SIZE}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00083}\mbox{\hyperlink{group__pfleury__uart_ga5bdd6772c246436bb14377095de79b31}{00083}}\ \textcolor{preprocessor}{\#define\ UART\_RX\_BUFFER\_SIZE\ 32}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00084}00084\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00085}00085\ }
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00091}00091\ \textcolor{preprocessor}{\#ifndef\ UART\_TX\_BUFFER\_SIZE}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00092}\mbox{\hyperlink{group__pfleury__uart_ga05f5d709605c6317c97e4974bec3402a}{00092}}\ \textcolor{preprocessor}{\#define\ UART\_TX\_BUFFER\_SIZE\ 32}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00093}00093\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00094}00094\ }
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00095}00095\ \textcolor{comment}{/*\ test\ if\ the\ size\ of\ the\ circular\ buffers\ fits\ into\ SRAM\ */}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00096}00096\ \textcolor{preprocessor}{\#if\ (\ (UART\_RX\_BUFFER\_SIZE+UART\_TX\_BUFFER\_SIZE)\ >=\ (RAMEND-\/0x60\ )\ )}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00097}00097\ \textcolor{preprocessor}{\#error\ "{}size\ of\ UART\_RX\_BUFFER\_SIZE\ +\ UART\_TX\_BUFFER\_SIZE\ larger\ than\ size\ of\ SRAM"{}}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00098}00098\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00099}00099\ }
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00100}00100\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00101}00101\ \textcolor{comment}{**\ high\ byte\ error\ return\ code\ of\ uart\_getc()}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00102}00102\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00103}\mbox{\hyperlink{group__pfleury__uart_gabcdb1041d763560cd8f8e722370dfd37}{00103}}\ \textcolor{preprocessor}{\#define\ UART\_FRAME\_ERROR\ \ \ \ \ \ 0x1000\ \ \ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00104}\mbox{\hyperlink{group__pfleury__uart_ga3183177e3613d8785d8cc8516931beb6}{00104}}\ \textcolor{preprocessor}{\#define\ UART\_OVERRUN\_ERROR\ \ \ \ 0x0800\ \ \ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00105}\mbox{\hyperlink{group__pfleury__uart_ga946e3d317937e003d2057bf19e96dd1d}{00105}}\ \textcolor{preprocessor}{\#define\ UART\_PARITY\_ERROR\ \ \ \ \ 0x0400\ \ \ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00106}\mbox{\hyperlink{group__pfleury__uart_ga94758f3dad6864703b7417d3e40f11df}{00106}}\ \textcolor{preprocessor}{\#define\ UART\_BUFFER\_OVERFLOW\ \ 0x0200\ \ \ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00107}\mbox{\hyperlink{group__pfleury__uart_ga77ba544d423ff42d400220a05303f268}{00107}}\ \textcolor{preprocessor}{\#define\ UART\_NO\_DATA\ \ \ \ \ \ \ \ \ \ 0x0100\ \ \ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00110}00110\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00111}00111\ \textcolor{comment}{**\ function\ prototypes}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00112}00112\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00113}00113\ }
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00119}\mbox{\hyperlink{group__pfleury__uart_gac19a76bb7d446125734a67f9f4b68991}{00119}}\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{group__pfleury__uart_gac19a76bb7d446125734a67f9f4b68991}{uart\_init}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ baudrate);}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00120}00120\ }
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00121}00121\ }
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00146}\mbox{\hyperlink{group__pfleury__uart_gaefaab30a8338ec46a6be35b99b1b4f09}{00146}}\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{group__pfleury__uart_gaefaab30a8338ec46a6be35b99b1b4f09}{uart\_getc}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00147}00147\ }
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00148}00148\ }
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00154}\mbox{\hyperlink{group__pfleury__uart_gad975221bc08b901e4c7ad69f9c9a97e2}{00154}}\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{group__pfleury__uart_gad975221bc08b901e4c7ad69f9c9a97e2}{uart\_putc}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ data);}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00155}00155\ }
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00156}00156\ }
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00167}\mbox{\hyperlink{group__pfleury__uart_gae52facc0a56086a365bb0018160d8d71}{00167}}\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{group__pfleury__uart_gae52facc0a56086a365bb0018160d8d71}{uart\_puts}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *s\ );}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00168}00168\ }
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00169}00169\ }
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00181}\mbox{\hyperlink{group__pfleury__uart_ga6d78b6744db6232f52b4616402036c2f}{00181}}\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{group__pfleury__uart_ga6d78b6744db6232f52b4616402036c2f}{uart\_puts\_p}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *s\ );}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00182}00182\ }
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00186}\mbox{\hyperlink{group__pfleury__uart_gae9e143569df2285379bc55f9f5595bf9}{00186}}\ \textcolor{preprocessor}{\#define\ uart\_puts\_P(\_\_s)\ \ \ \ \ \ \ uart\_puts\_p(PSTR(\_\_s))}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00187}00187\ }
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00188}00188\ }
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00189}00189\ }
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00191}\mbox{\hyperlink{group__pfleury__uart_ga4db697cb5469fd70e794fa7df73a6d6a}{00191}}\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{group__pfleury__uart_ga4db697cb5469fd70e794fa7df73a6d6a}{uart1\_init}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ baudrate);}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00193}\mbox{\hyperlink{group__pfleury__uart_gaeb1405c641e5bc9b7224018f5e8d90de}{00193}}\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{group__pfleury__uart_gaeb1405c641e5bc9b7224018f5e8d90de}{uart1\_getc}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00195}\mbox{\hyperlink{group__pfleury__uart_gab465f689d197fadfbacc374fc9411154}{00195}}\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{group__pfleury__uart_gab465f689d197fadfbacc374fc9411154}{uart1\_putc}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ data);}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00197}\mbox{\hyperlink{group__pfleury__uart_ga5568f8f3913b218fd4d0346af78831b2}{00197}}\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{group__pfleury__uart_ga5568f8f3913b218fd4d0346af78831b2}{uart1\_puts}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *s\ );}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00199}\mbox{\hyperlink{group__pfleury__uart_ga1e8074d0a2d5922601c5db2f9777ba79}{00199}}\ \textcolor{keyword}{extern}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{group__pfleury__uart_ga1e8074d0a2d5922601c5db2f9777ba79}{uart1\_puts\_p}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *s\ );}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00201}\mbox{\hyperlink{group__pfleury__uart_gaabd7a5b0c15611ee9ecb2873cc9ee87a}{00201}}\ \textcolor{preprocessor}{\#define\ uart1\_puts\_P(\_\_s)\ \ \ \ \ \ \ uart1\_puts\_p(PSTR(\_\_s))}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00202}00202\ }
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00206}00206\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ UART\_H}}
+\DoxyCodeLine{\Hypertarget{uart_8h_source_l00207}00207\ }
+
+\end{DoxyCode}

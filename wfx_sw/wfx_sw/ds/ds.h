@@ -3,6 +3,8 @@
  * @brief Header file containing common functions and definitions for the display 'computer software component" or CSC.
  *
  * This file provides declarations for common utility functions and definitions associated with the LCD display.
+ * @version 1.0
+ * @copyright (C) 2024 Bradley Johnson and Abele Atresso
  */
 
 #ifndef DS_H_

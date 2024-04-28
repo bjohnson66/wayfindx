@@ -1,0 +1,1101 @@
+\doxysection{LCD library \texorpdfstring{$<$}{<}lcd.\+h\texorpdfstring{$>$}{>}}
+\hypertarget{group__pfleury__lcd}{}\label{group__pfleury__lcd}\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+
+
+Basic routines for interfacing a HD44780\+U-\/based character LCD display.  
+
+
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{group__pfleury__lcd_ga9af28b2779326b63ff4356e2b1828984}{lcd\+\_\+init}} (\mbox{\hyperlink{ut__types_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\+\_\+t}} disp\+Attr)
+\begin{DoxyCompactList}\small\item\em Initialize display and select type of cursor. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__pfleury__lcd_gaf8da853dba4b9d5f2aea4e294444e14d}{lcd\+\_\+clrscr}} (void)
+\begin{DoxyCompactList}\small\item\em Clear display and set cursor to home position. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__pfleury__lcd_ga3aabf730aa4e0393bb5c959583c00a8e}{lcd\+\_\+home}} (void)
+\begin{DoxyCompactList}\small\item\em Set cursor to home position. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__pfleury__lcd_gadbf47a5efdf02367ded1ebf8f9edb5fe}{lcd\+\_\+gotoxy}} (\mbox{\hyperlink{ut__types_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\+\_\+t}} x, \mbox{\hyperlink{ut__types_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\+\_\+t}} y)
+\begin{DoxyCompactList}\small\item\em Set cursor to specified position. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__pfleury__lcd_gafa7e36b95c43d603f510273ad077cbbe}{lcd\+\_\+putc}} (char c)
+\begin{DoxyCompactList}\small\item\em Display character at current cursor position. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__pfleury__lcd_ga8ffdfcac7638368ff04364c14984266e}{lcd\+\_\+puts}} (const char \texorpdfstring{$\ast$}{*}s)
+\begin{DoxyCompactList}\small\item\em Display string without auto linefeed. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__pfleury__lcd_ga9022a24a56a9b15681f62eb6ba77e5de}{lcd\+\_\+puts\+\_\+p}} (const char \texorpdfstring{$\ast$}{*}progmem\+\_\+s)
+\begin{DoxyCompactList}\small\item\em Display string from program memory without auto linefeed. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__pfleury__lcd_gaea9d14f02df06f948cb5a56776980826}{lcd\+\_\+command}} (\mbox{\hyperlink{ut__types_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\+\_\+t}} cmd)
+\begin{DoxyCompactList}\small\item\em Send LCD controller instruction command. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__pfleury__lcd_gad0729d2cba627825a089ca1fff12ba29}{lcd\+\_\+data}} (\mbox{\hyperlink{ut__types_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\+\_\+t}} data)
+\begin{DoxyCompactList}\small\item\em Send data byte to LCD controller. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_ga4f1928f1515e21422d5a33af2949f2f7}{lcd\+\_\+puts\+\_\+P}}(\+\_\+\+\_\+s)~\mbox{\hyperlink{group__pfleury__lcd_ga9022a24a56a9b15681f62eb6ba77e5de}{lcd\+\_\+puts\+\_\+p}}(PSTR(\+\_\+\+\_\+s))
+\begin{DoxyCompactList}\small\item\em macros for automatically storing string constant in program memory \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Definition for LCD controller type}
+Use 0 for HD44780 controller, change to 1 for displays with KS0073 controller. \begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_ga63574b03f72a197aeee823aae95dc3b7}{LCD\+\_\+\+CONTROLLER\+\_\+\+KS0073}}~0
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Definitions for Display Size}
+Change these definitions to adapt setting to your display
+
+These definitions can be defined in a separate include file {\bfseries{lcd\+\_\+definitions.\+h}} instead modifying this file by adding -\/D\+\_\+\+LCD\+\_\+\+DEFINITIONS\+\_\+\+FILE to the CDEFS section in the Makefile. All definitions added to the file lcd\+\_\+definitions.\+h will override the default definitions from \doxylink{lcd_8h}{lcd.\+h} \begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_ga01212e90283511562039db786f65ba98}{LCD\+\_\+\+LINES}}~4
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_ga684bb4392e384b7ae7c660d81dacb930}{LCD\+\_\+\+DISP\+\_\+\+LENGTH}}~20
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_gae59a728d9dee9f12c817b29d38746ed9}{LCD\+\_\+\+LINE\+\_\+\+LENGTH}}~0x40
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_gabd056d70a1488ea2eb1aef87e248e234}{LCD\+\_\+\+START\+\_\+\+LINE1}}~0x00
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_ga7b317b21058ef031716ba040ef75430a}{LCD\+\_\+\+START\+\_\+\+LINE2}}~0x40
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_gae7cca16353048a062baeb3a52da55249}{LCD\+\_\+\+START\+\_\+\+LINE3}}~0x14
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_gab1b73e05bdb5cc12cdff5a1cf6c4f2a2}{LCD\+\_\+\+START\+\_\+\+LINE4}}~0x54
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_gadb35ff6cb242e48ba0545ea919ffc5d3}{LCD\+\_\+\+WRAP\+\_\+\+LINES}}~0
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Definitions for 4-\/bit IO mode}
+The four LCD data lines and the three control lines RS, RW, E can be on the same port or on different ports. Change LCD\+\_\+\+RS\+\_\+\+PORT, LCD\+\_\+\+RW\+\_\+\+PORT, LCD\+\_\+\+E\+\_\+\+PORT if you want the control lines on different ports.
+
+Normally the four data lines should be mapped to bit 0..3 on one port, but it is possible to connect these data lines in different order or even on different ports by adapting the LCD\+\_\+\+DATAx\+\_\+\+PORT and LCD\+\_\+\+DATAx\+\_\+\+PIN definitions.
+
+Adjust these definitions to your target.~\newline
+ These definitions can be defined in a separate include file {\bfseries{lcd\+\_\+definitions.\+h}} instead modifying this file by adding {\bfseries{-\/D\+\_\+\+LCD\+\_\+\+DEFINITIONS\+\_\+\+FILE}} to the {\bfseries{CDEFS}} section in the Makefile. All definitions added to the file lcd\+\_\+definitions.\+h will override the default definitions from \doxylink{lcd_8h}{lcd.\+h} \begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_ga659fcdf979f69bbd14f852f525f25e02}{LCD\+\_\+\+IO\+\_\+\+MODE}}~1
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_gabcf42bd88b3c36193f301ca25b033875}{LCD\+\_\+\+PORT}}~PORTD
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_gafc0acd4774bcd311595732f5367e266b}{LCD\+\_\+\+DATA0\+\_\+\+PORT}}~\mbox{\hyperlink{group__pfleury__lcd_gabcf42bd88b3c36193f301ca25b033875}{LCD\+\_\+\+PORT}}
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_ga345af0248d5739bd8896d4f585618ca2}{LCD\+\_\+\+DATA1\+\_\+\+PORT}}~\mbox{\hyperlink{group__pfleury__lcd_gabcf42bd88b3c36193f301ca25b033875}{LCD\+\_\+\+PORT}}
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_ga4d5c48a3f2b9426c14bbca3150834a20}{LCD\+\_\+\+DATA2\+\_\+\+PORT}}~\mbox{\hyperlink{group__pfleury__lcd_gabcf42bd88b3c36193f301ca25b033875}{LCD\+\_\+\+PORT}}
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_gaec71b6692f2af7c9de32dbe85fcb51c2}{LCD\+\_\+\+DATA3\+\_\+\+PORT}}~\mbox{\hyperlink{group__pfleury__lcd_gabcf42bd88b3c36193f301ca25b033875}{LCD\+\_\+\+PORT}}
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_gafe54d7d886b5c56bed0cf971febbb773}{LCD\+\_\+\+DATA0\+\_\+\+PIN}}~6
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_ga97fb520e7b83bb047ac5c9247de57049}{LCD\+\_\+\+DATA1\+\_\+\+PIN}}~5
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_ga7f3d53627337f6535cc8daa35876510a}{LCD\+\_\+\+DATA2\+\_\+\+PIN}}~4
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_ga54032ce0050853e181f879b69fec4370}{LCD\+\_\+\+DATA3\+\_\+\+PIN}}~3
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_gac5be2a22727fd9ca349e1c9bcbfbcd47}{LCD\+\_\+\+RS\+\_\+\+PORT}}~PORTB
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_gae5c0a0a5750f3aaea06083e3a4a31f5d}{LCD\+\_\+\+RS\+\_\+\+PIN}}~1
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_gae8772bdf31db863b81805c837bdc2da2}{LCD\+\_\+\+RW\+\_\+\+PORT}}~PORTB
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_ga3ac938dd5fc02a9a232df6605b5f6aa8}{LCD\+\_\+\+RW\+\_\+\+PIN}}~0
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_gaf97f97ff3832d1289bbcb471090ea297}{LCD\+\_\+\+E\+\_\+\+PORT}}~PORTD
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_gae644d776392a8d47899d9910c2b8feb6}{LCD\+\_\+\+E\+\_\+\+PIN}}~7
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Definitions of delays}
+Used to calculate delay timers. Adapt the F\+\_\+\+CPU define in the Makefile to the clock frequency in Hz of your target
+
+These delay times can be adjusted, if some displays require different delays.~\newline
+ These definitions can be defined in a separate include file {\bfseries{lcd\+\_\+definitions.\+h}} instead modifying this file by adding {\bfseries{-\/D\+\_\+\+LCD\+\_\+\+DEFINITIONS\+\_\+\+FILE}} to the {\bfseries{CDEFS}} section in the Makefile. All definitions added to the file lcd\+\_\+definitions.\+h will override the default definitions from \doxylink{lcd_8h}{lcd.\+h} \begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_ga79ca3fe83448ab158a4c566bf292c260}{LCD\+\_\+\+DELAY\+\_\+\+BOOTUP}}~16000
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_gab6ba3c8cdcf1a96b0d4c476eff8f8617}{LCD\+\_\+\+DELAY\+\_\+\+INIT}}~5000
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_ga2ce1ac9b146b7baa7169e27f9cf3a99e}{LCD\+\_\+\+DELAY\+\_\+\+INIT\+\_\+\+REP}}~64
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_gadf773dcbd0827cd15c788065c9197459}{LCD\+\_\+\+DELAY\+\_\+\+INIT\+\_\+4\+BIT}}~64
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_ga73b2370827e2d350cedd45e08a9eb0b2}{LCD\+\_\+\+DELAY\+\_\+\+BUSY\+\_\+\+FLAG}}~4
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_ga5b0632f09757ffe6f018c6ef88cc3296}{LCD\+\_\+\+DELAY\+\_\+\+ENABLE\+\_\+\+PULSE}}~1
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Definitions for LCD command instructions}
+The constants define the various LCD controller instructions which can be passed to the function \doxylink{group__pfleury__lcd_gaea9d14f02df06f948cb5a56776980826}{lcd\+\_\+command()}, see HD44780 data sheet for a complete description. \begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_ga459688213267d13ccfbeb2c9004988cb}{LCD\+\_\+\+CLR}}~0      /\texorpdfstring{$\ast$}{*} DB0\+: clear display                  \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_gae0e309ccad89222eb3457f2da9f2bb8d}{LCD\+\_\+\+HOME}}~1      /\texorpdfstring{$\ast$}{*} DB1\+: return to home position        \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_gae5d757ddb6d94de8c82191b60b40e442}{LCD\+\_\+\+ENTRY\+\_\+\+MODE}}~2      /\texorpdfstring{$\ast$}{*} DB2\+: set entry mode                 \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_gada766266a0be0d0040fbf86e23b58aa6}{LCD\+\_\+\+ENTRY\+\_\+\+INC}}~1      /\texorpdfstring{$\ast$}{*}   DB1\+: 1=increment, 0=decrement     \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_ga14d0c7fda147e0dc8cdaa4a2629b3532}{LCD\+\_\+\+ENTRY\+\_\+\+SHIFT}}~0      /\texorpdfstring{$\ast$}{*}   DB2\+: 1=display shift on           \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_ga47a809dfec086fdeca93dedc4fb83b44}{LCD\+\_\+\+ON}}~3      /\texorpdfstring{$\ast$}{*} DB3\+: turn lcd/cursor on             \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_gae84f634b0a1661c4d5bbaafd9397732a}{LCD\+\_\+\+ON\+\_\+\+DISPLAY}}~2      /\texorpdfstring{$\ast$}{*}   DB2\+: turn display on              \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_ga47638b5ebbaec9600a0ebf9a55caf802}{LCD\+\_\+\+ON\+\_\+\+CURSOR}}~1      /\texorpdfstring{$\ast$}{*}   DB1\+: turn cursor on               \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_ga5d76592a978537acee615098ce4d80f5}{LCD\+\_\+\+ON\+\_\+\+BLINK}}~0      /\texorpdfstring{$\ast$}{*}     DB0\+: blinking cursor ?          \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_ga3f4f758b80fcfa6c9e4db58e2515c78a}{LCD\+\_\+\+MOVE}}~4      /\texorpdfstring{$\ast$}{*} DB4\+: move cursor/display            \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_gaaddc2afa9a02bfa748950f2c1e6a204d}{LCD\+\_\+\+MOVE\+\_\+\+DISP}}~3      /\texorpdfstring{$\ast$}{*}   DB3\+: move display (0-\/$>$ cursor) ?  \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_ga97cdb19acf109ad52ab4994d2ad02cee}{LCD\+\_\+\+MOVE\+\_\+\+RIGHT}}~2      /\texorpdfstring{$\ast$}{*}   DB2\+: move right (0-\/$>$ left) ?      \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_ga50de1697f1da8ab075a6b4d7aeace64e}{LCD\+\_\+\+FUNCTION}}~5      /\texorpdfstring{$\ast$}{*} DB5\+: function set                   \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_ga91d15d8e3008f6cb141406a8b5d0d3c0}{LCD\+\_\+\+FUNCTION\+\_\+8\+BIT}}~4      /\texorpdfstring{$\ast$}{*}   DB4\+: set 8BIT mode (0-\/$>$4BIT mode) \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_ga6c24806bed18d565917165caa3475463}{LCD\+\_\+\+FUNCTION\+\_\+2\+LINES}}~3      /\texorpdfstring{$\ast$}{*}   DB3\+: two lines (0-\/$>$one line)      \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_ga48de81358277fe4f2810c2b82f90397e}{LCD\+\_\+\+FUNCTION\+\_\+10\+DOTS}}~2      /\texorpdfstring{$\ast$}{*}   DB2\+: 5x10 font (0-\/$>$5x7 font)      \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_ga3b38de74c362be1781fef1136aa9684c}{LCD\+\_\+\+CGRAM}}~6      /\texorpdfstring{$\ast$}{*} DB6\+: set CG RAM address             \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_gae54acf3ccc45b7d6be334a03627740c6}{LCD\+\_\+\+DDRAM}}~7      /\texorpdfstring{$\ast$}{*} DB7\+: set DD RAM address             \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_gac8dd1658e235f174d1cabae5c438943d}{LCD\+\_\+\+BUSY}}~7      /\texorpdfstring{$\ast$}{*} DB7\+: LCD is busy                    \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_gaad56f8e07634e85663f56888ae97089c}{LCD\+\_\+\+ENTRY\+\_\+\+DEC}}~0x04   /\texorpdfstring{$\ast$}{*} display shift off, dec cursor move dir \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_ga1c62932f252c6262cbef728add9696e4}{LCD\+\_\+\+ENTRY\+\_\+\+DEC\+\_\+\+SHIFT}}~0x05   /\texorpdfstring{$\ast$}{*} display shift on,  dec cursor move dir \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_gad27ddc4b8d03594662c8757f946dde28}{LCD\+\_\+\+ENTRY\+\_\+\+INC\+\_\+}}~0x06   /\texorpdfstring{$\ast$}{*} display shift off, inc cursor move dir \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_gafabd0215cc6ae5539dc638dbec44a506}{LCD\+\_\+\+ENTRY\+\_\+\+INC\+\_\+\+SHIFT}}~0x07   /\texorpdfstring{$\ast$}{*} display shift on,  inc cursor move dir \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_gaa2966175115943883f51e9c90478540c}{LCD\+\_\+\+DISP\+\_\+\+OFF}}~0x08   /\texorpdfstring{$\ast$}{*} display off                            \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_ga5163a96b133868975c0738e180b30cb8}{LCD\+\_\+\+DISP\+\_\+\+ON}}~0x0C   /\texorpdfstring{$\ast$}{*} display on, cursor off                 \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_ga470cef85de53e37356b22c66a357a764}{LCD\+\_\+\+DISP\+\_\+\+ON\+\_\+\+BLINK}}~0x0D   /\texorpdfstring{$\ast$}{*} display on, cursor off, blink char     \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_gaf56b6d6bdb6fa48b26106dee5f74ae1f}{LCD\+\_\+\+DISP\+\_\+\+ON\+\_\+\+CURSOR}}~0x0E   /\texorpdfstring{$\ast$}{*} display on, cursor on                  \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_gac1984ed0db15c6991d34c184fdca5dc6}{LCD\+\_\+\+DISP\+\_\+\+ON\+\_\+\+CURSOR\+\_\+\+BLINK}}~0x0F   /\texorpdfstring{$\ast$}{*} display on, cursor on, blink char      \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_gac2f0ddce1daaa1bf1a016270a89a264b}{LCD\+\_\+\+MOVE\+\_\+\+CURSOR\+\_\+\+LEFT}}~0x10   /\texorpdfstring{$\ast$}{*} move cursor left  (decrement)          \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_ga0ad58e39e053e97d34527fcbe936899b}{LCD\+\_\+\+MOVE\+\_\+\+CURSOR\+\_\+\+RIGHT}}~0x14   /\texorpdfstring{$\ast$}{*} move cursor right (increment)          \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_gab3c34ff1eee238bbe9c677215219fb8e}{LCD\+\_\+\+MOVE\+\_\+\+DISP\+\_\+\+LEFT}}~0x18   /\texorpdfstring{$\ast$}{*} shift display left                     \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_ga9a90bb926f5ba59378af81fe8e246ffb}{LCD\+\_\+\+MOVE\+\_\+\+DISP\+\_\+\+RIGHT}}~0x1C   /\texorpdfstring{$\ast$}{*} shift display right                    \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_gaff4e5baa36a0322eb97557dcb18cd96e}{LCD\+\_\+\+FUNCTION\+\_\+4\+BIT\+\_\+1\+LINE}}~0x20   /\texorpdfstring{$\ast$}{*} 4-\/bit interface, single line, 5x7 dots \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_gab35032ab368a8bc90798e0c547fb24c2}{LCD\+\_\+\+FUNCTION\+\_\+4\+BIT\+\_\+2\+LINES}}~0x28   /\texorpdfstring{$\ast$}{*} 4-\/bit interface, dual line,   5x7 dots \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_gaa8aeee098cb4c84ec420e00d054abcce}{LCD\+\_\+\+FUNCTION\+\_\+8\+BIT\+\_\+1\+LINE}}~0x30   /\texorpdfstring{$\ast$}{*} 8-\/bit interface, single line, 5x7 dots \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_ga160a214f47869f8f98ad5add3a7568db}{LCD\+\_\+\+FUNCTION\+\_\+8\+BIT\+\_\+2\+LINES}}~0x38   /\texorpdfstring{$\ast$}{*} 8-\/bit interface, dual line,   5x7 dots \texorpdfstring{$\ast$}{*}/
+\item 
+\#define \mbox{\hyperlink{group__pfleury__lcd_ga1849e2087d3034a3fffa67444beed109}{LCD\+\_\+\+MODE\+\_\+\+DEFAULT}}~((1$<$$<$\mbox{\hyperlink{group__pfleury__lcd_gae5d757ddb6d94de8c82191b60b40e442}{LCD\+\_\+\+ENTRY\+\_\+\+MODE}}) \texorpdfstring{$\vert$}{|} (1$<$$<$\mbox{\hyperlink{group__pfleury__lcd_gada766266a0be0d0040fbf86e23b58aa6}{LCD\+\_\+\+ENTRY\+\_\+\+INC}}) )
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Basic routines for interfacing a HD44780\+U-\/based character LCD display. 
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ <\mbox{\hyperlink{lcd_8h}{lcd.h}}>}\ }
+
+\end{DoxyCode}
+
+
+LCD character displays can be found in many devices, like espresso machines, laser printers. The Hitachi HD44780 controller and its compatible controllers like Samsung KS0066U have become an industry standard for these types of displays.
+
+This library allows easy interfacing with a HD44780 compatible display and can be operated in memory mapped mode (LCD\+\_\+\+IO\+\_\+\+MODE defined as 0 in the include file \doxylink{lcd_8h}{lcd.\+h}.) or in 4-\/bit IO port mode (LCD\+\_\+\+IO\+\_\+\+MODE defined as 1). 8-\/bit IO port mode is not supported.
+
+Memory mapped mode is compatible with old Kanda STK200 starter kit, but also supports generation of R/W signal through A8 address line.
+
+\begin{DoxySeeAlso}{See also}
+The chapter \href{ http://homepage.hispeed.ch/peterfleury/avr-lcd44780.html}{\texttt{ Interfacing a HD44780 Based LCD to an AVR}} on my home page, which shows example circuits how to connect an LCD to an AVR controller.
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Peter Fleury \href{mailto:pfleury@gmx.ch}{\texttt{ pfleury@gmx.\+ch}} \href{http://tinyurl.com/peterfleury}{\texttt{ http\+://tinyurl.\+com/peterfleury}}
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+2.\+0
+\end{DoxyVersion}
+\begin{DoxyCopyright}{Copyright}
+(C) 2015 Peter Fleury, GNU General Public License Version 3 
+\end{DoxyCopyright}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{group__pfleury__lcd_gac8dd1658e235f174d1cabae5c438943d}\label{group__pfleury__lcd_gac8dd1658e235f174d1cabae5c438943d} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_BUSY@{LCD\_BUSY}}
+\index{LCD\_BUSY@{LCD\_BUSY}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_BUSY}{LCD\_BUSY}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+BUSY~7      /\texorpdfstring{$\ast$}{*} DB7\+: LCD is busy                    \texorpdfstring{$\ast$}{*}/}
+
+
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00247}{247}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_ga3b38de74c362be1781fef1136aa9684c}\label{group__pfleury__lcd_ga3b38de74c362be1781fef1136aa9684c} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_CGRAM@{LCD\_CGRAM}}
+\index{LCD\_CGRAM@{LCD\_CGRAM}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_CGRAM}{LCD\_CGRAM}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+CGRAM~6      /\texorpdfstring{$\ast$}{*} DB6\+: set CG RAM address             \texorpdfstring{$\ast$}{*}/}
+
+
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00245}{245}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_ga459688213267d13ccfbeb2c9004988cb}\label{group__pfleury__lcd_ga459688213267d13ccfbeb2c9004988cb} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_CLR@{LCD\_CLR}}
+\index{LCD\_CLR@{LCD\_CLR}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_CLR}{LCD\_CLR}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+CLR~0      /\texorpdfstring{$\ast$}{*} DB0\+: clear display                  \texorpdfstring{$\ast$}{*}/}
+
+
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00229}{229}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_ga63574b03f72a197aeee823aae95dc3b7}\label{group__pfleury__lcd_ga63574b03f72a197aeee823aae95dc3b7} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_CONTROLLER\_KS0073@{LCD\_CONTROLLER\_KS0073}}
+\index{LCD\_CONTROLLER\_KS0073@{LCD\_CONTROLLER\_KS0073}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_CONTROLLER\_KS0073}{LCD\_CONTROLLER\_KS0073}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+CONTROLLER\+\_\+\+KS0073~0}
+
+Use 0 for HD44780 controller, 1 for KS0073 controller 
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00070}{70}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_gafe54d7d886b5c56bed0cf971febbb773}\label{group__pfleury__lcd_gafe54d7d886b5c56bed0cf971febbb773} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_DATA0\_PIN@{LCD\_DATA0\_PIN}}
+\index{LCD\_DATA0\_PIN@{LCD\_DATA0\_PIN}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_DATA0\_PIN}{LCD\_DATA0\_PIN}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+DATA0\+\_\+\+PIN~6}
+
+pin for 4bit data bit 0 ~\newline
+ 
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00146}{146}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_gafc0acd4774bcd311595732f5367e266b}\label{group__pfleury__lcd_gafc0acd4774bcd311595732f5367e266b} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_DATA0\_PORT@{LCD\_DATA0\_PORT}}
+\index{LCD\_DATA0\_PORT@{LCD\_DATA0\_PORT}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_DATA0\_PORT}{LCD\_DATA0\_PORT}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+DATA0\+\_\+\+PORT~\mbox{\hyperlink{group__pfleury__lcd_gabcf42bd88b3c36193f301ca25b033875}{LCD\+\_\+\+PORT}}}
+
+port for 4bit data bit 0 
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00134}{134}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_ga97fb520e7b83bb047ac5c9247de57049}\label{group__pfleury__lcd_ga97fb520e7b83bb047ac5c9247de57049} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_DATA1\_PIN@{LCD\_DATA1\_PIN}}
+\index{LCD\_DATA1\_PIN@{LCD\_DATA1\_PIN}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_DATA1\_PIN}{LCD\_DATA1\_PIN}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+DATA1\+\_\+\+PIN~5}
+
+pin for 4bit data bit 1 ~\newline
+ 
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00149}{149}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_ga345af0248d5739bd8896d4f585618ca2}\label{group__pfleury__lcd_ga345af0248d5739bd8896d4f585618ca2} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_DATA1\_PORT@{LCD\_DATA1\_PORT}}
+\index{LCD\_DATA1\_PORT@{LCD\_DATA1\_PORT}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_DATA1\_PORT}{LCD\_DATA1\_PORT}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+DATA1\+\_\+\+PORT~\mbox{\hyperlink{group__pfleury__lcd_gabcf42bd88b3c36193f301ca25b033875}{LCD\+\_\+\+PORT}}}
+
+port for 4bit data bit 1 
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00137}{137}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_ga7f3d53627337f6535cc8daa35876510a}\label{group__pfleury__lcd_ga7f3d53627337f6535cc8daa35876510a} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_DATA2\_PIN@{LCD\_DATA2\_PIN}}
+\index{LCD\_DATA2\_PIN@{LCD\_DATA2\_PIN}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_DATA2\_PIN}{LCD\_DATA2\_PIN}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+DATA2\+\_\+\+PIN~4}
+
+pin for 4bit data bit 2 ~\newline
+ 
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00152}{152}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_ga4d5c48a3f2b9426c14bbca3150834a20}\label{group__pfleury__lcd_ga4d5c48a3f2b9426c14bbca3150834a20} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_DATA2\_PORT@{LCD\_DATA2\_PORT}}
+\index{LCD\_DATA2\_PORT@{LCD\_DATA2\_PORT}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_DATA2\_PORT}{LCD\_DATA2\_PORT}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+DATA2\+\_\+\+PORT~\mbox{\hyperlink{group__pfleury__lcd_gabcf42bd88b3c36193f301ca25b033875}{LCD\+\_\+\+PORT}}}
+
+port for 4bit data bit 2 
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00140}{140}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_ga54032ce0050853e181f879b69fec4370}\label{group__pfleury__lcd_ga54032ce0050853e181f879b69fec4370} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_DATA3\_PIN@{LCD\_DATA3\_PIN}}
+\index{LCD\_DATA3\_PIN@{LCD\_DATA3\_PIN}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_DATA3\_PIN}{LCD\_DATA3\_PIN}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+DATA3\+\_\+\+PIN~3}
+
+pin for 4bit data bit 3 ~\newline
+ 
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00155}{155}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_gaec71b6692f2af7c9de32dbe85fcb51c2}\label{group__pfleury__lcd_gaec71b6692f2af7c9de32dbe85fcb51c2} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_DATA3\_PORT@{LCD\_DATA3\_PORT}}
+\index{LCD\_DATA3\_PORT@{LCD\_DATA3\_PORT}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_DATA3\_PORT}{LCD\_DATA3\_PORT}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+DATA3\+\_\+\+PORT~\mbox{\hyperlink{group__pfleury__lcd_gabcf42bd88b3c36193f301ca25b033875}{LCD\+\_\+\+PORT}}}
+
+port for 4bit data bit 3 
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00143}{143}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_gae54acf3ccc45b7d6be334a03627740c6}\label{group__pfleury__lcd_gae54acf3ccc45b7d6be334a03627740c6} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_DDRAM@{LCD\_DDRAM}}
+\index{LCD\_DDRAM@{LCD\_DDRAM}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_DDRAM}{LCD\_DDRAM}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+DDRAM~7      /\texorpdfstring{$\ast$}{*} DB7\+: set DD RAM address             \texorpdfstring{$\ast$}{*}/}
+
+
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00246}{246}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_ga79ca3fe83448ab158a4c566bf292c260}\label{group__pfleury__lcd_ga79ca3fe83448ab158a4c566bf292c260} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_DELAY\_BOOTUP@{LCD\_DELAY\_BOOTUP}}
+\index{LCD\_DELAY\_BOOTUP@{LCD\_DELAY\_BOOTUP}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_DELAY\_BOOTUP}{LCD\_DELAY\_BOOTUP}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+DELAY\+\_\+\+BOOTUP~16000}
+
+delay in micro seconds after power-\/on ~\newline
+ 
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00203}{203}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_ga73b2370827e2d350cedd45e08a9eb0b2}\label{group__pfleury__lcd_ga73b2370827e2d350cedd45e08a9eb0b2} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_DELAY\_BUSY\_FLAG@{LCD\_DELAY\_BUSY\_FLAG}}
+\index{LCD\_DELAY\_BUSY\_FLAG@{LCD\_DELAY\_BUSY\_FLAG}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_DELAY\_BUSY\_FLAG}{LCD\_DELAY\_BUSY\_FLAG}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+DELAY\+\_\+\+BUSY\+\_\+\+FLAG~4}
+
+time in micro seconds the address counter is updated after busy flag is cleared 
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00215}{215}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_ga5b0632f09757ffe6f018c6ef88cc3296}\label{group__pfleury__lcd_ga5b0632f09757ffe6f018c6ef88cc3296} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_DELAY\_ENABLE\_PULSE@{LCD\_DELAY\_ENABLE\_PULSE}}
+\index{LCD\_DELAY\_ENABLE\_PULSE@{LCD\_DELAY\_ENABLE\_PULSE}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_DELAY\_ENABLE\_PULSE}{LCD\_DELAY\_ENABLE\_PULSE}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+DELAY\+\_\+\+ENABLE\+\_\+\+PULSE~1}
+
+enable signal pulse width in micro seconds 
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00218}{218}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_gab6ba3c8cdcf1a96b0d4c476eff8f8617}\label{group__pfleury__lcd_gab6ba3c8cdcf1a96b0d4c476eff8f8617} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_DELAY\_INIT@{LCD\_DELAY\_INIT}}
+\index{LCD\_DELAY\_INIT@{LCD\_DELAY\_INIT}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_DELAY\_INIT}{LCD\_DELAY\_INIT}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+DELAY\+\_\+\+INIT~5000}
+
+delay in micro seconds after initialization command sent ~\newline
+ 
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00206}{206}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_gadf773dcbd0827cd15c788065c9197459}\label{group__pfleury__lcd_gadf773dcbd0827cd15c788065c9197459} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_DELAY\_INIT\_4BIT@{LCD\_DELAY\_INIT\_4BIT}}
+\index{LCD\_DELAY\_INIT\_4BIT@{LCD\_DELAY\_INIT\_4BIT}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_DELAY\_INIT\_4BIT}{LCD\_DELAY\_INIT\_4BIT}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+DELAY\+\_\+\+INIT\+\_\+4\+BIT~64}
+
+delay in micro seconds after setting 4-\/bit mode 
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00212}{212}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_ga2ce1ac9b146b7baa7169e27f9cf3a99e}\label{group__pfleury__lcd_ga2ce1ac9b146b7baa7169e27f9cf3a99e} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_DELAY\_INIT\_REP@{LCD\_DELAY\_INIT\_REP}}
+\index{LCD\_DELAY\_INIT\_REP@{LCD\_DELAY\_INIT\_REP}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_DELAY\_INIT\_REP}{LCD\_DELAY\_INIT\_REP}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+DELAY\+\_\+\+INIT\+\_\+\+REP~64}
+
+delay in micro seconds after initialization command repeated 
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00209}{209}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_ga684bb4392e384b7ae7c660d81dacb930}\label{group__pfleury__lcd_ga684bb4392e384b7ae7c660d81dacb930} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_DISP\_LENGTH@{LCD\_DISP\_LENGTH}}
+\index{LCD\_DISP\_LENGTH@{LCD\_DISP\_LENGTH}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_DISP\_LENGTH}{LCD\_DISP\_LENGTH}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+DISP\+\_\+\+LENGTH~20}
+
+visibles characters per line of the display 
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00086}{86}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_gaa2966175115943883f51e9c90478540c}\label{group__pfleury__lcd_gaa2966175115943883f51e9c90478540c} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_DISP\_OFF@{LCD\_DISP\_OFF}}
+\index{LCD\_DISP\_OFF@{LCD\_DISP\_OFF}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_DISP\_OFF}{LCD\_DISP\_OFF}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+DISP\+\_\+\+OFF~0x08   /\texorpdfstring{$\ast$}{*} display off                            \texorpdfstring{$\ast$}{*}/}
+
+
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00256}{256}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_ga5163a96b133868975c0738e180b30cb8}\label{group__pfleury__lcd_ga5163a96b133868975c0738e180b30cb8} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_DISP\_ON@{LCD\_DISP\_ON}}
+\index{LCD\_DISP\_ON@{LCD\_DISP\_ON}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_DISP\_ON}{LCD\_DISP\_ON}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+DISP\+\_\+\+ON~0x0C   /\texorpdfstring{$\ast$}{*} display on, cursor off                 \texorpdfstring{$\ast$}{*}/}
+
+
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00257}{257}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_ga470cef85de53e37356b22c66a357a764}\label{group__pfleury__lcd_ga470cef85de53e37356b22c66a357a764} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_DISP\_ON\_BLINK@{LCD\_DISP\_ON\_BLINK}}
+\index{LCD\_DISP\_ON\_BLINK@{LCD\_DISP\_ON\_BLINK}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_DISP\_ON\_BLINK}{LCD\_DISP\_ON\_BLINK}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+DISP\+\_\+\+ON\+\_\+\+BLINK~0x0D   /\texorpdfstring{$\ast$}{*} display on, cursor off, blink char     \texorpdfstring{$\ast$}{*}/}
+
+
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00258}{258}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_gaf56b6d6bdb6fa48b26106dee5f74ae1f}\label{group__pfleury__lcd_gaf56b6d6bdb6fa48b26106dee5f74ae1f} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_DISP\_ON\_CURSOR@{LCD\_DISP\_ON\_CURSOR}}
+\index{LCD\_DISP\_ON\_CURSOR@{LCD\_DISP\_ON\_CURSOR}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_DISP\_ON\_CURSOR}{LCD\_DISP\_ON\_CURSOR}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+DISP\+\_\+\+ON\+\_\+\+CURSOR~0x0E   /\texorpdfstring{$\ast$}{*} display on, cursor on                  \texorpdfstring{$\ast$}{*}/}
+
+
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00259}{259}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_gac1984ed0db15c6991d34c184fdca5dc6}\label{group__pfleury__lcd_gac1984ed0db15c6991d34c184fdca5dc6} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_DISP\_ON\_CURSOR\_BLINK@{LCD\_DISP\_ON\_CURSOR\_BLINK}}
+\index{LCD\_DISP\_ON\_CURSOR\_BLINK@{LCD\_DISP\_ON\_CURSOR\_BLINK}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_DISP\_ON\_CURSOR\_BLINK}{LCD\_DISP\_ON\_CURSOR\_BLINK}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+DISP\+\_\+\+ON\+\_\+\+CURSOR\+\_\+\+BLINK~0x0F   /\texorpdfstring{$\ast$}{*} display on, cursor on, blink char      \texorpdfstring{$\ast$}{*}/}
+
+
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00260}{260}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_gae644d776392a8d47899d9910c2b8feb6}\label{group__pfleury__lcd_gae644d776392a8d47899d9910c2b8feb6} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_E\_PIN@{LCD\_E\_PIN}}
+\index{LCD\_E\_PIN@{LCD\_E\_PIN}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_E\_PIN}{LCD\_E\_PIN}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+E\+\_\+\+PIN~7}
+
+pin for Enable line ~\newline
+ 
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00173}{173}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_gaf97f97ff3832d1289bbcb471090ea297}\label{group__pfleury__lcd_gaf97f97ff3832d1289bbcb471090ea297} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_E\_PORT@{LCD\_E\_PORT}}
+\index{LCD\_E\_PORT@{LCD\_E\_PORT}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_E\_PORT}{LCD\_E\_PORT}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+E\+\_\+\+PORT~PORTD}
+
+port for Enable line ~\newline
+ 
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00170}{170}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_gaad56f8e07634e85663f56888ae97089c}\label{group__pfleury__lcd_gaad56f8e07634e85663f56888ae97089c} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_ENTRY\_DEC@{LCD\_ENTRY\_DEC}}
+\index{LCD\_ENTRY\_DEC@{LCD\_ENTRY\_DEC}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_ENTRY\_DEC}{LCD\_ENTRY\_DEC}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+ENTRY\+\_\+\+DEC~0x04   /\texorpdfstring{$\ast$}{*} display shift off, dec cursor move dir \texorpdfstring{$\ast$}{*}/}
+
+
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00250}{250}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_ga1c62932f252c6262cbef728add9696e4}\label{group__pfleury__lcd_ga1c62932f252c6262cbef728add9696e4} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_ENTRY\_DEC\_SHIFT@{LCD\_ENTRY\_DEC\_SHIFT}}
+\index{LCD\_ENTRY\_DEC\_SHIFT@{LCD\_ENTRY\_DEC\_SHIFT}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_ENTRY\_DEC\_SHIFT}{LCD\_ENTRY\_DEC\_SHIFT}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+ENTRY\+\_\+\+DEC\+\_\+\+SHIFT~0x05   /\texorpdfstring{$\ast$}{*} display shift on,  dec cursor move dir \texorpdfstring{$\ast$}{*}/}
+
+
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00251}{251}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_gada766266a0be0d0040fbf86e23b58aa6}\label{group__pfleury__lcd_gada766266a0be0d0040fbf86e23b58aa6} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_ENTRY\_INC@{LCD\_ENTRY\_INC}}
+\index{LCD\_ENTRY\_INC@{LCD\_ENTRY\_INC}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_ENTRY\_INC}{LCD\_ENTRY\_INC}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+ENTRY\+\_\+\+INC~1      /\texorpdfstring{$\ast$}{*}   DB1\+: 1=increment, 0=decrement     \texorpdfstring{$\ast$}{*}/}
+
+
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00232}{232}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_gad27ddc4b8d03594662c8757f946dde28}\label{group__pfleury__lcd_gad27ddc4b8d03594662c8757f946dde28} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_ENTRY\_INC\_@{LCD\_ENTRY\_INC\_}}
+\index{LCD\_ENTRY\_INC\_@{LCD\_ENTRY\_INC\_}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_ENTRY\_INC\_}{LCD\_ENTRY\_INC\_}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+ENTRY\+\_\+\+INC\+\_\+~0x06   /\texorpdfstring{$\ast$}{*} display shift off, inc cursor move dir \texorpdfstring{$\ast$}{*}/}
+
+
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00252}{252}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_gafabd0215cc6ae5539dc638dbec44a506}\label{group__pfleury__lcd_gafabd0215cc6ae5539dc638dbec44a506} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_ENTRY\_INC\_SHIFT@{LCD\_ENTRY\_INC\_SHIFT}}
+\index{LCD\_ENTRY\_INC\_SHIFT@{LCD\_ENTRY\_INC\_SHIFT}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_ENTRY\_INC\_SHIFT}{LCD\_ENTRY\_INC\_SHIFT}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+ENTRY\+\_\+\+INC\+\_\+\+SHIFT~0x07   /\texorpdfstring{$\ast$}{*} display shift on,  inc cursor move dir \texorpdfstring{$\ast$}{*}/}
+
+
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00253}{253}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_gae5d757ddb6d94de8c82191b60b40e442}\label{group__pfleury__lcd_gae5d757ddb6d94de8c82191b60b40e442} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_ENTRY\_MODE@{LCD\_ENTRY\_MODE}}
+\index{LCD\_ENTRY\_MODE@{LCD\_ENTRY\_MODE}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_ENTRY\_MODE}{LCD\_ENTRY\_MODE}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+ENTRY\+\_\+\+MODE~2      /\texorpdfstring{$\ast$}{*} DB2\+: set entry mode                 \texorpdfstring{$\ast$}{*}/}
+
+
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00231}{231}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_ga14d0c7fda147e0dc8cdaa4a2629b3532}\label{group__pfleury__lcd_ga14d0c7fda147e0dc8cdaa4a2629b3532} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_ENTRY\_SHIFT@{LCD\_ENTRY\_SHIFT}}
+\index{LCD\_ENTRY\_SHIFT@{LCD\_ENTRY\_SHIFT}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_ENTRY\_SHIFT}{LCD\_ENTRY\_SHIFT}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+ENTRY\+\_\+\+SHIFT~0      /\texorpdfstring{$\ast$}{*}   DB2\+: 1=display shift on           \texorpdfstring{$\ast$}{*}/}
+
+
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00233}{233}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_ga50de1697f1da8ab075a6b4d7aeace64e}\label{group__pfleury__lcd_ga50de1697f1da8ab075a6b4d7aeace64e} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_FUNCTION@{LCD\_FUNCTION}}
+\index{LCD\_FUNCTION@{LCD\_FUNCTION}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_FUNCTION}{LCD\_FUNCTION}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+FUNCTION~5      /\texorpdfstring{$\ast$}{*} DB5\+: function set                   \texorpdfstring{$\ast$}{*}/}
+
+
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00241}{241}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_ga48de81358277fe4f2810c2b82f90397e}\label{group__pfleury__lcd_ga48de81358277fe4f2810c2b82f90397e} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_FUNCTION\_10DOTS@{LCD\_FUNCTION\_10DOTS}}
+\index{LCD\_FUNCTION\_10DOTS@{LCD\_FUNCTION\_10DOTS}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_FUNCTION\_10DOTS}{LCD\_FUNCTION\_10DOTS}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+FUNCTION\+\_\+10\+DOTS~2      /\texorpdfstring{$\ast$}{*}   DB2\+: 5x10 font (0-\/$>$5x7 font)      \texorpdfstring{$\ast$}{*}/}
+
+
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00244}{244}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_ga6c24806bed18d565917165caa3475463}\label{group__pfleury__lcd_ga6c24806bed18d565917165caa3475463} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_FUNCTION\_2LINES@{LCD\_FUNCTION\_2LINES}}
+\index{LCD\_FUNCTION\_2LINES@{LCD\_FUNCTION\_2LINES}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_FUNCTION\_2LINES}{LCD\_FUNCTION\_2LINES}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+FUNCTION\+\_\+2\+LINES~3      /\texorpdfstring{$\ast$}{*}   DB3\+: two lines (0-\/$>$one line)      \texorpdfstring{$\ast$}{*}/}
+
+
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00243}{243}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_gaff4e5baa36a0322eb97557dcb18cd96e}\label{group__pfleury__lcd_gaff4e5baa36a0322eb97557dcb18cd96e} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_FUNCTION\_4BIT\_1LINE@{LCD\_FUNCTION\_4BIT\_1LINE}}
+\index{LCD\_FUNCTION\_4BIT\_1LINE@{LCD\_FUNCTION\_4BIT\_1LINE}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_FUNCTION\_4BIT\_1LINE}{LCD\_FUNCTION\_4BIT\_1LINE}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+FUNCTION\+\_\+4\+BIT\+\_\+1\+LINE~0x20   /\texorpdfstring{$\ast$}{*} 4-\/bit interface, single line, 5x7 dots \texorpdfstring{$\ast$}{*}/}
+
+
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00269}{269}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_gab35032ab368a8bc90798e0c547fb24c2}\label{group__pfleury__lcd_gab35032ab368a8bc90798e0c547fb24c2} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_FUNCTION\_4BIT\_2LINES@{LCD\_FUNCTION\_4BIT\_2LINES}}
+\index{LCD\_FUNCTION\_4BIT\_2LINES@{LCD\_FUNCTION\_4BIT\_2LINES}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_FUNCTION\_4BIT\_2LINES}{LCD\_FUNCTION\_4BIT\_2LINES}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+FUNCTION\+\_\+4\+BIT\+\_\+2\+LINES~0x28   /\texorpdfstring{$\ast$}{*} 4-\/bit interface, dual line,   5x7 dots \texorpdfstring{$\ast$}{*}/}
+
+
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00270}{270}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_ga91d15d8e3008f6cb141406a8b5d0d3c0}\label{group__pfleury__lcd_ga91d15d8e3008f6cb141406a8b5d0d3c0} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_FUNCTION\_8BIT@{LCD\_FUNCTION\_8BIT}}
+\index{LCD\_FUNCTION\_8BIT@{LCD\_FUNCTION\_8BIT}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_FUNCTION\_8BIT}{LCD\_FUNCTION\_8BIT}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+FUNCTION\+\_\+8\+BIT~4      /\texorpdfstring{$\ast$}{*}   DB4\+: set 8BIT mode (0-\/$>$4BIT mode) \texorpdfstring{$\ast$}{*}/}
+
+
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00242}{242}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_gaa8aeee098cb4c84ec420e00d054abcce}\label{group__pfleury__lcd_gaa8aeee098cb4c84ec420e00d054abcce} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_FUNCTION\_8BIT\_1LINE@{LCD\_FUNCTION\_8BIT\_1LINE}}
+\index{LCD\_FUNCTION\_8BIT\_1LINE@{LCD\_FUNCTION\_8BIT\_1LINE}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_FUNCTION\_8BIT\_1LINE}{LCD\_FUNCTION\_8BIT\_1LINE}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+FUNCTION\+\_\+8\+BIT\+\_\+1\+LINE~0x30   /\texorpdfstring{$\ast$}{*} 8-\/bit interface, single line, 5x7 dots \texorpdfstring{$\ast$}{*}/}
+
+
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00271}{271}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_ga160a214f47869f8f98ad5add3a7568db}\label{group__pfleury__lcd_ga160a214f47869f8f98ad5add3a7568db} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_FUNCTION\_8BIT\_2LINES@{LCD\_FUNCTION\_8BIT\_2LINES}}
+\index{LCD\_FUNCTION\_8BIT\_2LINES@{LCD\_FUNCTION\_8BIT\_2LINES}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_FUNCTION\_8BIT\_2LINES}{LCD\_FUNCTION\_8BIT\_2LINES}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+FUNCTION\+\_\+8\+BIT\+\_\+2\+LINES~0x38   /\texorpdfstring{$\ast$}{*} 8-\/bit interface, dual line,   5x7 dots \texorpdfstring{$\ast$}{*}/}
+
+
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00272}{272}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_gae0e309ccad89222eb3457f2da9f2bb8d}\label{group__pfleury__lcd_gae0e309ccad89222eb3457f2da9f2bb8d} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_HOME@{LCD\_HOME}}
+\index{LCD\_HOME@{LCD\_HOME}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_HOME}{LCD\_HOME}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+HOME~1      /\texorpdfstring{$\ast$}{*} DB1\+: return to home position        \texorpdfstring{$\ast$}{*}/}
+
+
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00230}{230}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_ga659fcdf979f69bbd14f852f525f25e02}\label{group__pfleury__lcd_ga659fcdf979f69bbd14f852f525f25e02} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_IO\_MODE@{LCD\_IO\_MODE}}
+\index{LCD\_IO\_MODE@{LCD\_IO\_MODE}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_IO\_MODE}{LCD\_IO\_MODE}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+IO\+\_\+\+MODE~1}
+
+0\+: memory mapped mode, 1\+: IO port mode 
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00126}{126}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_gae59a728d9dee9f12c817b29d38746ed9}\label{group__pfleury__lcd_gae59a728d9dee9f12c817b29d38746ed9} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_LINE\_LENGTH@{LCD\_LINE\_LENGTH}}
+\index{LCD\_LINE\_LENGTH@{LCD\_LINE\_LENGTH}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_LINE\_LENGTH}{LCD\_LINE\_LENGTH}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+LINE\+\_\+\+LENGTH~0x40}
+
+internal line length of the display ~\newline
+ 
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00089}{89}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_ga01212e90283511562039db786f65ba98}\label{group__pfleury__lcd_ga01212e90283511562039db786f65ba98} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_LINES@{LCD\_LINES}}
+\index{LCD\_LINES@{LCD\_LINES}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_LINES}{LCD\_LINES}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+LINES~4}
+
+number of visible lines of the display 
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00083}{83}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_ga1849e2087d3034a3fffa67444beed109}\label{group__pfleury__lcd_ga1849e2087d3034a3fffa67444beed109} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_MODE\_DEFAULT@{LCD\_MODE\_DEFAULT}}
+\index{LCD\_MODE\_DEFAULT@{LCD\_MODE\_DEFAULT}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_MODE\_DEFAULT}{LCD\_MODE\_DEFAULT}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+MODE\+\_\+\+DEFAULT~((1$<$$<$\mbox{\hyperlink{group__pfleury__lcd_gae5d757ddb6d94de8c82191b60b40e442}{LCD\+\_\+\+ENTRY\+\_\+\+MODE}}) \texorpdfstring{$\vert$}{|} (1$<$$<$\mbox{\hyperlink{group__pfleury__lcd_gada766266a0be0d0040fbf86e23b58aa6}{LCD\+\_\+\+ENTRY\+\_\+\+INC}}) )}
+
+
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00275}{275}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_ga3f4f758b80fcfa6c9e4db58e2515c78a}\label{group__pfleury__lcd_ga3f4f758b80fcfa6c9e4db58e2515c78a} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_MOVE@{LCD\_MOVE}}
+\index{LCD\_MOVE@{LCD\_MOVE}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_MOVE}{LCD\_MOVE}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+MOVE~4      /\texorpdfstring{$\ast$}{*} DB4\+: move cursor/display            \texorpdfstring{$\ast$}{*}/}
+
+
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00238}{238}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_gac2f0ddce1daaa1bf1a016270a89a264b}\label{group__pfleury__lcd_gac2f0ddce1daaa1bf1a016270a89a264b} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_MOVE\_CURSOR\_LEFT@{LCD\_MOVE\_CURSOR\_LEFT}}
+\index{LCD\_MOVE\_CURSOR\_LEFT@{LCD\_MOVE\_CURSOR\_LEFT}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_MOVE\_CURSOR\_LEFT}{LCD\_MOVE\_CURSOR\_LEFT}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+MOVE\+\_\+\+CURSOR\+\_\+\+LEFT~0x10   /\texorpdfstring{$\ast$}{*} move cursor left  (decrement)          \texorpdfstring{$\ast$}{*}/}
+
+
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00263}{263}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_ga0ad58e39e053e97d34527fcbe936899b}\label{group__pfleury__lcd_ga0ad58e39e053e97d34527fcbe936899b} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_MOVE\_CURSOR\_RIGHT@{LCD\_MOVE\_CURSOR\_RIGHT}}
+\index{LCD\_MOVE\_CURSOR\_RIGHT@{LCD\_MOVE\_CURSOR\_RIGHT}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_MOVE\_CURSOR\_RIGHT}{LCD\_MOVE\_CURSOR\_RIGHT}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+MOVE\+\_\+\+CURSOR\+\_\+\+RIGHT~0x14   /\texorpdfstring{$\ast$}{*} move cursor right (increment)          \texorpdfstring{$\ast$}{*}/}
+
+
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00264}{264}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_gaaddc2afa9a02bfa748950f2c1e6a204d}\label{group__pfleury__lcd_gaaddc2afa9a02bfa748950f2c1e6a204d} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_MOVE\_DISP@{LCD\_MOVE\_DISP}}
+\index{LCD\_MOVE\_DISP@{LCD\_MOVE\_DISP}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_MOVE\_DISP}{LCD\_MOVE\_DISP}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+MOVE\+\_\+\+DISP~3      /\texorpdfstring{$\ast$}{*}   DB3\+: move display (0-\/$>$ cursor) ?  \texorpdfstring{$\ast$}{*}/}
+
+
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00239}{239}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_gab3c34ff1eee238bbe9c677215219fb8e}\label{group__pfleury__lcd_gab3c34ff1eee238bbe9c677215219fb8e} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_MOVE\_DISP\_LEFT@{LCD\_MOVE\_DISP\_LEFT}}
+\index{LCD\_MOVE\_DISP\_LEFT@{LCD\_MOVE\_DISP\_LEFT}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_MOVE\_DISP\_LEFT}{LCD\_MOVE\_DISP\_LEFT}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+MOVE\+\_\+\+DISP\+\_\+\+LEFT~0x18   /\texorpdfstring{$\ast$}{*} shift display left                     \texorpdfstring{$\ast$}{*}/}
+
+
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00265}{265}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_ga9a90bb926f5ba59378af81fe8e246ffb}\label{group__pfleury__lcd_ga9a90bb926f5ba59378af81fe8e246ffb} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_MOVE\_DISP\_RIGHT@{LCD\_MOVE\_DISP\_RIGHT}}
+\index{LCD\_MOVE\_DISP\_RIGHT@{LCD\_MOVE\_DISP\_RIGHT}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_MOVE\_DISP\_RIGHT}{LCD\_MOVE\_DISP\_RIGHT}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+MOVE\+\_\+\+DISP\+\_\+\+RIGHT~0x1C   /\texorpdfstring{$\ast$}{*} shift display right                    \texorpdfstring{$\ast$}{*}/}
+
+
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00266}{266}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_ga97cdb19acf109ad52ab4994d2ad02cee}\label{group__pfleury__lcd_ga97cdb19acf109ad52ab4994d2ad02cee} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_MOVE\_RIGHT@{LCD\_MOVE\_RIGHT}}
+\index{LCD\_MOVE\_RIGHT@{LCD\_MOVE\_RIGHT}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_MOVE\_RIGHT}{LCD\_MOVE\_RIGHT}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+MOVE\+\_\+\+RIGHT~2      /\texorpdfstring{$\ast$}{*}   DB2\+: move right (0-\/$>$ left) ?      \texorpdfstring{$\ast$}{*}/}
+
+
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00240}{240}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_ga47a809dfec086fdeca93dedc4fb83b44}\label{group__pfleury__lcd_ga47a809dfec086fdeca93dedc4fb83b44} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_ON@{LCD\_ON}}
+\index{LCD\_ON@{LCD\_ON}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_ON}{LCD\_ON}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+ON~3      /\texorpdfstring{$\ast$}{*} DB3\+: turn lcd/cursor on             \texorpdfstring{$\ast$}{*}/}
+
+
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00234}{234}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_ga5d76592a978537acee615098ce4d80f5}\label{group__pfleury__lcd_ga5d76592a978537acee615098ce4d80f5} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_ON\_BLINK@{LCD\_ON\_BLINK}}
+\index{LCD\_ON\_BLINK@{LCD\_ON\_BLINK}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_ON\_BLINK}{LCD\_ON\_BLINK}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+ON\+\_\+\+BLINK~0      /\texorpdfstring{$\ast$}{*}     DB0\+: blinking cursor ?          \texorpdfstring{$\ast$}{*}/}
+
+
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00237}{237}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_ga47638b5ebbaec9600a0ebf9a55caf802}\label{group__pfleury__lcd_ga47638b5ebbaec9600a0ebf9a55caf802} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_ON\_CURSOR@{LCD\_ON\_CURSOR}}
+\index{LCD\_ON\_CURSOR@{LCD\_ON\_CURSOR}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_ON\_CURSOR}{LCD\_ON\_CURSOR}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+ON\+\_\+\+CURSOR~1      /\texorpdfstring{$\ast$}{*}   DB1\+: turn cursor on               \texorpdfstring{$\ast$}{*}/}
+
+
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00236}{236}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_gae84f634b0a1661c4d5bbaafd9397732a}\label{group__pfleury__lcd_gae84f634b0a1661c4d5bbaafd9397732a} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_ON\_DISPLAY@{LCD\_ON\_DISPLAY}}
+\index{LCD\_ON\_DISPLAY@{LCD\_ON\_DISPLAY}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_ON\_DISPLAY}{LCD\_ON\_DISPLAY}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+ON\+\_\+\+DISPLAY~2      /\texorpdfstring{$\ast$}{*}   DB2\+: turn display on              \texorpdfstring{$\ast$}{*}/}
+
+
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00235}{235}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_gabcf42bd88b3c36193f301ca25b033875}\label{group__pfleury__lcd_gabcf42bd88b3c36193f301ca25b033875} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_PORT@{LCD\_PORT}}
+\index{LCD\_PORT@{LCD\_PORT}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_PORT}{LCD\_PORT}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+PORT~PORTD}
+
+port for the LCD lines ~\newline
+ 
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00131}{131}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_ga4f1928f1515e21422d5a33af2949f2f7}\label{group__pfleury__lcd_ga4f1928f1515e21422d5a33af2949f2f7} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!lcd\_puts\_P@{lcd\_puts\_P}}
+\index{lcd\_puts\_P@{lcd\_puts\_P}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{lcd\_puts\_P}{lcd\_puts\_P}}
+{\footnotesize\ttfamily \#define lcd\+\_\+puts\+\_\+P(\begin{DoxyParamCaption}\item[{}]{\+\_\+\+\_\+s }\end{DoxyParamCaption})~\mbox{\hyperlink{group__pfleury__lcd_ga9022a24a56a9b15681f62eb6ba77e5de}{lcd\+\_\+puts\+\_\+p}}(PSTR(\+\_\+\+\_\+s))}
+
+
+
+macros for automatically storing string constant in program memory 
+
+
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00365}{365}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_gae5c0a0a5750f3aaea06083e3a4a31f5d}\label{group__pfleury__lcd_gae5c0a0a5750f3aaea06083e3a4a31f5d} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_RS\_PIN@{LCD\_RS\_PIN}}
+\index{LCD\_RS\_PIN@{LCD\_RS\_PIN}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_RS\_PIN}{LCD\_RS\_PIN}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+RS\+\_\+\+PIN~1}
+
+pin for RS line ~\newline
+ 
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00161}{161}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_gac5be2a22727fd9ca349e1c9bcbfbcd47}\label{group__pfleury__lcd_gac5be2a22727fd9ca349e1c9bcbfbcd47} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_RS\_PORT@{LCD\_RS\_PORT}}
+\index{LCD\_RS\_PORT@{LCD\_RS\_PORT}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_RS\_PORT}{LCD\_RS\_PORT}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+RS\+\_\+\+PORT~PORTB}
+
+port for RS line ~\newline
+ 
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00158}{158}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_ga3ac938dd5fc02a9a232df6605b5f6aa8}\label{group__pfleury__lcd_ga3ac938dd5fc02a9a232df6605b5f6aa8} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_RW\_PIN@{LCD\_RW\_PIN}}
+\index{LCD\_RW\_PIN@{LCD\_RW\_PIN}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_RW\_PIN}{LCD\_RW\_PIN}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+RW\+\_\+\+PIN~0}
+
+pin for RW line ~\newline
+ 
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00167}{167}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_gae8772bdf31db863b81805c837bdc2da2}\label{group__pfleury__lcd_gae8772bdf31db863b81805c837bdc2da2} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_RW\_PORT@{LCD\_RW\_PORT}}
+\index{LCD\_RW\_PORT@{LCD\_RW\_PORT}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_RW\_PORT}{LCD\_RW\_PORT}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+RW\+\_\+\+PORT~PORTB}
+
+port for RW line ~\newline
+ 
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00164}{164}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_gabd056d70a1488ea2eb1aef87e248e234}\label{group__pfleury__lcd_gabd056d70a1488ea2eb1aef87e248e234} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_START\_LINE1@{LCD\_START\_LINE1}}
+\index{LCD\_START\_LINE1@{LCD\_START\_LINE1}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_START\_LINE1}{LCD\_START\_LINE1}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+START\+\_\+\+LINE1~0x00}
+
+DDRAM address of first char of line 1 
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00092}{92}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_ga7b317b21058ef031716ba040ef75430a}\label{group__pfleury__lcd_ga7b317b21058ef031716ba040ef75430a} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_START\_LINE2@{LCD\_START\_LINE2}}
+\index{LCD\_START\_LINE2@{LCD\_START\_LINE2}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_START\_LINE2}{LCD\_START\_LINE2}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+START\+\_\+\+LINE2~0x40}
+
+DDRAM address of first char of line 2 
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00095}{95}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_gae7cca16353048a062baeb3a52da55249}\label{group__pfleury__lcd_gae7cca16353048a062baeb3a52da55249} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_START\_LINE3@{LCD\_START\_LINE3}}
+\index{LCD\_START\_LINE3@{LCD\_START\_LINE3}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_START\_LINE3}{LCD\_START\_LINE3}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+START\+\_\+\+LINE3~0x14}
+
+DDRAM address of first char of line 3 
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00098}{98}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_gab1b73e05bdb5cc12cdff5a1cf6c4f2a2}\label{group__pfleury__lcd_gab1b73e05bdb5cc12cdff5a1cf6c4f2a2} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_START\_LINE4@{LCD\_START\_LINE4}}
+\index{LCD\_START\_LINE4@{LCD\_START\_LINE4}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_START\_LINE4}{LCD\_START\_LINE4}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+START\+\_\+\+LINE4~0x54}
+
+DDRAM address of first char of line 4 
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00101}{101}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+\Hypertarget{group__pfleury__lcd_gadb35ff6cb242e48ba0545ea919ffc5d3}\label{group__pfleury__lcd_gadb35ff6cb242e48ba0545ea919ffc5d3} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!LCD\_WRAP\_LINES@{LCD\_WRAP\_LINES}}
+\index{LCD\_WRAP\_LINES@{LCD\_WRAP\_LINES}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{LCD\_WRAP\_LINES}{LCD\_WRAP\_LINES}}
+{\footnotesize\ttfamily \#define LCD\+\_\+\+WRAP\+\_\+\+LINES~0}
+
+0\+: no wrap, 1\+: wrap at end of visibile line 
+
+Definition at line \mbox{\hyperlink{lcd_8h_source_l00104}{104}} of file \mbox{\hyperlink{lcd_8h_source}{lcd.\+h}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{group__pfleury__lcd_gaf8da853dba4b9d5f2aea4e294444e14d}\label{group__pfleury__lcd_gaf8da853dba4b9d5f2aea4e294444e14d} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!lcd\_clrscr@{lcd\_clrscr}}
+\index{lcd\_clrscr@{lcd\_clrscr}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{lcd\_clrscr()}{lcd\_clrscr()}}
+{\footnotesize\ttfamily void lcd\+\_\+clrscr (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Clear display and set cursor to home position. 
+
+\begin{DoxyReturn}{Returns}
+none 
+\end{DoxyReturn}
+\Hypertarget{group__pfleury__lcd_gaea9d14f02df06f948cb5a56776980826}\label{group__pfleury__lcd_gaea9d14f02df06f948cb5a56776980826} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!lcd\_command@{lcd\_command}}
+\index{lcd\_command@{lcd\_command}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{lcd\_command()}{lcd\_command()}}
+{\footnotesize\ttfamily void lcd\+\_\+command (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{ut__types_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\+\_\+t}}}]{cmd }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Send LCD controller instruction command. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em cmd} & instruction to send to LCD controller, see HD44780 data sheet \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+none 
+\end{DoxyReturn}
+\Hypertarget{group__pfleury__lcd_gad0729d2cba627825a089ca1fff12ba29}\label{group__pfleury__lcd_gad0729d2cba627825a089ca1fff12ba29} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!lcd\_data@{lcd\_data}}
+\index{lcd\_data@{lcd\_data}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{lcd\_data()}{lcd\_data()}}
+{\footnotesize\ttfamily void lcd\+\_\+data (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{ut__types_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\+\_\+t}}}]{data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Send data byte to LCD controller. 
+
+Similar to \doxylink{group__pfleury__lcd_gafa7e36b95c43d603f510273ad077cbbe}{lcd\+\_\+putc()}, but without interpreting LF 
+\begin{DoxyParams}{Parameters}
+{\em data} & byte to send to LCD controller, see HD44780 data sheet \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+none 
+\end{DoxyReturn}
+\Hypertarget{group__pfleury__lcd_gadbf47a5efdf02367ded1ebf8f9edb5fe}\label{group__pfleury__lcd_gadbf47a5efdf02367ded1ebf8f9edb5fe} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!lcd\_gotoxy@{lcd\_gotoxy}}
+\index{lcd\_gotoxy@{lcd\_gotoxy}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{lcd\_gotoxy()}{lcd\_gotoxy()}}
+{\footnotesize\ttfamily void lcd\+\_\+gotoxy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{ut__types_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\+\_\+t}}}]{x,  }\item[{\mbox{\hyperlink{ut__types_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\+\_\+t}}}]{y }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Set cursor to specified position. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & horizontal position~\newline
+ (0\+: left most position) \\
+\hline
+{\em y} & vertical position~\newline
+ (0\+: first line) \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+none 
+\end{DoxyReturn}
+\Hypertarget{group__pfleury__lcd_ga3aabf730aa4e0393bb5c959583c00a8e}\label{group__pfleury__lcd_ga3aabf730aa4e0393bb5c959583c00a8e} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!lcd\_home@{lcd\_home}}
+\index{lcd\_home@{lcd\_home}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{lcd\_home()}{lcd\_home()}}
+{\footnotesize\ttfamily void lcd\+\_\+home (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Set cursor to home position. 
+
+\begin{DoxyReturn}{Returns}
+none 
+\end{DoxyReturn}
+\Hypertarget{group__pfleury__lcd_ga9af28b2779326b63ff4356e2b1828984}\label{group__pfleury__lcd_ga9af28b2779326b63ff4356e2b1828984} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!lcd\_init@{lcd\_init}}
+\index{lcd\_init@{lcd\_init}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{lcd\_init()}{lcd\_init()}}
+{\footnotesize\ttfamily void lcd\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{ut__types_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\+\_\+t}}}]{disp\+Attr }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Initialize display and select type of cursor. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em disp\+Attr} & {\bfseries{LCD\+\_\+\+DISP\+\_\+\+OFF}} display off~\newline
+ {\bfseries{LCD\+\_\+\+DISP\+\_\+\+ON}} display on, cursor off~\newline
+ {\bfseries{LCD\+\_\+\+DISP\+\_\+\+ON\+\_\+\+CURSOR}} display on, cursor on~\newline
+ {\bfseries{LCD\+\_\+\+DISP\+\_\+\+ON\+\_\+\+CURSOR\+\_\+\+BLINK}} display on, cursor on flashing ~\newline
+ \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+none 
+\end{DoxyReturn}
+\Hypertarget{group__pfleury__lcd_gafa7e36b95c43d603f510273ad077cbbe}\label{group__pfleury__lcd_gafa7e36b95c43d603f510273ad077cbbe} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!lcd\_putc@{lcd\_putc}}
+\index{lcd\_putc@{lcd\_putc}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{lcd\_putc()}{lcd\_putc()}}
+{\footnotesize\ttfamily void lcd\+\_\+putc (\begin{DoxyParamCaption}\item[{char}]{c }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Display character at current cursor position. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em c} & character to be displayed ~\newline
+ \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+none 
+\end{DoxyReturn}
+\Hypertarget{group__pfleury__lcd_ga8ffdfcac7638368ff04364c14984266e}\label{group__pfleury__lcd_ga8ffdfcac7638368ff04364c14984266e} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!lcd\_puts@{lcd\_puts}}
+\index{lcd\_puts@{lcd\_puts}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{lcd\_puts()}{lcd\_puts()}}
+{\footnotesize\ttfamily void lcd\+\_\+puts (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{s }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Display string without auto linefeed. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em s} & string to be displayed ~\newline
+ \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+none 
+\end{DoxyReturn}
+\Hypertarget{group__pfleury__lcd_ga9022a24a56a9b15681f62eb6ba77e5de}\label{group__pfleury__lcd_ga9022a24a56a9b15681f62eb6ba77e5de} 
+\index{LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}!lcd\_puts\_p@{lcd\_puts\_p}}
+\index{lcd\_puts\_p@{lcd\_puts\_p}!LCD library $<$lcd.h$>$@{LCD library $<$lcd.h$>$}}
+\doxysubsubsection{\texorpdfstring{lcd\_puts\_p()}{lcd\_puts\_p()}}
+{\footnotesize\ttfamily void lcd\+\_\+puts\+\_\+p (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{progmem\+\_\+s }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Display string from program memory without auto linefeed. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em progmem\+\_\+s} & string from program memory be be displayed ~\newline
+ \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+none 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\doxylink{group__pfleury__lcd_ga4f1928f1515e21422d5a33af2949f2f7}{lcd\+\_\+puts\+\_\+P} 
+\end{DoxySeeAlso}

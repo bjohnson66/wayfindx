@@ -1,0 +1,67 @@
+\doxysection{ir.\+c}
+\hypertarget{ir_8c_source}{}\label{ir_8c_source}\index{G:/Project\_Files/WayFindX/wfx\_sw/wfx\_sw/ir/ir.c@{G:/Project\_Files/WayFindX/wfx\_sw/wfx\_sw/ir/ir.c}}
+\mbox{\hyperlink{ir_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{ir_8h}{ir.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00002}00002\ \textcolor{preprocessor}{\#include\ <avr/interrupt.h>}}
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00003}00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{utilities_8h}{../ut/utilities.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00005}00005\ \textcolor{comment}{//global}}
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00006}\mbox{\hyperlink{ir_8c_a420cef67ebc0cf3d472f957806f1b8b4}{00006}}\ \mbox{\hyperlink{ut__types_8h_a1f1825b69244eb3ad2c7165ddc99c956}{uint16\_t}}\ \mbox{\hyperlink{ir_8c_a420cef67ebc0cf3d472f957806f1b8b4}{ir\_sec\_counter}}\ =\ 0;\ }
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00007}\mbox{\hyperlink{ir_8c_a3869ada31829485498d4bdbf1d4cc6e9}{00007}}\ \mbox{\hyperlink{ut__types_8h_a5338510a6d3a27844de9a766a4303d46}{boolean\_t}}\ \mbox{\hyperlink{ir_8c_a3869ada31829485498d4bdbf1d4cc6e9}{ir\_trigger\_1hz\_flag\_g}}\ =\ \textcolor{keyword}{false};\ }
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00011}00011\ \textcolor{comment}{//local\ static}}
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00012}00012\ \textcolor{keyword}{static}\ \mbox{\hyperlink{ut__types_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\_t}}\ timer2\_overflow\_counter;}
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00015}00015\ \textcolor{comment}{//\ Interrupt\ Service\ Routine\ for\ Timer0\ overflow:\ Poll\ all\ four\ buttons\ in\ background\ set\ state\ if\ we\ have\ polled\ enough\ times}}
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00016}\mbox{\hyperlink{ir_8c_add2d7cdddfb682dcc0391e60cf42c7d6}{00016}}\ \mbox{\hyperlink{ir_8c_add2d7cdddfb682dcc0391e60cf42c7d6}{ISR}}(TIMER0\_OVF\_vect)\ \{}
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00017}00017\ \ \ \ \ \mbox{\hyperlink{utilities_8c_a88ffabf71aed5f9ff12e47960d74ad3a}{ut\_poll\_btns}}();}
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00018}00018\ \ \ \ \ TCNT0\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00019}00019\ \}}
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00021}00021\ \textcolor{comment}{//\ Interrupt\ Service\ Routine\ for\ Timer2\ overflow:\ Used\ to\ trip\ trigger\ flag\ at\ 1Hz}}
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00022}\mbox{\hyperlink{ir_8c_a7cfcbe42bd266750aeb6e5d71e5ea479}{00022}}\ \mbox{\hyperlink{ir_8c_add2d7cdddfb682dcc0391e60cf42c7d6}{ISR}}(TIMER2\_OVF\_vect)\ \{}
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00023}00023\ \ \ \ \ timer2\_overflow\_counter++;}
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00024}00024\ \ \ \ \ \textcolor{keywordflow}{if}\ (timer2\_overflow\_counter\ >=\ 15)\{}
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00025}00025\ \ \ \ \ \ \ \ \ timer2\_overflow\_counter\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00026}00026\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{ir_8c_a420cef67ebc0cf3d472f957806f1b8b4}{ir\_sec\_counter}}++;}
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00027}00027\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{ir_8c_a3869ada31829485498d4bdbf1d4cc6e9}{ir\_trigger\_1hz\_flag\_g}})\{}
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{ir_8c_a3869ada31829485498d4bdbf1d4cc6e9}{ir\_trigger\_1hz\_flag\_g}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00029}00029\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00030}00030\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00031}00031\ \}}
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00038}\mbox{\hyperlink{ir_8c_a398213820d1862c262f45bb51a4bb934}{00038}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{ir_8c_a398213820d1862c262f45bb51a4bb934}{ir\_init}}()}
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00039}00039\ \{}
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00040}00040\ \ \ \ \ cli();}
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00041}00041\ \ \ \ \ \textcolor{comment}{//-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00042}00042\ \ \ \ \ \textcolor{comment}{//timer\ 0\ for\ background\ button\ polling}}
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00043}00043\ \ \ \ \ OCR0A\ =\ 2;\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Set\ TOP\ (maximum\ value\ for\ counter)}}
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00044}00044\ \ }
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00045}00045\ \ \ \ \ TCNT0\ =\ 0x00;\ \ \ \ \ \ \ \textcolor{comment}{//set\ counter\ to\ zero}}
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00046}00046\ \ \ \ \ TCCR0A\ =\ 0x00;\ \ \ \ \ \ \textcolor{comment}{//set\ TCCR1A\ to\ zero\ before\ configuring\ timer0}}
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00047}00047\ \ \ \ \ TCCR0B\ =\ 0x00;}
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00048}00048\ \ \ \ \ \textcolor{comment}{//\ TOP\ is\ defined\ as\ OCR0A\ when\ WGM2:0\ =\ 5}}
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00050}00050\ \ \ \ \ \textcolor{comment}{//\ Set\ pre-\/scaler\ to\ /8}}
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00051}00051\ \ \ \ \ TCCR0B\ |=\ (1\ <<\ CS01);}
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00052}00052\ \ \ \ \ \textcolor{comment}{//\ Enable\ Timer0\ Overflow\ Interrupt}}
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00053}00053\ \ \ \ \ TIMSK0\ |=\ (1\ <<\ TOIE0);}
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00054}00054\ \ \ \ \ \textcolor{comment}{//\ Initialize\ Timer0\ count}}
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00055}00055\ \ \ \ \ TCNT0\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00058}00058\ \ \ \ \ \textcolor{comment}{//Set\ up\ timer2\ for\ 1\ hz\ task\ managment}}
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00059}00059\ \ \ \ \ \textcolor{comment}{//\ Set\ Timer2\ in\ normal\ mode\ (WGM22:0\ =\ 0)}}
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00060}00060\ \ \ \ \ TCCR2A\ =\ 0x00;}
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00061}00061\ \ \ \ \ TCCR2B\ =\ 0x00;}
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00062}00062\ \ \ \ \ \textcolor{comment}{//\ Set\ pre-\/scaler\ to\ clk/1024\ for\ smoothing}}
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00063}00063\ \ \ \ \ TCCR2B\ |=\ (1\ <<\ CS22)\ |\ (1\ <<\ CS21)\ |\ (1\ <<\ CS20);\ \textcolor{comment}{//\ Pre-\/scaler\ =\ 64}}
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00064}00064\ \ \ \ \ \textcolor{comment}{//\ Enable\ Timer2\ Overflow\ Interrupt}}
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00065}00065\ \ \ \ \ TIMSK2\ |=\ (1\ <<\ TOIE2);}
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00066}00066\ }
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00067}00067\ }
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00068}00068\ \ \ \ \ sei();\ \textcolor{comment}{//\ Enable\ interrupts.}}
+\DoxyCodeLine{\Hypertarget{ir_8c_source_l00069}00069\ \}}
+
+\end{DoxyCode}

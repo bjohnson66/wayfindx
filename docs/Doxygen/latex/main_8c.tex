@@ -1,0 +1,108 @@
+\doxysection{G\+:/\+Project\+\_\+\+Files/\+Way\+Find\+X/wfx\+\_\+sw/wfx\+\_\+sw/main.c File Reference}
+\hypertarget{main_8c}{}\label{main_8c}\index{G:/Project\_Files/WayFindX/wfx\_sw/wfx\_sw/main.c@{G:/Project\_Files/WayFindX/wfx\_sw/wfx\_sw/main.c}}
+{\ttfamily \#include $<$avr/power.\+h$>$}\newline
+{\ttfamily \#include $<$avr/io.\+h$>$}\newline
+{\ttfamily \#include $<$util/delay.\+h$>$}\newline
+{\ttfamily \#include "{}ds/ds.\+h"{}}\newline
+{\ttfamily \#include "{}ir/ir.\+h"{}}\newline
+{\ttfamily \#include "{}nf/nf.\+h"{}}\newline
+{\ttfamily \#include "{}nf/nf\+\_\+types.\+h"{}}\newline
+{\ttfamily \#include "{}ut/utilities.\+h"{}}\newline
+{\ttfamily \#include "{}ut/ut\+\_\+types.\+h"{}}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{main_8c_a43bafb28b29491ec7f871319b5a3b2f8}{F\+\_\+\+CPU}}~4000000\+UL
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{main_8c_aecc7d8debf54990ffeaaed5bac7d7d81}{startup}} ()
+\begin{DoxyCompactList}\small\item\em Performs startup initialization. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8c_ab67999156be1112194eef57df203b7d1}{task\+\_\+1hz}} ()
+\begin{DoxyCompactList}\small\item\em Executes tasks that should occur every 1Hz. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8c_aa2eb9ba074b23fc3b4a91c98e0c83c8b}{update\+\_\+display}} ()
+\begin{DoxyCompactList}\small\item\em Updates the display with relevant information. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{main_8c_a840291bc02cba5474a4cb46a9b9566fe}{main}} (void)
+\begin{DoxyCompactList}\small\item\em Main loop function. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{main_8c_a43bafb28b29491ec7f871319b5a3b2f8}\label{main_8c_a43bafb28b29491ec7f871319b5a3b2f8} 
+\index{main.c@{main.c}!F\_CPU@{F\_CPU}}
+\index{F\_CPU@{F\_CPU}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{F\_CPU}{F\_CPU}}
+{\footnotesize\ttfamily \#define F\+\_\+\+CPU~4000000\+UL}
+
+Define the CPU frequency to 4MHz. 
+
+Definition at line \mbox{\hyperlink{main_8c_source_l00046}{46}} of file \mbox{\hyperlink{main_8c_source}{main.\+c}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{main_8c_a840291bc02cba5474a4cb46a9b9566fe}\label{main_8c_a840291bc02cba5474a4cb46a9b9566fe} 
+\index{main.c@{main.c}!main@{main}}
+\index{main@{main}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Main loop function. 
+
+This function controls the program flow and will not return. It initializes the peripherals, clears the display, and continuously updates the system behavior. 
+
+Definition at line \mbox{\hyperlink{main_8c_source_l00073}{73}} of file \mbox{\hyperlink{main_8c_source}{main.\+c}}.
+
+\Hypertarget{main_8c_aecc7d8debf54990ffeaaed5bac7d7d81}\label{main_8c_aecc7d8debf54990ffeaaed5bac7d7d81} 
+\index{main.c@{main.c}!startup@{startup}}
+\index{startup@{startup}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{startup()}{startup()}}
+{\footnotesize\ttfamily void startup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Performs startup initialization. 
+
+\texorpdfstring{$<$}{<} Include display-\/related functions. \texorpdfstring{$<$}{<} Include interrupt routines. \texorpdfstring{$<$}{<} Include navigation fetch functions \texorpdfstring{$<$}{<} Include utility functions. \texorpdfstring{$<$}{<} Include common type definitions.
+
+This function initializes various peripherals and components during startup, such as the display, interrupt routines, navigation fetch, and utilities. \texorpdfstring{$<$}{<} Initialize display CSC.
+
+\texorpdfstring{$<$}{<} Initialize interrupt routines.
+
+\texorpdfstring{$<$}{<}Initialize navigation fetch CSC.
+
+\texorpdfstring{$<$}{<} Initialize utilities CSC.
+
+Definition at line \mbox{\hyperlink{main_8c_source_l00093}{93}} of file \mbox{\hyperlink{main_8c_source}{main.\+c}}.
+
+\Hypertarget{main_8c_ab67999156be1112194eef57df203b7d1}\label{main_8c_ab67999156be1112194eef57df203b7d1} 
+\index{main.c@{main.c}!task\_1hz@{task\_1hz}}
+\index{task\_1hz@{task\_1hz}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{task\_1hz()}{task\_1hz()}}
+{\footnotesize\ttfamily void task\+\_\+1hz (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Executes tasks that should occur every 1Hz. 
+
+This function is called once per second and performs tasks such as updating the display. 
+
+Definition at line \mbox{\hyperlink{main_8c_source_l00130}{130}} of file \mbox{\hyperlink{main_8c_source}{main.\+c}}.
+
+\Hypertarget{main_8c_aa2eb9ba074b23fc3b4a91c98e0c83c8b}\label{main_8c_aa2eb9ba074b23fc3b4a91c98e0c83c8b} 
+\index{main.c@{main.c}!update\_display@{update\_display}}
+\index{update\_display@{update\_display}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{update\_display()}{update\_display()}}
+{\footnotesize\ttfamily void update\+\_\+display (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Updates the display with relevant information. 
+
+This function updates the display with information such as GPS coordinates, mode, operation, and memory status. 
+
+Definition at line \mbox{\hyperlink{main_8c_source_l00147}{147}} of file \mbox{\hyperlink{main_8c_source}{main.\+c}}.
+

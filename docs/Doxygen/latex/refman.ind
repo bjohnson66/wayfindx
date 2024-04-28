@@ -1,0 +1,473 @@
+\begin{theindex}
+
+  \item {ACTION\_BTN}
+    \subitem {utilities.h}, \hyperpage{49}
+  \item {altitudeLLA\_float}
+    \subitem {nf.c}, \hyperpage{21}
+    \subitem {nf\_types.h}, \hyperpage{35}
+  \item {altitudeLLA\_str}
+    \subitem {nf.c}, \hyperpage{21}
+    \subitem {nf\_types.h}, \hyperpage{35}
+
+  \indexspace
+
+  \item {boolean\_t}
+    \subitem {ut\_types.h}, \hyperpage{39}
+
+  \indexspace
+
+  \item {CLEAR\_OP}
+    \subitem {utilities.h}, \hyperpage{49}
+  \item {CLEAR\_STR}
+    \subitem {utilities.h}, \hyperpage{49}
+  \item {convertNMEAtoLLA}
+    \subitem {nf.c}, \hyperpage{20}
+    \subitem {nf.h}, \hyperpage{30}
+
+  \indexspace
+
+  \item {ds.c}
+    \subitem {ds\_clear}, \hyperpage{5}
+    \subitem {ds\_init}, \hyperpage{5}
+    \subitem {ds\_print\_string}, \hyperpage{5}
+  \item {ds.h}
+    \subitem {ds\_clear}, \hyperpage{8}
+    \subitem {ds\_init}, \hyperpage{8}
+    \subitem {ds\_print\_string}, \hyperpage{8}
+    \subitem {MAX\_COL}, \hyperpage{7}
+    \subitem {MAX\_ROWS}, \hyperpage{7}
+    \subitem {SPACES}, \hyperpage{7}
+  \item {ds\_clear}
+    \subitem {ds.c}, \hyperpage{5}
+    \subitem {ds.h}, \hyperpage{8}
+  \item {ds\_init}
+    \subitem {ds.c}, \hyperpage{5}
+    \subitem {ds.h}, \hyperpage{8}
+  \item {ds\_print\_string}
+    \subitem {ds.c}, \hyperpage{5}
+    \subitem {ds.h}, \hyperpage{8}
+
+  \indexspace
+
+  \item {ew\_indicator}
+    \subitem {nf.c}, \hyperpage{21}
+    \subitem {nf\_types.h}, \hyperpage{35}
+
+  \indexspace
+
+  \item {F\_CPU}
+    \subitem {main.c}, \hyperpage{13}
+    \subitem {nf.c}, \hyperpage{18}
+  \item {false}
+    \subitem {ut\_types.h}, \hyperpage{39}
+
+  \indexspace
+
+  \item {G:/Project\_Files/WayFindX/wfx\_sw/wfx\_sw/ds/ds.c}, 
+		\hyperpage{5, 6}
+  \item {G:/Project\_Files/WayFindX/wfx\_sw/wfx\_sw/ds/ds.h}, 
+		\hyperpage{6}, \hyperpage{9}
+  \item {G:/Project\_Files/WayFindX/wfx\_sw/wfx\_sw/ir/ir.c}, 
+		\hyperpage{9, 10}
+  \item {G:/Project\_Files/WayFindX/wfx\_sw/wfx\_sw/ir/ir.h}, 
+		\hyperpage{11}, \hyperpage{13}
+  \item {G:/Project\_Files/WayFindX/wfx\_sw/wfx\_sw/main.c}, 
+		\hyperpage{13}, \hyperpage{15}
+  \item {G:/Project\_Files/WayFindX/wfx\_sw/wfx\_sw/nf/nf.c}, 
+		\hyperpage{17}, \hyperpage{24}
+  \item {G:/Project\_Files/WayFindX/wfx\_sw/wfx\_sw/nf/nf.h}, 
+		\hyperpage{28}, \hyperpage{31}
+  \item {G:/Project\_Files/WayFindX/wfx\_sw/wfx\_sw/nf/nf\_types.h}, 
+		\hyperpage{32}, \hyperpage{38}
+  \item {G:/Project\_Files/WayFindX/wfx\_sw/wfx\_sw/ut/ut\_types.h}, 
+		\hyperpage{38}, \hyperpage{40}
+  \item {G:/Project\_Files/WayFindX/wfx\_sw/wfx\_sw/ut/utilities.c}, 
+		\hyperpage{40}, \hyperpage{45}
+  \item {G:/Project\_Files/WayFindX/wfx\_sw/wfx\_sw/ut/utilities.h}, 
+		\hyperpage{48}, \hyperpage{54}
+  \item {get\_serial\_char}
+    \subitem {nf.c}, \hyperpage{20}
+    \subitem {nf.h}, \hyperpage{30}
+  \item {GGA\_ALTITUDE\_BUFFER\_SIZE}
+    \subitem {nf\_types.h}, \hyperpage{32}
+  \item {GGA\_HDOP\_BUFFER\_SIZE}
+    \subitem {nf\_types.h}, \hyperpage{32}
+  \item {GGA\_INDICATOR\_SIZE}
+    \subitem {nf\_types.h}, \hyperpage{33}
+  \item {GGA\_LAT\_BUFFER\_SIZE}
+    \subitem {nf\_types.h}, \hyperpage{33}
+  \item {GGA\_LONG\_BUFFER\_SIZE}
+    \subitem {nf\_types.h}, \hyperpage{33}
+  \item {GGA\_NUM\_INDICATORS\_ACTIVE}
+    \subitem {nf\_types.h}, \hyperpage{33}
+  \item {GGA\_NUM\_ITEMS\_ACTIVE}
+    \subitem {nf\_types.h}, \hyperpage{33}
+  \item {GGA\_SIZE}
+    \subitem {nf\_types.h}, \hyperpage{33}
+  \item {GGA\_SV\_USD\_BUFFER\_SIZE}
+    \subitem {nf\_types.h}, \hyperpage{34}
+  \item {GGA\_TYPE}
+    \subitem {nf.c}, \hyperpage{18}
+  \item {GGA\_UTC\_BUFFER\_SIZE}
+    \subitem {nf\_types.h}, \hyperpage{34}
+  \item {GLL\_TYPE}
+    \subitem {nf.c}, \hyperpage{19}
+  \item {GSA\_TYPE}
+    \subitem {nf.c}, \hyperpage{19}
+  \item {GSV\_TYPE}
+    \subitem {nf.c}, \hyperpage{19}
+
+  \indexspace
+
+  \item {hdop}
+    \subitem {nf.c}, \hyperpage{22}
+    \subitem {nf\_types.h}, \hyperpage{35}
+
+  \indexspace
+
+  \item {int8\_t}
+    \subitem {ut\_types.h}, \hyperpage{39}
+  \item {ir.c}
+    \subitem {ir\_init}, \hyperpage{9}
+    \subitem {ir\_sec\_counter}, \hyperpage{10}
+    \subitem {ir\_trigger\_1hz\_flag\_g}, \hyperpage{10}
+    \subitem {ISR}, \hyperpage{9, 10}
+  \item {ir.h}
+    \subitem {ir\_init}, \hyperpage{12}
+    \subitem {ir\_sec\_counter}, \hyperpage{12}
+    \subitem {ir\_trigger\_1hz\_flag\_g}, \hyperpage{12}
+  \item {ir\_init}
+    \subitem {ir.c}, \hyperpage{9}
+    \subitem {ir.h}, \hyperpage{12}
+  \item {ir\_sec\_counter}
+    \subitem {ir.c}, \hyperpage{10}
+    \subitem {ir.h}, \hyperpage{12}
+  \item {ir\_trigger\_1hz\_flag\_g}
+    \subitem {ir.c}, \hyperpage{10}
+    \subitem {ir.h}, \hyperpage{12}
+  \item {is\_button\_pressed}
+    \subitem {utilities.c}, \hyperpage{41}
+  \item {ISR}
+    \subitem {ir.c}, \hyperpage{9, 10}
+
+  \indexspace
+
+  \item {latitude}
+    \subitem {nf.c}, \hyperpage{22}
+    \subitem {nf\_types.h}, \hyperpage{35}
+  \item {latitudeLLA\_float}
+    \subitem {nf.c}, \hyperpage{22}
+    \subitem {nf\_types.h}, \hyperpage{35}
+  \item {latitudeLLA\_str}
+    \subitem {nf.c}, \hyperpage{22}
+    \subitem {nf\_types.h}, \hyperpage{36}
+  \item {LLA\_ALT\_BUFFER\_SIZE}
+    \subitem {nf\_types.h}, \hyperpage{34}
+  \item {LLA\_LAT\_BUFFER\_SIZE}
+    \subitem {nf\_types.h}, \hyperpage{34}
+  \item {LLA\_LONG\_BUFFER\_SIZE}
+    \subitem {nf\_types.h}, \hyperpage{34}
+  \item {longitude}
+    \subitem {nf.c}, \hyperpage{22}
+    \subitem {nf\_types.h}, \hyperpage{36}
+  \item {longitudeLLA\_float}
+    \subitem {nf.c}, \hyperpage{22}
+    \subitem {nf\_types.h}, \hyperpage{36}
+  \item {longitudeLLA\_str}
+    \subitem {nf.c}, \hyperpage{23}
+    \subitem {nf\_types.h}, \hyperpage{36}
+
+  \indexspace
+
+  \item {main}
+    \subitem {main.c}, \hyperpage{14}
+  \item {main.c}
+    \subitem {F\_CPU}, \hyperpage{13}
+    \subitem {main}, \hyperpage{14}
+    \subitem {startup}, \hyperpage{14}
+    \subitem {task\_1hz}, \hyperpage{14}
+    \subitem {update\_display}, \hyperpage{14}
+  \item {MAX\_COL}
+    \subitem {ds.h}, \hyperpage{7}
+  \item {MAX\_MEM\_INDEX}
+    \subitem {utilities.h}, \hyperpage{49}
+  \item {MAX\_ROWS}
+    \subitem {ds.h}, \hyperpage{7}
+  \item {MEM\_SELECT\_BTN}
+    \subitem {utilities.h}, \hyperpage{49}
+  \item {MODE\_SELECT\_BTN}
+    \subitem {utilities.h}, \hyperpage{50}
+  \item {msl\_altitude}
+    \subitem {nf.c}, \hyperpage{23}
+    \subitem {nf\_types.h}, \hyperpage{36}
+  \item {MSS\_TYPE}
+    \subitem {nf.c}, \hyperpage{19}
+
+  \indexspace
+
+  \item {NAV\_MODE}
+    \subitem {utilities.h}, \hyperpage{50}
+  \item {nf.c}
+    \subitem {altitudeLLA\_float}, \hyperpage{21}
+    \subitem {altitudeLLA\_str}, \hyperpage{21}
+    \subitem {convertNMEAtoLLA}, \hyperpage{20}
+    \subitem {ew\_indicator}, \hyperpage{21}
+    \subitem {F\_CPU}, \hyperpage{18}
+    \subitem {get\_serial\_char}, \hyperpage{20}
+    \subitem {GGA\_TYPE}, \hyperpage{18}
+    \subitem {GLL\_TYPE}, \hyperpage{19}
+    \subitem {GSA\_TYPE}, \hyperpage{19}
+    \subitem {GSV\_TYPE}, \hyperpage{19}
+    \subitem {hdop}, \hyperpage{22}
+    \subitem {latitude}, \hyperpage{22}
+    \subitem {latitudeLLA\_float}, \hyperpage{22}
+    \subitem {latitudeLLA\_str}, \hyperpage{22}
+    \subitem {longitude}, \hyperpage{22}
+    \subitem {longitudeLLA\_float}, \hyperpage{22}
+    \subitem {longitudeLLA\_str}, \hyperpage{23}
+    \subitem {msl\_altitude}, \hyperpage{23}
+    \subitem {MSS\_TYPE}, \hyperpage{19}
+    \subitem {nf\_clear\_nav\_strings}, \hyperpage{20}
+    \subitem {nf\_init}, \hyperpage{21}
+    \subitem {NMEA\_MSG\_ID\_SIZE}, \hyperpage{19}
+    \subitem {ns\_indicator}, \hyperpage{23}
+    \subitem {OK\_TO\_SEND\_TYPE}, \hyperpage{19}
+    \subitem {position\_fix\_indicator}, \hyperpage{23}
+    \subitem {read\_nmea\_msg\_raw}, \hyperpage{21}
+    \subitem {RMC\_TYPE}, \hyperpage{19}
+    \subitem {satellites\_used}, \hyperpage{23}
+    \subitem {speed}, \hyperpage{23}
+    \subitem {UART\_BAUD\_RATE}, \hyperpage{19}
+    \subitem {utc\_time}, \hyperpage{24}
+    \subitem {VTG\_TYPE}, \hyperpage{20}
+    \subitem {ZDA\_TYPE}, \hyperpage{20}
+  \item {nf.h}
+    \subitem {convertNMEAtoLLA}, \hyperpage{30}
+    \subitem {get\_serial\_char}, \hyperpage{30}
+    \subitem {nf\_init}, \hyperpage{31}
+    \subitem {NF\_INIT\_FAILURE}, \hyperpage{29}
+    \subitem {NF\_INIT\_SUCCESS}, \hyperpage{29}
+    \subitem {read\_nmea\_msg\_raw}, \hyperpage{31}
+  \item {nf\_clear\_nav\_strings}
+    \subitem {nf.c}, \hyperpage{20}
+  \item {nf\_init}
+    \subitem {nf.c}, \hyperpage{21}
+    \subitem {nf.h}, \hyperpage{31}
+  \item {NF\_INIT\_FAILURE}
+    \subitem {nf.h}, \hyperpage{29}
+  \item {NF\_INIT\_SUCCESS}
+    \subitem {nf.h}, \hyperpage{29}
+  \item {nf\_types.h}
+    \subitem {altitudeLLA\_float}, \hyperpage{35}
+    \subitem {altitudeLLA\_str}, \hyperpage{35}
+    \subitem {ew\_indicator}, \hyperpage{35}
+    \subitem {GGA\_ALTITUDE\_BUFFER\_SIZE}, \hyperpage{32}
+    \subitem {GGA\_HDOP\_BUFFER\_SIZE}, \hyperpage{32}
+    \subitem {GGA\_INDICATOR\_SIZE}, \hyperpage{33}
+    \subitem {GGA\_LAT\_BUFFER\_SIZE}, \hyperpage{33}
+    \subitem {GGA\_LONG\_BUFFER\_SIZE}, \hyperpage{33}
+    \subitem {GGA\_NUM\_INDICATORS\_ACTIVE}, \hyperpage{33}
+    \subitem {GGA\_NUM\_ITEMS\_ACTIVE}, \hyperpage{33}
+    \subitem {GGA\_SIZE}, \hyperpage{33}
+    \subitem {GGA\_SV\_USD\_BUFFER\_SIZE}, \hyperpage{34}
+    \subitem {GGA\_UTC\_BUFFER\_SIZE}, \hyperpage{34}
+    \subitem {hdop}, \hyperpage{35}
+    \subitem {latitude}, \hyperpage{35}
+    \subitem {latitudeLLA\_float}, \hyperpage{35}
+    \subitem {latitudeLLA\_str}, \hyperpage{36}
+    \subitem {LLA\_ALT\_BUFFER\_SIZE}, \hyperpage{34}
+    \subitem {LLA\_LAT\_BUFFER\_SIZE}, \hyperpage{34}
+    \subitem {LLA\_LONG\_BUFFER\_SIZE}, \hyperpage{34}
+    \subitem {longitude}, \hyperpage{36}
+    \subitem {longitudeLLA\_float}, \hyperpage{36}
+    \subitem {longitudeLLA\_str}, \hyperpage{36}
+    \subitem {msl\_altitude}, \hyperpage{36}
+    \subitem {ns\_indicator}, \hyperpage{36}
+    \subitem {position\_fix\_indicator}, \hyperpage{37}
+    \subitem {satellites\_used}, \hyperpage{37}
+    \subitem {speed}, \hyperpage{37}
+    \subitem {utc\_time}, \hyperpage{37}
+    \subitem {VTG\_SPEED\_BUFER\_SIZE}, \hyperpage{34}
+  \item {NMEA\_MSG\_ID\_SIZE}
+    \subitem {nf.c}, \hyperpage{19}
+  \item {NOP}
+    \subitem {utilities.h}, \hyperpage{50}
+  \item {ns\_indicator}
+    \subitem {nf.c}, \hyperpage{23}
+    \subitem {nf\_types.h}, \hyperpage{36}
+  \item {NUM\_BUTTONS}
+    \subitem {utilities.h}, \hyperpage{50}
+  \item {NUM\_OPERATIONS}
+    \subitem {utilities.h}, \hyperpage{50}
+
+  \indexspace
+
+  \item {OK\_TO\_SEND\_TYPE}
+    \subitem {nf.c}, \hyperpage{19}
+  \item {ON\_TIME\_THRESHHOLD}
+    \subitem {utilities.h}, \hyperpage{50}
+  \item {OP\_SELECT\_BTN}
+    \subitem {utilities.h}, \hyperpage{51}
+
+  \indexspace
+
+  \item {position\_fix\_indicator}
+    \subitem {nf.c}, \hyperpage{23}
+    \subitem {nf\_types.h}, \hyperpage{37}
+
+  \indexspace
+
+  \item {read\_nmea\_msg\_raw}
+    \subitem {nf.c}, \hyperpage{21}
+    \subitem {nf.h}, \hyperpage{31}
+  \item {RESET\_OP}
+    \subitem {utilities.h}, \hyperpage{51}
+  \item {RESET\_STR}
+    \subitem {utilities.h}, \hyperpage{51}
+  \item {RESET\_TIME\_THRESHHOLD}
+    \subitem {utilities.h}, \hyperpage{51}
+  \item {RMC\_TYPE}
+    \subitem {nf.c}, \hyperpage{19}
+
+  \indexspace
+
+  \item {satellites\_used}
+    \subitem {nf.c}, \hyperpage{23}
+    \subitem {nf\_types.h}, \hyperpage{37}
+  \item {SAVE\_OP}
+    \subitem {utilities.h}, \hyperpage{51}
+  \item {SAVE\_STR}
+    \subitem {utilities.h}, \hyperpage{51}
+  \item {SPACES}
+    \subitem {ds.h}, \hyperpage{7}
+  \item {speed}
+    \subitem {nf.c}, \hyperpage{23}
+    \subitem {nf\_types.h}, \hyperpage{37}
+  \item {startup}
+    \subitem {main.c}, \hyperpage{14}
+  \item {STAT\_MODE}
+    \subitem {utilities.h}, \hyperpage{52}
+
+  \indexspace
+
+  \item {task\_1hz}
+    \subitem {main.c}, \hyperpage{14}
+  \item {true}
+    \subitem {ut\_types.h}, \hyperpage{39}
+
+  \indexspace
+
+  \item {UART\_BAUD\_RATE}
+    \subitem {nf.c}, \hyperpage{19}
+  \item {uint16\_t}
+    \subitem {ut\_types.h}, \hyperpage{40}
+  \item {uint8\_t}
+    \subitem {ut\_types.h}, \hyperpage{40}
+  \item {update\_display}
+    \subitem {main.c}, \hyperpage{14}
+  \item {ut\_convert\_lat\_float\_to\_string}
+    \subitem {utilities.c}, \hyperpage{42}
+  \item {ut\_convert\_long\_float\_to\_string}
+    \subitem {utilities.c}, \hyperpage{42}
+  \item {ut\_init}
+    \subitem {utilities.c}, \hyperpage{42}
+    \subitem {utilities.h}, \hyperpage{52}
+  \item {ut\_lat\_mem\_floats}
+    \subitem {utilities.c}, \hyperpage{44}
+    \subitem {utilities.h}, \hyperpage{53}
+  \item {ut\_lat\_mem\_str}
+    \subitem {utilities.c}, \hyperpage{44}
+    \subitem {utilities.h}, \hyperpage{53}
+  \item {ut\_load\_from\_non\_vol}
+    \subitem {utilities.c}, \hyperpage{42}
+  \item {ut\_long\_mem\_floats}
+    \subitem {utilities.c}, \hyperpage{44}
+    \subitem {utilities.h}, \hyperpage{53}
+  \item {ut\_long\_mem\_str}
+    \subitem {utilities.c}, \hyperpage{44}
+    \subitem {utilities.h}, \hyperpage{53}
+  \item {ut\_memory\_0idx}
+    \subitem {utilities.c}, \hyperpage{44}
+    \subitem {utilities.h}, \hyperpage{53}
+  \item {ut\_mode}
+    \subitem {utilities.c}, \hyperpage{44}
+    \subitem {utilities.h}, \hyperpage{53}
+  \item {ut\_operation}
+    \subitem {utilities.c}, \hyperpage{44}
+    \subitem {utilities.h}, \hyperpage{54}
+  \item {ut\_poll\_btns}
+    \subitem {utilities.c}, \hyperpage{43}
+    \subitem {utilities.h}, \hyperpage{52}
+  \item {ut\_types.h}
+    \subitem {boolean\_t}, \hyperpage{39}
+    \subitem {false}, \hyperpage{39}
+    \subitem {int8\_t}, \hyperpage{39}
+    \subitem {true}, \hyperpage{39}
+    \subitem {uint16\_t}, \hyperpage{40}
+    \subitem {uint8\_t}, \hyperpage{40}
+  \item {ut\_write\_to\_non\_vol}
+    \subitem {utilities.c}, \hyperpage{43}
+  \item {utc\_time}
+    \subitem {nf.c}, \hyperpage{24}
+    \subitem {nf\_types.h}, \hyperpage{37}
+  \item {utilities.c}
+    \subitem {is\_button\_pressed}, \hyperpage{41}
+    \subitem {ut\_convert\_lat\_float\_to\_string}, \hyperpage{42}
+    \subitem {ut\_convert\_long\_float\_to\_string}, \hyperpage{42}
+    \subitem {ut\_init}, \hyperpage{42}
+    \subitem {ut\_lat\_mem\_floats}, \hyperpage{44}
+    \subitem {ut\_lat\_mem\_str}, \hyperpage{44}
+    \subitem {ut\_load\_from\_non\_vol}, \hyperpage{42}
+    \subitem {ut\_long\_mem\_floats}, \hyperpage{44}
+    \subitem {ut\_long\_mem\_str}, \hyperpage{44}
+    \subitem {ut\_memory\_0idx}, \hyperpage{44}
+    \subitem {ut\_mode}, \hyperpage{44}
+    \subitem {ut\_operation}, \hyperpage{44}
+    \subitem {ut\_poll\_btns}, \hyperpage{43}
+    \subitem {ut\_write\_to\_non\_vol}, \hyperpage{43}
+  \item {utilities.h}
+    \subitem {ACTION\_BTN}, \hyperpage{49}
+    \subitem {CLEAR\_OP}, \hyperpage{49}
+    \subitem {CLEAR\_STR}, \hyperpage{49}
+    \subitem {MAX\_MEM\_INDEX}, \hyperpage{49}
+    \subitem {MEM\_SELECT\_BTN}, \hyperpage{49}
+    \subitem {MODE\_SELECT\_BTN}, \hyperpage{50}
+    \subitem {NAV\_MODE}, \hyperpage{50}
+    \subitem {NOP}, \hyperpage{50}
+    \subitem {NUM\_BUTTONS}, \hyperpage{50}
+    \subitem {NUM\_OPERATIONS}, \hyperpage{50}
+    \subitem {ON\_TIME\_THRESHHOLD}, \hyperpage{50}
+    \subitem {OP\_SELECT\_BTN}, \hyperpage{51}
+    \subitem {RESET\_OP}, \hyperpage{51}
+    \subitem {RESET\_STR}, \hyperpage{51}
+    \subitem {RESET\_TIME\_THRESHHOLD}, \hyperpage{51}
+    \subitem {SAVE\_OP}, \hyperpage{51}
+    \subitem {SAVE\_STR}, \hyperpage{51}
+    \subitem {STAT\_MODE}, \hyperpage{52}
+    \subitem {ut\_init}, \hyperpage{52}
+    \subitem {ut\_lat\_mem\_floats}, \hyperpage{53}
+    \subitem {ut\_lat\_mem\_str}, \hyperpage{53}
+    \subitem {ut\_long\_mem\_floats}, \hyperpage{53}
+    \subitem {ut\_long\_mem\_str}, \hyperpage{53}
+    \subitem {ut\_memory\_0idx}, \hyperpage{53}
+    \subitem {ut\_mode}, \hyperpage{53}
+    \subitem {ut\_operation}, \hyperpage{54}
+    \subitem {ut\_poll\_btns}, \hyperpage{52}
+
+  \indexspace
+
+  \item {VTG\_SPEED\_BUFER\_SIZE}
+    \subitem {nf\_types.h}, \hyperpage{34}
+  \item {VTG\_TYPE}
+    \subitem {nf.c}, \hyperpage{20}
+
+  \indexspace
+
+  \item {WayFindX}, \hyperpage{1}
+
+  \indexspace
+
+  \item {ZDA\_TYPE}
+    \subitem {nf.c}, \hyperpage{20}
+
+\end{theindex}

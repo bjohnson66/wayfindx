@@ -1,0 +1,264 @@
+\doxysection{G\+:/\+Project\+\_\+\+Files/\+Way\+Find\+X/wfx\+\_\+sw/wfx\+\_\+sw/ut/utilities.c File Reference}
+\hypertarget{utilities_8c}{}\label{utilities_8c}\index{G:/Project\_Files/WayFindX/wfx\_sw/wfx\_sw/ut/utilities.c@{G:/Project\_Files/WayFindX/wfx\_sw/wfx\_sw/ut/utilities.c}}
+{\ttfamily \#include $<$avr/io.\+h$>$}\newline
+{\ttfamily \#include "{}utilities.\+h"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{ut__types_8h_a5338510a6d3a27844de9a766a4303d46}{boolean\+\_\+t}} \mbox{\hyperlink{utilities_8c_a5398f50635b04079fe8df25af6cfb61e}{is\+\_\+button\+\_\+pressed}} (volatile \mbox{\hyperlink{ut__types_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\+\_\+t}} \texorpdfstring{$\ast$}{*}port, \mbox{\hyperlink{ut__types_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\+\_\+t}} pin)
+\begin{DoxyCompactList}\small\item\em Checks if a button is pressed. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{utilities_8c_adad30b7f34c99fa441c093fdb66e1d5a}{ut\+\_\+load\+\_\+from\+\_\+non\+\_\+vol}} (\mbox{\hyperlink{ut__types_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\+\_\+t}} index, float \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{nf_8c_ae2012471fd2dd8dc217f3e7d806d0d95}{longitude}}, float \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{nf_8c_aa9973386b0ff84d65394ae6270388afe}{latitude}})
+\begin{DoxyCompactList}\small\item\em Loads position from non-\/volatile memory. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{utilities_8c_ac4657635dead0d3f04534709baa60b5d}{ut\+\_\+write\+\_\+to\+\_\+non\+\_\+vol}} (\mbox{\hyperlink{ut__types_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\+\_\+t}} index)
+\begin{DoxyCompactList}\small\item\em Writes to non-\/volatile memory. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{utilities_8c_a7c8e6dfbca2af65f6e27fb5b1b0955b1}{ut\+\_\+convert\+\_\+lat\+\_\+float\+\_\+to\+\_\+string}} (float lat\+\_\+float, char \texorpdfstring{$\ast$}{*}lat\+\_\+string)
+\begin{DoxyCompactList}\small\item\em Converts latitude from float to string. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{utilities_8c_a2b130f66ce270be03bbc9c5e04b118f3}{ut\+\_\+convert\+\_\+long\+\_\+float\+\_\+to\+\_\+string}} (float long\+\_\+float, char \texorpdfstring{$\ast$}{*}long\+\_\+string)
+\begin{DoxyCompactList}\small\item\em Converts longitude from float to string. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{utilities_8c_a435a2ff90939883d4bf4aa83f03cd2b4}{ut\+\_\+init}} ()
+\begin{DoxyCompactList}\small\item\em Initializes the pins for buttons, loads from SD card, and initializes stored locations on startup. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{utilities_8c_a88ffabf71aed5f9ff12e47960d74ad3a}{ut\+\_\+poll\+\_\+btns}} ()
+\begin{DoxyCompactList}\small\item\em Checks the status of each button sequentially. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{ut__types_8h_a5338510a6d3a27844de9a766a4303d46}{boolean\+\_\+t}} \mbox{\hyperlink{utilities_8c_af78821a90ed17b6589cce61366448631}{ut\+\_\+mode}}
+\item 
+\mbox{\hyperlink{ut__types_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\+\_\+t}} \mbox{\hyperlink{utilities_8c_a59ef0619f0fca92ab12dccac00503277}{ut\+\_\+operation}}
+\item 
+\mbox{\hyperlink{ut__types_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\+\_\+t}} \mbox{\hyperlink{utilities_8c_aab6073f815c4c183a282ab1f8831e75a}{ut\+\_\+memory\+\_\+0idx}}
+\item 
+float \mbox{\hyperlink{utilities_8c_a41b8ed1a1c1e54b0bc8bd88cd0731187}{ut\+\_\+lat\+\_\+mem\+\_\+floats}} \mbox{[}\mbox{\hyperlink{utilities_8h_a30682ad456c44dd32e1da9094a40d97f}{MAX\+\_\+\+MEM\+\_\+\+INDEX}}\mbox{]}
+\item 
+float \mbox{\hyperlink{utilities_8c_a07f10ac2a8fd49e014aa87de20167da3}{ut\+\_\+long\+\_\+mem\+\_\+floats}} \mbox{[}\mbox{\hyperlink{utilities_8h_a30682ad456c44dd32e1da9094a40d97f}{MAX\+\_\+\+MEM\+\_\+\+INDEX}}\mbox{]}
+\item 
+char \mbox{\hyperlink{utilities_8c_ab7665b726dd42a9d5c9af514c3119768}{ut\+\_\+lat\+\_\+mem\+\_\+str}} \mbox{[}\mbox{\hyperlink{nf__types_8h_a7b3c9ba3ceea8208b4b82e11a41722e8}{LLA\+\_\+\+LAT\+\_\+\+BUFFER\+\_\+\+SIZE}}\mbox{]}
+\item 
+char \mbox{\hyperlink{utilities_8c_a22d6ca202177fcc59702e055ebb0e1e1}{ut\+\_\+long\+\_\+mem\+\_\+str}} \mbox{[}\mbox{\hyperlink{nf__types_8h_a548e32055b21b64df9a5c859e1be38d4}{LLA\+\_\+\+LONG\+\_\+\+BUFFER\+\_\+\+SIZE}}\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{utilities_8c_a5398f50635b04079fe8df25af6cfb61e}\label{utilities_8c_a5398f50635b04079fe8df25af6cfb61e} 
+\index{utilities.c@{utilities.c}!is\_button\_pressed@{is\_button\_pressed}}
+\index{is\_button\_pressed@{is\_button\_pressed}!utilities.c@{utilities.c}}
+\doxysubsubsection{\texorpdfstring{is\_button\_pressed()}{is\_button\_pressed()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{ut__types_8h_a5338510a6d3a27844de9a766a4303d46}{boolean\+\_\+t}} is\+\_\+button\+\_\+pressed (\begin{DoxyParamCaption}\item[{volatile \mbox{\hyperlink{ut__types_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{port,  }\item[{\mbox{\hyperlink{ut__types_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\+\_\+t}}}]{pin }\end{DoxyParamCaption})}
+
+
+
+Checks if a button is pressed. 
+
+Simple utility function to poll an individual button. keeping for maintainability if button needs switched to different port or pin.
+
+This function checks whether a specified button is pressed.
+
+
+\begin{DoxyParams}{Parameters}
+{\em port} & Pointer to the port register. \\
+\hline
+{\em pin} & The pin number of the button. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the button is pressed, false otherwise. 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{utilities_8c_source_l00289}{289}} of file \mbox{\hyperlink{utilities_8c_source}{utilities.\+c}}.
+
+\Hypertarget{utilities_8c_a7c8e6dfbca2af65f6e27fb5b1b0955b1}\label{utilities_8c_a7c8e6dfbca2af65f6e27fb5b1b0955b1} 
+\index{utilities.c@{utilities.c}!ut\_convert\_lat\_float\_to\_string@{ut\_convert\_lat\_float\_to\_string}}
+\index{ut\_convert\_lat\_float\_to\_string@{ut\_convert\_lat\_float\_to\_string}!utilities.c@{utilities.c}}
+\doxysubsubsection{\texorpdfstring{ut\_convert\_lat\_float\_to\_string()}{ut\_convert\_lat\_float\_to\_string()}}
+{\footnotesize\ttfamily void ut\+\_\+convert\+\_\+lat\+\_\+float\+\_\+to\+\_\+string (\begin{DoxyParamCaption}\item[{float}]{lat\+\_\+float,  }\item[{char \texorpdfstring{$\ast$}{*}}]{lat\+\_\+string }\end{DoxyParamCaption})}
+
+
+
+Converts latitude from float to string. 
+
+This function converts a floating-\/point latitude value to a string.
+
+
+\begin{DoxyParams}{Parameters}
+{\em lat\+\_\+float} & The latitude value as a float. \\
+\hline
+{\em lat\+\_\+string} & Pointer to the string to store the converted latitude. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{utilities_8c_source_l00067}{67}} of file \mbox{\hyperlink{utilities_8c_source}{utilities.\+c}}.
+
+\Hypertarget{utilities_8c_a2b130f66ce270be03bbc9c5e04b118f3}\label{utilities_8c_a2b130f66ce270be03bbc9c5e04b118f3} 
+\index{utilities.c@{utilities.c}!ut\_convert\_long\_float\_to\_string@{ut\_convert\_long\_float\_to\_string}}
+\index{ut\_convert\_long\_float\_to\_string@{ut\_convert\_long\_float\_to\_string}!utilities.c@{utilities.c}}
+\doxysubsubsection{\texorpdfstring{ut\_convert\_long\_float\_to\_string()}{ut\_convert\_long\_float\_to\_string()}}
+{\footnotesize\ttfamily void ut\+\_\+convert\+\_\+long\+\_\+float\+\_\+to\+\_\+string (\begin{DoxyParamCaption}\item[{float}]{long\+\_\+float,  }\item[{char \texorpdfstring{$\ast$}{*}}]{long\+\_\+string }\end{DoxyParamCaption})}
+
+
+
+Converts longitude from float to string. 
+
+This function converts a floating-\/point longitude value to a string.
+
+
+\begin{DoxyParams}{Parameters}
+{\em long\+\_\+float} & The longitude value as a float. \\
+\hline
+{\em long\+\_\+string} & Pointer to the string to store the converted longitude. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{utilities_8c_source_l00105}{105}} of file \mbox{\hyperlink{utilities_8c_source}{utilities.\+c}}.
+
+\Hypertarget{utilities_8c_a435a2ff90939883d4bf4aa83f03cd2b4}\label{utilities_8c_a435a2ff90939883d4bf4aa83f03cd2b4} 
+\index{utilities.c@{utilities.c}!ut\_init@{ut\_init}}
+\index{ut\_init@{ut\_init}!utilities.c@{utilities.c}}
+\doxysubsubsection{\texorpdfstring{ut\_init()}{ut\_init()}}
+{\footnotesize\ttfamily void ut\+\_\+init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Initializes the pins for buttons, loads from SD card, and initializes stored locations on startup. 
+
+This function initializes the pins for buttons, loads data from an SD card, and initializes stored locations on startup. 
+
+Definition at line \mbox{\hyperlink{utilities_8c_source_l00142}{142}} of file \mbox{\hyperlink{utilities_8c_source}{utilities.\+c}}.
+
+\Hypertarget{utilities_8c_adad30b7f34c99fa441c093fdb66e1d5a}\label{utilities_8c_adad30b7f34c99fa441c093fdb66e1d5a} 
+\index{utilities.c@{utilities.c}!ut\_load\_from\_non\_vol@{ut\_load\_from\_non\_vol}}
+\index{ut\_load\_from\_non\_vol@{ut\_load\_from\_non\_vol}!utilities.c@{utilities.c}}
+\doxysubsubsection{\texorpdfstring{ut\_load\_from\_non\_vol()}{ut\_load\_from\_non\_vol()}}
+{\footnotesize\ttfamily void ut\+\_\+load\+\_\+from\+\_\+non\+\_\+vol (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{ut__types_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\+\_\+t}}}]{index,  }\item[{float \texorpdfstring{$\ast$}{*}}]{longitude,  }\item[{float \texorpdfstring{$\ast$}{*}}]{latitude }\end{DoxyParamCaption})}
+
+
+
+Loads position from non-\/volatile memory. 
+
+This function loads the longitude and latitude from non-\/volatile memory.
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & The index of the memory location. \\
+\hline
+{\em longitude} & Pointer to store the longitude value. \\
+\hline
+{\em latitude} & Pointer to store the latitude value. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{utilities_8c_source_l00042}{42}} of file \mbox{\hyperlink{utilities_8c_source}{utilities.\+c}}.
+
+\Hypertarget{utilities_8c_a88ffabf71aed5f9ff12e47960d74ad3a}\label{utilities_8c_a88ffabf71aed5f9ff12e47960d74ad3a} 
+\index{utilities.c@{utilities.c}!ut\_poll\_btns@{ut\_poll\_btns}}
+\index{ut\_poll\_btns@{ut\_poll\_btns}!utilities.c@{utilities.c}}
+\doxysubsubsection{\texorpdfstring{ut\_poll\_btns()}{ut\_poll\_btns()}}
+{\footnotesize\ttfamily void ut\+\_\+poll\+\_\+btns (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Checks the status of each button sequentially. 
+
+Checks status of each button sequentially. Action triggers on button release. Is to be called in background via interrupt. Post-\/polling action takes place in the following order\+: MODE\+\_\+\+SELECT\+\_\+\+BTN, MEM\+\_\+\+SELECT\+\_\+\+BTN, OP\+\_\+\+SELECT\+\_\+\+BTN.
+
+This function checks the status of each button sequentially. Action triggers on button release. It is to be called in the background via interrupt. Post-\/polling action takes place in the following order\+: MODE\+\_\+\+SELECT\+\_\+\+BTN, MEM\+\_\+\+SELECT\+\_\+\+BTN, OP\+\_\+\+SELECT\+\_\+\+BTN. 
+
+Definition at line \mbox{\hyperlink{utilities_8c_source_l00189}{189}} of file \mbox{\hyperlink{utilities_8c_source}{utilities.\+c}}.
+
+\Hypertarget{utilities_8c_ac4657635dead0d3f04534709baa60b5d}\label{utilities_8c_ac4657635dead0d3f04534709baa60b5d} 
+\index{utilities.c@{utilities.c}!ut\_write\_to\_non\_vol@{ut\_write\_to\_non\_vol}}
+\index{ut\_write\_to\_non\_vol@{ut\_write\_to\_non\_vol}!utilities.c@{utilities.c}}
+\doxysubsubsection{\texorpdfstring{ut\_write\_to\_non\_vol()}{ut\_write\_to\_non\_vol()}}
+{\footnotesize\ttfamily void ut\+\_\+write\+\_\+to\+\_\+non\+\_\+vol (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{ut__types_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\+\_\+t}}}]{index }\end{DoxyParamCaption})}
+
+
+
+Writes to non-\/volatile memory. 
+
+This function writes data to non-\/volatile memory based on the provided index.
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & The index of the memory location. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{utilities_8c_source_l00055}{55}} of file \mbox{\hyperlink{utilities_8c_source}{utilities.\+c}}.
+
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{utilities_8c_a41b8ed1a1c1e54b0bc8bd88cd0731187}\label{utilities_8c_a41b8ed1a1c1e54b0bc8bd88cd0731187} 
+\index{utilities.c@{utilities.c}!ut\_lat\_mem\_floats@{ut\_lat\_mem\_floats}}
+\index{ut\_lat\_mem\_floats@{ut\_lat\_mem\_floats}!utilities.c@{utilities.c}}
+\doxysubsubsection{\texorpdfstring{ut\_lat\_mem\_floats}{ut\_lat\_mem\_floats}}
+{\footnotesize\ttfamily float ut\+\_\+lat\+\_\+mem\+\_\+floats\mbox{[}\mbox{\hyperlink{utilities_8h_a30682ad456c44dd32e1da9094a40d97f}{MAX\+\_\+\+MEM\+\_\+\+INDEX}}\mbox{]}}
+
+Array to store latitude 
+
+Definition at line \mbox{\hyperlink{utilities_8c_source_l00008}{8}} of file \mbox{\hyperlink{utilities_8c_source}{utilities.\+c}}.
+
+\Hypertarget{utilities_8c_ab7665b726dd42a9d5c9af514c3119768}\label{utilities_8c_ab7665b726dd42a9d5c9af514c3119768} 
+\index{utilities.c@{utilities.c}!ut\_lat\_mem\_str@{ut\_lat\_mem\_str}}
+\index{ut\_lat\_mem\_str@{ut\_lat\_mem\_str}!utilities.c@{utilities.c}}
+\doxysubsubsection{\texorpdfstring{ut\_lat\_mem\_str}{ut\_lat\_mem\_str}}
+{\footnotesize\ttfamily char ut\+\_\+lat\+\_\+mem\+\_\+str\mbox{[}\mbox{\hyperlink{nf__types_8h_a7b3c9ba3ceea8208b4b82e11a41722e8}{LLA\+\_\+\+LAT\+\_\+\+BUFFER\+\_\+\+SIZE}}\mbox{]}}
+
+String to store latitude 
+
+Definition at line \mbox{\hyperlink{utilities_8c_source_l00010}{10}} of file \mbox{\hyperlink{utilities_8c_source}{utilities.\+c}}.
+
+\Hypertarget{utilities_8c_a07f10ac2a8fd49e014aa87de20167da3}\label{utilities_8c_a07f10ac2a8fd49e014aa87de20167da3} 
+\index{utilities.c@{utilities.c}!ut\_long\_mem\_floats@{ut\_long\_mem\_floats}}
+\index{ut\_long\_mem\_floats@{ut\_long\_mem\_floats}!utilities.c@{utilities.c}}
+\doxysubsubsection{\texorpdfstring{ut\_long\_mem\_floats}{ut\_long\_mem\_floats}}
+{\footnotesize\ttfamily float ut\+\_\+long\+\_\+mem\+\_\+floats\mbox{[}\mbox{\hyperlink{utilities_8h_a30682ad456c44dd32e1da9094a40d97f}{MAX\+\_\+\+MEM\+\_\+\+INDEX}}\mbox{]}}
+
+Array to store longitude 
+
+Definition at line \mbox{\hyperlink{utilities_8c_source_l00009}{9}} of file \mbox{\hyperlink{utilities_8c_source}{utilities.\+c}}.
+
+\Hypertarget{utilities_8c_a22d6ca202177fcc59702e055ebb0e1e1}\label{utilities_8c_a22d6ca202177fcc59702e055ebb0e1e1} 
+\index{utilities.c@{utilities.c}!ut\_long\_mem\_str@{ut\_long\_mem\_str}}
+\index{ut\_long\_mem\_str@{ut\_long\_mem\_str}!utilities.c@{utilities.c}}
+\doxysubsubsection{\texorpdfstring{ut\_long\_mem\_str}{ut\_long\_mem\_str}}
+{\footnotesize\ttfamily char ut\+\_\+long\+\_\+mem\+\_\+str\mbox{[}\mbox{\hyperlink{nf__types_8h_a548e32055b21b64df9a5c859e1be38d4}{LLA\+\_\+\+LONG\+\_\+\+BUFFER\+\_\+\+SIZE}}\mbox{]}}
+
+String to store longitude 
+
+Definition at line \mbox{\hyperlink{utilities_8c_source_l00011}{11}} of file \mbox{\hyperlink{utilities_8c_source}{utilities.\+c}}.
+
+\Hypertarget{utilities_8c_aab6073f815c4c183a282ab1f8831e75a}\label{utilities_8c_aab6073f815c4c183a282ab1f8831e75a} 
+\index{utilities.c@{utilities.c}!ut\_memory\_0idx@{ut\_memory\_0idx}}
+\index{ut\_memory\_0idx@{ut\_memory\_0idx}!utilities.c@{utilities.c}}
+\doxysubsubsection{\texorpdfstring{ut\_memory\_0idx}{ut\_memory\_0idx}}
+{\footnotesize\ttfamily \mbox{\hyperlink{ut__types_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\+\_\+t}} ut\+\_\+memory\+\_\+0idx}
+
+Index for memory 
+
+Definition at line \mbox{\hyperlink{utilities_8c_source_l00007}{7}} of file \mbox{\hyperlink{utilities_8c_source}{utilities.\+c}}.
+
+\Hypertarget{utilities_8c_af78821a90ed17b6589cce61366448631}\label{utilities_8c_af78821a90ed17b6589cce61366448631} 
+\index{utilities.c@{utilities.c}!ut\_mode@{ut\_mode}}
+\index{ut\_mode@{ut\_mode}!utilities.c@{utilities.c}}
+\doxysubsubsection{\texorpdfstring{ut\_mode}{ut\_mode}}
+{\footnotesize\ttfamily \mbox{\hyperlink{ut__types_8h_a5338510a6d3a27844de9a766a4303d46}{boolean\+\_\+t}} ut\+\_\+mode}
+
+Current mode 
+
+Definition at line \mbox{\hyperlink{utilities_8c_source_l00005}{5}} of file \mbox{\hyperlink{utilities_8c_source}{utilities.\+c}}.
+
+\Hypertarget{utilities_8c_a59ef0619f0fca92ab12dccac00503277}\label{utilities_8c_a59ef0619f0fca92ab12dccac00503277} 
+\index{utilities.c@{utilities.c}!ut\_operation@{ut\_operation}}
+\index{ut\_operation@{ut\_operation}!utilities.c@{utilities.c}}
+\doxysubsubsection{\texorpdfstring{ut\_operation}{ut\_operation}}
+{\footnotesize\ttfamily \mbox{\hyperlink{ut__types_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\+\_\+t}} ut\+\_\+operation}
+
+Current operation 
+
+Definition at line \mbox{\hyperlink{utilities_8c_source_l00006}{6}} of file \mbox{\hyperlink{utilities_8c_source}{utilities.\+c}}.
+

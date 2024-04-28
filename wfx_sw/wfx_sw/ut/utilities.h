@@ -4,6 +4,8 @@
  *
  * This file provides declarations for common utility functions and definitions
  * that can be used throughout the project.
+ * @version 1.0
+ * @copyright (C) 2024 Bradley Johnson and Abele Atresso
  */
 
 #ifndef UTILITIES_H

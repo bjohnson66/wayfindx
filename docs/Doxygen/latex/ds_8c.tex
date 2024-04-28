@@ -1,0 +1,69 @@
+\doxysection{G\+:/\+Project\+\_\+\+Files/\+Way\+Find\+X/wfx\+\_\+sw/wfx\+\_\+sw/ds/ds.c File Reference}
+\hypertarget{ds_8c}{}\label{ds_8c}\index{G:/Project\_Files/WayFindX/wfx\_sw/wfx\_sw/ds/ds.c@{G:/Project\_Files/WayFindX/wfx\_sw/wfx\_sw/ds/ds.c}}
+{\ttfamily \#include "{}ds.\+h"{}}\newline
+{\ttfamily \#include "{}../lib/lcd.\+h"{}}\newline
+{\ttfamily \#include "{}../ut/ut\+\_\+types.\+h"{}}\newline
+{\ttfamily \#include $<$avr/io.\+h$>$}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{ds_8c_a66261e2bef87ec8e57a3a465bab3dccf}{ds\+\_\+print\+\_\+string}} (char \texorpdfstring{$\ast$}{*}input\+String, int size, \mbox{\hyperlink{ut__types_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\+\_\+t}} row)
+\begin{DoxyCompactList}\small\item\em Prints a string on the LCD display. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{ds_8c_a69cb0034f78dcef03f3a3061bc53e732}{ds\+\_\+init}} ()
+\begin{DoxyCompactList}\small\item\em Initializes the LCD display. This function initializes the LCD display and turns on the display. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{ds_8c_ad1c430e87521e31ef80358050b6c7ae4}{ds\+\_\+clear}} ()
+\begin{DoxyCompactList}\small\item\em Clears the LCD display. This function clears the LCD display. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{ds_8c_ad1c430e87521e31ef80358050b6c7ae4}\label{ds_8c_ad1c430e87521e31ef80358050b6c7ae4} 
+\index{ds.c@{ds.c}!ds\_clear@{ds\_clear}}
+\index{ds\_clear@{ds\_clear}!ds.c@{ds.c}}
+\doxysubsubsection{\texorpdfstring{ds\_clear()}{ds\_clear()}}
+{\footnotesize\ttfamily void ds\+\_\+clear (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Clears the LCD display. This function clears the LCD display. 
+
+Clears the display. 
+
+Definition at line \mbox{\hyperlink{ds_8c_source_l00044}{44}} of file \mbox{\hyperlink{ds_8c_source}{ds.\+c}}.
+
+\Hypertarget{ds_8c_a69cb0034f78dcef03f3a3061bc53e732}\label{ds_8c_a69cb0034f78dcef03f3a3061bc53e732} 
+\index{ds.c@{ds.c}!ds\_init@{ds\_init}}
+\index{ds\_init@{ds\_init}!ds.c@{ds.c}}
+\doxysubsubsection{\texorpdfstring{ds\_init()}{ds\_init()}}
+{\footnotesize\ttfamily void ds\+\_\+init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Initializes the LCD display. This function initializes the LCD display and turns on the display. 
+
+Uses library to initialize display. If DEBUG is defined, cursor will blink. Otherwise, cursor will be off. 
+
+Definition at line \mbox{\hyperlink{ds_8c_source_l00033}{33}} of file \mbox{\hyperlink{ds_8c_source}{ds.\+c}}.
+
+\Hypertarget{ds_8c_a66261e2bef87ec8e57a3a465bab3dccf}\label{ds_8c_a66261e2bef87ec8e57a3a465bab3dccf} 
+\index{ds.c@{ds.c}!ds\_print\_string@{ds\_print\_string}}
+\index{ds\_print\_string@{ds\_print\_string}!ds.c@{ds.c}}
+\doxysubsubsection{\texorpdfstring{ds\_print\_string()}{ds\_print\_string()}}
+{\footnotesize\ttfamily void ds\+\_\+print\+\_\+string (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{input\+String,  }\item[{int}]{size,  }\item[{\mbox{\hyperlink{ut__types_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\+\_\+t}}}]{row }\end{DoxyParamCaption})}
+
+
+
+Prints a string on the LCD display. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em input\+String} & Pointer to the string to be printed. \\
+\hline
+{\em size} & Size of the string to be printed. \\
+\hline
+{\em row} & indicating what row to place the cursor \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{ds_8c_source_l00014}{14}} of file \mbox{\hyperlink{ds_8c_source}{ds.\+c}}.
+

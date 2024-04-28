@@ -1,0 +1,81 @@
+\doxysection{G\+:/\+Project\+\_\+\+Files/\+Way\+Find\+X/wfx\+\_\+sw/wfx\+\_\+sw/ir/ir.c File Reference}
+\hypertarget{ir_8c}{}\label{ir_8c}\index{G:/Project\_Files/WayFindX/wfx\_sw/wfx\_sw/ir/ir.c@{G:/Project\_Files/WayFindX/wfx\_sw/wfx\_sw/ir/ir.c}}
+{\ttfamily \#include "{}ir.\+h"{}}\newline
+{\ttfamily \#include $<$avr/interrupt.\+h$>$}\newline
+{\ttfamily \#include "{}../ut/utilities.\+h"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{ir_8c_add2d7cdddfb682dcc0391e60cf42c7d6}{ISR}} (TIMER0\+\_\+\+OVF\+\_\+vect)
+\item 
+\mbox{\hyperlink{ir_8c_a7cfcbe42bd266750aeb6e5d71e5ea479}{ISR}} (TIMER2\+\_\+\+OVF\+\_\+vect)
+\item 
+void \mbox{\hyperlink{ir_8c_a398213820d1862c262f45bb51a4bb934}{ir\+\_\+init}} ()
+\begin{DoxyCompactList}\small\item\em Initializes interrupt system functionality. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{ut__types_8h_a1f1825b69244eb3ad2c7165ddc99c956}{uint16\+\_\+t}} \mbox{\hyperlink{ir_8c_a420cef67ebc0cf3d472f957806f1b8b4}{ir\+\_\+sec\+\_\+counter}} = 0
+\item 
+\mbox{\hyperlink{ut__types_8h_a5338510a6d3a27844de9a766a4303d46}{boolean\+\_\+t}} \mbox{\hyperlink{ir_8c_a3869ada31829485498d4bdbf1d4cc6e9}{ir\+\_\+trigger\+\_\+1hz\+\_\+flag\+\_\+g}} = \mbox{\hyperlink{ut__types_8h_a65e9886d74aaee76545e83dd09011727}{false}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{ir_8c_a398213820d1862c262f45bb51a4bb934}\label{ir_8c_a398213820d1862c262f45bb51a4bb934} 
+\index{ir.c@{ir.c}!ir\_init@{ir\_init}}
+\index{ir\_init@{ir\_init}!ir.c@{ir.c}}
+\doxysubsubsection{\texorpdfstring{ir\_init()}{ir\_init()}}
+{\footnotesize\ttfamily void ir\+\_\+init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Initializes interrupt system functionality. 
+
+This function configures Timer2 for time management and Timer 0 for background button polling. 
+
+Definition at line \mbox{\hyperlink{ir_8c_source_l00038}{38}} of file \mbox{\hyperlink{ir_8c_source}{ir.\+c}}.
+
+\Hypertarget{ir_8c_add2d7cdddfb682dcc0391e60cf42c7d6}\label{ir_8c_add2d7cdddfb682dcc0391e60cf42c7d6} 
+\index{ir.c@{ir.c}!ISR@{ISR}}
+\index{ISR@{ISR}!ir.c@{ir.c}}
+\doxysubsubsection{\texorpdfstring{ISR()}{ISR()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily ISR (\begin{DoxyParamCaption}\item[{TIMER0\+\_\+\+OVF\+\_\+vect}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{ir_8c_source_l00016}{16}} of file \mbox{\hyperlink{ir_8c_source}{ir.\+c}}.
+
+\Hypertarget{ir_8c_a7cfcbe42bd266750aeb6e5d71e5ea479}\label{ir_8c_a7cfcbe42bd266750aeb6e5d71e5ea479} 
+\index{ir.c@{ir.c}!ISR@{ISR}}
+\index{ISR@{ISR}!ir.c@{ir.c}}
+\doxysubsubsection{\texorpdfstring{ISR()}{ISR()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily ISR (\begin{DoxyParamCaption}\item[{TIMER2\+\_\+\+OVF\+\_\+vect}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{ir_8c_source_l00022}{22}} of file \mbox{\hyperlink{ir_8c_source}{ir.\+c}}.
+
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{ir_8c_a420cef67ebc0cf3d472f957806f1b8b4}\label{ir_8c_a420cef67ebc0cf3d472f957806f1b8b4} 
+\index{ir.c@{ir.c}!ir\_sec\_counter@{ir\_sec\_counter}}
+\index{ir\_sec\_counter@{ir\_sec\_counter}!ir.c@{ir.c}}
+\doxysubsubsection{\texorpdfstring{ir\_sec\_counter}{ir\_sec\_counter}}
+{\footnotesize\ttfamily \mbox{\hyperlink{ut__types_8h_a1f1825b69244eb3ad2c7165ddc99c956}{uint16\+\_\+t}} ir\+\_\+sec\+\_\+counter = 0}
+
+Seconds counter for indicating TTFF 
+
+Definition at line \mbox{\hyperlink{ir_8c_source_l00006}{6}} of file \mbox{\hyperlink{ir_8c_source}{ir.\+c}}.
+
+\Hypertarget{ir_8c_a3869ada31829485498d4bdbf1d4cc6e9}\label{ir_8c_a3869ada31829485498d4bdbf1d4cc6e9} 
+\index{ir.c@{ir.c}!ir\_trigger\_1hz\_flag\_g@{ir\_trigger\_1hz\_flag\_g}}
+\index{ir\_trigger\_1hz\_flag\_g@{ir\_trigger\_1hz\_flag\_g}!ir.c@{ir.c}}
+\doxysubsubsection{\texorpdfstring{ir\_trigger\_1hz\_flag\_g}{ir\_trigger\_1hz\_flag\_g}}
+{\footnotesize\ttfamily \mbox{\hyperlink{ut__types_8h_a5338510a6d3a27844de9a766a4303d46}{boolean\+\_\+t}} ir\+\_\+trigger\+\_\+1hz\+\_\+flag\+\_\+g = \mbox{\hyperlink{ut__types_8h_a65e9886d74aaee76545e83dd09011727}{false}}}
+
+Global flag indicating 1Hz trigger 
+
+Definition at line \mbox{\hyperlink{ir_8c_source_l00007}{7}} of file \mbox{\hyperlink{ir_8c_source}{ir.\+c}}.
+

@@ -1,0 +1,137 @@
+\doxysection{G\+:/\+Project\+\_\+\+Files/\+Way\+Find\+X/wfx\+\_\+sw/wfx\+\_\+sw/ds/ds.h File Reference}
+\hypertarget{ds_8h}{}\label{ds_8h}\index{G:/Project\_Files/WayFindX/wfx\_sw/wfx\_sw/ds/ds.h@{G:/Project\_Files/WayFindX/wfx\_sw/wfx\_sw/ds/ds.h}}
+
+
+Header file containing common functions and definitions for the display \textquotesingle{}computer software component"{} or CSC.  
+
+
+{\ttfamily \#include "{}../ut/ut\+\_\+types.\+h"{}}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{ds_8h_a3b94af9dcb0358f28d175d80eed98330}{MAX\+\_\+\+ROWS}}~4
+\item 
+\#define \mbox{\hyperlink{ds_8h_a97e80440b5a5ec2ffc172dead9f8d2ec}{MAX\+\_\+\+COL}}~20
+\item 
+\#define \mbox{\hyperlink{ds_8h_a1a9b6f40de4cd7ffb57dd5abf8ec1f03}{SPACES}}~"{}                    "{}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{ds_8h_a66261e2bef87ec8e57a3a465bab3dccf}{ds\+\_\+print\+\_\+string}} (char \texorpdfstring{$\ast$}{*}input\+String, int size, \mbox{\hyperlink{ut__types_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\+\_\+t}} row)
+\begin{DoxyCompactList}\small\item\em Prints a string on the LCD display. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{ds_8h_a69cb0034f78dcef03f3a3061bc53e732}{ds\+\_\+init}} ()
+\begin{DoxyCompactList}\small\item\em Uses library to initialize display. If DEBUG is defined, cursor will blink. Otherwise, cursor will be off. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{ds_8h_ad1c430e87521e31ef80358050b6c7ae4}{ds\+\_\+clear}} ()
+\begin{DoxyCompactList}\small\item\em Clears the display. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Header file containing common functions and definitions for the display \textquotesingle{}computer software component"{} or CSC. 
+
+This file provides declarations for common utility functions and definitions associated with the LCD display. \begin{DoxyVersion}{Version}
+1.\+0 
+\end{DoxyVersion}
+\begin{DoxyCopyright}{Copyright}
+(C) 2024 Bradley Johnson and Abele Atresso 
+\end{DoxyCopyright}
+
+
+Definition in file \mbox{\hyperlink{ds_8h_source}{ds.\+h}}.
+
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{ds_8h_a97e80440b5a5ec2ffc172dead9f8d2ec}\label{ds_8h_a97e80440b5a5ec2ffc172dead9f8d2ec} 
+\index{ds.h@{ds.h}!MAX\_COL@{MAX\_COL}}
+\index{MAX\_COL@{MAX\_COL}!ds.h@{ds.h}}
+\doxysubsubsection{\texorpdfstring{MAX\_COL}{MAX\_COL}}
+{\footnotesize\ttfamily \#define MAX\+\_\+\+COL~20}
+
+Maximum number of columns on the LCD display 
+
+Definition at line \mbox{\hyperlink{ds_8h_source_l00014}{14}} of file \mbox{\hyperlink{ds_8h_source}{ds.\+h}}.
+
+\Hypertarget{ds_8h_a3b94af9dcb0358f28d175d80eed98330}\label{ds_8h_a3b94af9dcb0358f28d175d80eed98330} 
+\index{ds.h@{ds.h}!MAX\_ROWS@{MAX\_ROWS}}
+\index{MAX\_ROWS@{MAX\_ROWS}!ds.h@{ds.h}}
+\doxysubsubsection{\texorpdfstring{MAX\_ROWS}{MAX\_ROWS}}
+{\footnotesize\ttfamily \#define MAX\+\_\+\+ROWS~4}
+
+Maximum number of rows on the LCD display 
+
+Definition at line \mbox{\hyperlink{ds_8h_source_l00013}{13}} of file \mbox{\hyperlink{ds_8h_source}{ds.\+h}}.
+
+\Hypertarget{ds_8h_a1a9b6f40de4cd7ffb57dd5abf8ec1f03}\label{ds_8h_a1a9b6f40de4cd7ffb57dd5abf8ec1f03} 
+\index{ds.h@{ds.h}!SPACES@{SPACES}}
+\index{SPACES@{SPACES}!ds.h@{ds.h}}
+\doxysubsubsection{\texorpdfstring{SPACES}{SPACES}}
+{\footnotesize\ttfamily \#define SPACES~"{}                    "{}}
+
+String of spaces used for clearing the LCD display 
+
+Definition at line \mbox{\hyperlink{ds_8h_source_l00015}{15}} of file \mbox{\hyperlink{ds_8h_source}{ds.\+h}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{ds_8h_ad1c430e87521e31ef80358050b6c7ae4}\label{ds_8h_ad1c430e87521e31ef80358050b6c7ae4} 
+\index{ds.h@{ds.h}!ds\_clear@{ds\_clear}}
+\index{ds\_clear@{ds\_clear}!ds.h@{ds.h}}
+\doxysubsubsection{\texorpdfstring{ds\_clear()}{ds\_clear()}}
+{\footnotesize\ttfamily void ds\+\_\+clear (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Clears the display. 
+
+Clears the display. 
+
+Definition at line \mbox{\hyperlink{ds_8c_source_l00044}{44}} of file \mbox{\hyperlink{ds_8c_source}{ds.\+c}}.
+
+\Hypertarget{ds_8h_a69cb0034f78dcef03f3a3061bc53e732}\label{ds_8h_a69cb0034f78dcef03f3a3061bc53e732} 
+\index{ds.h@{ds.h}!ds\_init@{ds\_init}}
+\index{ds\_init@{ds\_init}!ds.h@{ds.h}}
+\doxysubsubsection{\texorpdfstring{ds\_init()}{ds\_init()}}
+{\footnotesize\ttfamily void ds\+\_\+init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Uses library to initialize display. If DEBUG is defined, cursor will blink. Otherwise, cursor will be off. 
+
+\begin{DoxyReturn}{Returns}
+none
+\end{DoxyReturn}
+Uses library to initialize display. If DEBUG is defined, cursor will blink. Otherwise, cursor will be off. 
+
+Definition at line \mbox{\hyperlink{ds_8c_source_l00033}{33}} of file \mbox{\hyperlink{ds_8c_source}{ds.\+c}}.
+
+\Hypertarget{ds_8h_a66261e2bef87ec8e57a3a465bab3dccf}\label{ds_8h_a66261e2bef87ec8e57a3a465bab3dccf} 
+\index{ds.h@{ds.h}!ds\_print\_string@{ds\_print\_string}}
+\index{ds\_print\_string@{ds\_print\_string}!ds.h@{ds.h}}
+\doxysubsubsection{\texorpdfstring{ds\_print\_string()}{ds\_print\_string()}}
+{\footnotesize\ttfamily void ds\+\_\+print\+\_\+string (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{input\+String,  }\item[{int}]{size,  }\item[{\mbox{\hyperlink{ut__types_8h_aba7bc1797add20fe3efdf37ced1182c5}{uint8\+\_\+t}}}]{row }\end{DoxyParamCaption})}
+
+
+
+Prints a string on the LCD display. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em input\+String} & Pointer to the string to be printed. \\
+\hline
+{\em size} & Size of the string to be printed. \\
+\hline
+{\em row} & Row index where the cursor will be placed.\\
+\hline
+{\em input\+String} & Pointer to the string to be printed. \\
+\hline
+{\em size} & Size of the string to be printed. \\
+\hline
+{\em row} & indicating what row to place the cursor \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{ds_8c_source_l00014}{14}} of file \mbox{\hyperlink{ds_8c_source}{ds.\+c}}.
+

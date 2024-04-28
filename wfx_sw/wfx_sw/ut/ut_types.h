@@ -3,6 +3,8 @@
  * @brief Header file containing typedefs for common types.
  *
  * This file provides typedefs for common types to improve code readability and portability.
+ * @version 1.0
+ * @copyright (C) 2024 Bradley Johnson and Abele Atresso
  */
 
 

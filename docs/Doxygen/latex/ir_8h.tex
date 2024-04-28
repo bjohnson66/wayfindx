@@ -1,0 +1,75 @@
+\doxysection{G\+:/\+Project\+\_\+\+Files/\+Way\+Find\+X/wfx\+\_\+sw/wfx\+\_\+sw/ir/ir.h File Reference}
+\hypertarget{ir_8h}{}\label{ir_8h}\index{G:/Project\_Files/WayFindX/wfx\_sw/wfx\_sw/ir/ir.h@{G:/Project\_Files/WayFindX/wfx\_sw/wfx\_sw/ir/ir.h}}
+
+
+Header file containing common functions and definitions for the interrupt system \textquotesingle{}computer software component"{} or CSC.  
+
+
+{\ttfamily \#include "{}../ut/ut\+\_\+types.\+h"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{ir_8h_a398213820d1862c262f45bb51a4bb934}{ir\+\_\+init}} ()
+\begin{DoxyCompactList}\small\item\em Initializes interrupt system functionality. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{ut__types_8h_a5338510a6d3a27844de9a766a4303d46}{boolean\+\_\+t}} \mbox{\hyperlink{ir_8h_a3869ada31829485498d4bdbf1d4cc6e9}{ir\+\_\+trigger\+\_\+1hz\+\_\+flag\+\_\+g}}
+\item 
+\mbox{\hyperlink{ut__types_8h_a1f1825b69244eb3ad2c7165ddc99c956}{uint16\+\_\+t}} \mbox{\hyperlink{ir_8h_a420cef67ebc0cf3d472f957806f1b8b4}{ir\+\_\+sec\+\_\+counter}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Header file containing common functions and definitions for the interrupt system \textquotesingle{}computer software component"{} or CSC. 
+
+This file provides declarations for common utility functions and definitions associated with the interrupt system. \begin{DoxyVersion}{Version}
+1.\+0 
+\end{DoxyVersion}
+\begin{DoxyCopyright}{Copyright}
+(C) 2024 Bradley Johnson and Abele Atresso 
+\end{DoxyCopyright}
+
+
+Definition in file \mbox{\hyperlink{ir_8h_source}{ir.\+h}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{ir_8h_a398213820d1862c262f45bb51a4bb934}\label{ir_8h_a398213820d1862c262f45bb51a4bb934} 
+\index{ir.h@{ir.h}!ir\_init@{ir\_init}}
+\index{ir\_init@{ir\_init}!ir.h@{ir.h}}
+\doxysubsubsection{\texorpdfstring{ir\_init()}{ir\_init()}}
+{\footnotesize\ttfamily void ir\+\_\+init (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Initializes interrupt system functionality. 
+
+This function configures Timer2 for time management and Timer 0 for background button polling. 
+
+Definition at line \mbox{\hyperlink{ir_8c_source_l00038}{38}} of file \mbox{\hyperlink{ir_8c_source}{ir.\+c}}.
+
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{ir_8h_a420cef67ebc0cf3d472f957806f1b8b4}\label{ir_8h_a420cef67ebc0cf3d472f957806f1b8b4} 
+\index{ir.h@{ir.h}!ir\_sec\_counter@{ir\_sec\_counter}}
+\index{ir\_sec\_counter@{ir\_sec\_counter}!ir.h@{ir.h}}
+\doxysubsubsection{\texorpdfstring{ir\_sec\_counter}{ir\_sec\_counter}}
+{\footnotesize\ttfamily \mbox{\hyperlink{ut__types_8h_a1f1825b69244eb3ad2c7165ddc99c956}{uint16\+\_\+t}} ir\+\_\+sec\+\_\+counter\hspace{0.3cm}{\ttfamily [extern]}}
+
+Seconds counter for indicating TTFF 
+
+Definition at line \mbox{\hyperlink{ir_8c_source_l00006}{6}} of file \mbox{\hyperlink{ir_8c_source}{ir.\+c}}.
+
+\Hypertarget{ir_8h_a3869ada31829485498d4bdbf1d4cc6e9}\label{ir_8h_a3869ada31829485498d4bdbf1d4cc6e9} 
+\index{ir.h@{ir.h}!ir\_trigger\_1hz\_flag\_g@{ir\_trigger\_1hz\_flag\_g}}
+\index{ir\_trigger\_1hz\_flag\_g@{ir\_trigger\_1hz\_flag\_g}!ir.h@{ir.h}}
+\doxysubsubsection{\texorpdfstring{ir\_trigger\_1hz\_flag\_g}{ir\_trigger\_1hz\_flag\_g}}
+{\footnotesize\ttfamily \mbox{\hyperlink{ut__types_8h_a5338510a6d3a27844de9a766a4303d46}{boolean\+\_\+t}} ir\+\_\+trigger\+\_\+1hz\+\_\+flag\+\_\+g\hspace{0.3cm}{\ttfamily [extern]}}
+
+Global flag indicating 1Hz trigger 
+
+Definition at line \mbox{\hyperlink{ir_8c_source_l00007}{7}} of file \mbox{\hyperlink{ir_8c_source}{ir.\+c}}.
+
