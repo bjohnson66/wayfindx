@@ -50,6 +50,7 @@
 #include <avr/power.h>
 #include <avr/io.h>
 #include <util/delay.h>
+#include <stdlib.h>
 
 #include "ds/ds.h" /**< Include display-related functions. */
 #include "ir/ir.h" /**< Include interrupt routines. */
@@ -151,11 +152,39 @@ void update_display(){
 	char line3[MAX_COL] = SPACES;
 
 	if (utc_time[0] == ' '){ //Until we solve for time
+		char counter[7];
+		itoa(ir_sec_counter, counter, 10);
+		line0[0] = 'T';
+		line0[1] = 'T';
+		line0[2] = 'F';
+		line0[3] = 'F';
+		line0[4] = ':';
+		for (int i = 0; i < 7; i++){
+			if (counter[i] == 0){
+				break;
+			}
+			line0[i+5] = counter[i];
+		}
+		
 		char* temp = "Acquiring Satellites";
 		for (int i = 0; i < MAX_COL; i++){
 			line3[i] = temp[i];
 		}		
 	} else if (position_fix_indicator[0] != '1'){ //Display time once we solve for time
+		char counter[7];
+		itoa(ir_sec_counter, counter, 10);
+		line0[0] = 'T';
+		line0[1] = 'T';
+		line0[2] = 'F';
+		line0[3] = 'F';
+		line0[4] = ':';
+		for (int i = 0; i < 7; i++){
+			if (counter[i] == 0){
+				break;
+			}
+			line0[i+5] = counter[i];
+		}
+				
 		line2[0] = 'U';
 		line2[1] = 'T';
 		line2[2] = 'C';
