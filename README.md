@@ -15,7 +15,7 @@ The project utilizes the following hardware components:
 
 - Arduino microcontroller (ATMega328p)
 - HD44780 Controlled 20x4 LCD for display
-- Control Stick for user input
+- Four buttons for user input
 - NEO-6M GPS module for positioning
 - Power Switch and 9V battery for power management
 - Additional components for connectivity
