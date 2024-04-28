@@ -1,5 +1,9 @@
 #include <avr/io.h>
 #include "utilities.h"
+#include<util/delay.h>
+#ifndef F_CPU
+#define F_CPU 4000000UL /**< Define the CPU frequency to 4MHz. */
+#endif
 
 //global variables
 boolean_t ut_mode; /**< Current mode */
@@ -292,4 +296,44 @@ boolean_t is_button_pressed(volatile uint8_t *port, uint8_t pin) {
 		return true;
 	}
 	return false;
+}
+void SPI_init(){
+	    // set CS, MOSI and SCK to output
+	    DDR_SPI |= (1 << CS) | (1 << MOSI) | (1 << SCK);
+
+	    // enable pull up resistor in MISO
+	    DDR_SPI |= (1 << MISO);
+
+	    // enable SPI, set as master, and clock to fosc/128
+	    SPCR = (1 << SPE) | (1 << MSTR) | (1 << SPR1) | (1 << SPR0);
+		// If we want to set clock to fck/16
+		//SPCR = (1 << SPE) | (1 << MSTR) | (1 << SPR0);
+    }
+uint8_t SPI_transfer(uint8_t data)
+{
+	// load data into register
+	SPDR = data;
+
+	// Wait for transmission complete
+	while(!(SPSR & (1 << SPIF)));
+
+	// return SPDR
+	return SPDR;
+}
+
+void SD_powerUpSeq()
+{
+	// make sure card is deselected
+	CS_DISABLE();
+
+	// give SD card time to power up
+	_delay_ms(1);
+
+	// send 80 clock cycles to synchronize
+	for(uint8_t i = 0; i < 10; i++)
+	SPI_transfer(0xFF);
+
+	// deselect SD card
+	CS_DISABLE();
+	SPI_transfer(0xFF);
 }

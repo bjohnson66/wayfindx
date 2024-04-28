@@ -69,5 +69,6 @@ void ut_init();
  */
 void ut_poll_btns();
 
-
+void SPI_init();
+void SD_powerUpSeq();
 #endif /* UTILITIES_H */
