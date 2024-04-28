@@ -8,9 +8,10 @@
 #ifndef DS_H_
 #define DS_H_
 
-#define MAX_ROWS 4
-#define MAX_COL 20
-#define SPACES "                    "
+#define MAX_ROWS 4 /**< Maximum number of rows on the LCD display */
+#define MAX_COL 20 /**< Maximum number of columns on the LCD display */
+#define SPACES "                    " /**< String of spaces used for clearing the LCD display */
+
 
 #include "../ut/ut_types.h"
 
@@ -19,7 +20,7 @@
  * 
  * @param inputString Pointer to the string to be printed.
  * @param size Size of the string to be printed.
- * @param row indicating what row to place the cursor
+ * @param row Row index where the cursor will be placed.
  */
 void ds_print_string(char * inputString, int size, uint8_t row);
 

@@ -9,13 +9,34 @@
 #ifndef UT_TYPES_H_
 #define UT_TYPES_H_
 
-typedef unsigned char  uint8_t;  ///< 8-bit unsigned integer
-typedef signed char    int8_t;   ///< 8-bit signed integer
-typedef unsigned int   uint16_t; ///< 16-bit unsigned integer
+/**
+ * @brief 8-bit unsigned integer type.
+ */
+typedef unsigned char  uint8_t;
 
-typedef unsigned char boolean_t;  /**< Boolean type (true/false). */
+/**
+ * @brief 8-bit signed integer type.
+ */
+typedef signed char    int8_t;
 
-#define false 0  /**< Definition of false as integer value 0. */
-#define true 1   /**< Definition of true as integer value 1. */
+/**
+ * @brief 16-bit unsigned integer type.
+ */
+typedef unsigned int   uint16_t;
+
+/**
+ * @brief Boolean type (true/false).
+ */
+typedef unsigned char boolean_t;
+
+/**
+ * @brief Definition of false as boolean value 0.
+ */
+#define false ((boolean_t)0)
+
+/**
+ * @brief Definition of true as boolean value 1.
+ */
+#define true ((boolean_t)1)
 
 #endif /* UT_TYPES_H_ */

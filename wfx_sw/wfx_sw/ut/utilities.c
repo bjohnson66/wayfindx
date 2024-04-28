@@ -2,37 +2,68 @@
 #include "utilities.h"
 
 //global variables
-boolean_t ut_mode;
-uint8_t ut_operation;
-uint8_t ut_memory_0idx;
-float ut_lat_mem_floats[MAX_MEM_INDEX];
-float ut_long_mem_floats[MAX_MEM_INDEX];
-char ut_lat_mem_str[LLA_LAT_BUFFER_SIZE];
-char ut_long_mem_str[LLA_LONG_BUFFER_SIZE];
+boolean_t ut_mode; /**< Current mode */
+uint8_t ut_operation; /**< Current operation */
+uint8_t ut_memory_0idx; /**< Index for memory */
+float ut_lat_mem_floats[MAX_MEM_INDEX]; /**< Array to store latitude */
+float ut_long_mem_floats[MAX_MEM_INDEX]; /**< Array to store longitude */
+char ut_lat_mem_str[LLA_LAT_BUFFER_SIZE]; /**< String to store latitude */
+char ut_long_mem_str[LLA_LONG_BUFFER_SIZE]; /**< String to store longitude */
 
 
 //local static variables
-static uint16_t num_button_polls;
-static uint16_t btn_on_time[NUM_BUTTONS]; // Array to store button logic high counts
-static uint8_t btn_off_time[NUM_BUTTONS]; // Array to store button states after debouncing
-static boolean_t prev_state[NUM_BUTTONS];
-static boolean_t btn_state[NUM_BUTTONS]; // Array to store button states after debouncing
+static uint16_t num_button_polls; /**< Number of button polls */
+static uint16_t btn_on_time[NUM_BUTTONS]; /**< Array to store button logic high counts */
+static uint8_t btn_off_time[NUM_BUTTONS]; /**< Array to store button states after debouncing */
+static boolean_t prev_state[NUM_BUTTONS]; /**< Previous state of buttons */
+static boolean_t btn_state[NUM_BUTTONS]; /**< Current state of buttons */
 
 //local functions
+/**
+ * @brief Checks if a button is pressed.
+ * 
+ * This function checks whether a specified button is pressed.
+ * 
+ * @param port Pointer to the port register.
+ * @param pin The pin number of the button.
+ * @return true if the button is pressed, false otherwise.
+ */
 boolean_t is_button_pressed(volatile uint8_t *port, uint8_t pin);
 
-//load position from non-vol memory
+/**
+ * @brief Loads position from non-volatile memory.
+ * 
+ * This function loads the longitude and latitude from non-volatile memory.
+ * 
+ * @param index The index of the memory location.
+ * @param longitude Pointer to store the longitude value.
+ * @param latitude Pointer to store the latitude value.
+ */
 void ut_load_from_non_vol(uint8_t index, float* longitude, float* latitude){
 	//TODO, load ith element of array from non-vol... or whole array at once if possible?
 	*longitude = 0.0f;
 	*latitude = 0.0f;
 }
 
+/**
+ * @brief Writes to non-volatile memory.
+ * 
+ * This function writes data to non-volatile memory based on the provided index.
+ * 
+ * @param index The index of the memory location.
+ */
 void ut_write_to_non_vol(uint8_t index){
 	//TODO, look at index and read from ut_long_mem_floats and ut_lat_mem_floats
 }
 
-
+/**
+ * @brief Converts latitude from float to string.
+ * 
+ * This function converts a floating-point latitude value to a string.
+ * 
+ * @param lat_float The latitude value as a float.
+ * @param lat_string Pointer to the string to store the converted latitude.
+ */
 void ut_convert_lat_float_to_string(float lat_float, char* lat_string){
 	//passed by value; will not change float from where function is called
 	if (lat_float < 0){
@@ -63,6 +94,14 @@ void ut_convert_lat_float_to_string(float lat_float, char* lat_string){
 	lat_string[8] = '0' + (decimal_part % 10); // Ones
 }
 
+/**
+ * @brief Converts longitude from float to string.
+ * 
+ * This function converts a floating-point longitude value to a string.
+ * 
+ * @param long_float The longitude value as a float.
+ * @param long_string Pointer to the string to store the converted longitude.
+ */
 void ut_convert_long_float_to_string(float long_float, char* long_string){
 	//passed by value; will not change float from where function is called
 	if (long_float < 0){
@@ -95,11 +134,11 @@ void ut_convert_long_float_to_string(float long_float, char* long_string){
 }
 
 
-/*
- *@brief ut_init initializes what ut needs on startup
- *
- *@return none
-*/
+/**
+ * @brief Initializes the pins for buttons, loads from SD card, and initializes stored locations on startup.
+ * 
+ * This function initializes the pins for buttons, loads data from an SD card, and initializes stored locations on startup.
+ */
 void ut_init()
 {
 	//read from SD card
@@ -141,7 +180,12 @@ void ut_init()
 	return;
 }
 
-//triggers button on release, called by interrupt
+/**
+ * @brief Checks the status of each button sequentially.
+ * 
+ * This function checks the status of each button sequentially. Action triggers on button release. It is to be called in the background via interrupt.
+ * Post-polling action takes place in the following order: MODE_SELECT_BTN, MEM_SELECT_BTN, OP_SELECT_BTN.
+ */
 void ut_poll_btns(){
 	// Iterate through each button
 	for (int i = 0; i < NUM_BUTTONS; i ++){
@@ -237,7 +281,7 @@ void ut_poll_btns(){
 	}
 }
 
-//local functions
+//local function definition
 /**
  * @brief Simple utility function to poll an individual button. keeping for maintainability
 		  if button needs switched to different port or pin

@@ -1,5 +1,5 @@
 #ifndef F_CPU
-#define F_CPU 4000000UL /**< Define the CPU frequency to 8MHz. */
+#define F_CPU 4000000UL /**< Define the CPU frequency to 4MHz. */
 #endif
 
 #include <avr/interrupt.h>
@@ -29,32 +29,34 @@
 
 //global
 //GGA MESSAGE
-char utc_time[GGA_UTC_BUFFER_SIZE];				// UTC Time, e.g., "161229.487"
-char latitude[GGA_LAT_BUFFER_SIZE];				// Latitude, e.g., "3723.2475"
-char ns_indicator[GGA_INDICATOR_SIZE];				// N/S Indicator, 'N' for north or 'S' for south
-char longitude[GGA_LONG_BUFFER_SIZE];				// Longitude, e.g., "12158.3416"
-char ew_indicator[GGA_INDICATOR_SIZE];				// E/W Indicator, 'E' for east or 'W' for west
-char position_fix_indicator[GGA_INDICATOR_SIZE];	// Position Fix Indicator, see Table 1-4
-char satellites_used[GGA_SV_USD_BUFFER_SIZE];		// Satellites Used, range 0 to 12 eg 07
-char hdop[GGA_HDOP_BUFFER_SIZE];					// HDOP (Horizontal Dilution of Precision), e.g., "1.0"
-char msl_altitude[GGA_ALTITUDE_BUFFER_SIZE];					// HDOP (Horizontal Dilution of Precision), e.g., "1.0"
-char speed[VTG_SPEED_BUFER_SIZE];
+char utc_time[GGA_UTC_BUFFER_SIZE];             /**< UTC Time, e.g., "161229.487" */
+char latitude[GGA_LAT_BUFFER_SIZE];             /**< Latitude, e.g., "3723.2475" */
+char ns_indicator[GGA_INDICATOR_SIZE];          /**< N/S Indicator, 'N' for north or 'S' for south */
+char longitude[GGA_LONG_BUFFER_SIZE];            /**< Longitude, e.g., "12158.3416" */
+char ew_indicator[GGA_INDICATOR_SIZE];          /**< E/W Indicator, 'E' for east or 'W' for west */
+char position_fix_indicator[GGA_INDICATOR_SIZE];/**< Position Fix Indicator, see Table 1-4 */
+char satellites_used[GGA_SV_USD_BUFFER_SIZE];    /**< Satellites Used, range 0 to 12 eg 07 */
+char hdop[GGA_HDOP_BUFFER_SIZE];                /**< HDOP (Horizontal Dilution of Precision), e.g., "1.0" */
+char msl_altitude[GGA_ALTITUDE_BUFFER_SIZE];     /**< Mean Sea Level Altitude, e.g., "1.0" */
+char speed[VTG_SPEED_BUFER_SIZE];               /**< Speed, e.g., "0.0" */
 
-float latitudeLLA_float;   // Latitude in degrees
-float longitudeLLA_float;  // Longitude in degrees
-float altitudeLLA_float;   // Altitude in meters
-char latitudeLLA_str[LLA_LAT_BUFFER_SIZE];   // Latitude in degrees
-char longitudeLLA_str[LLA_LONG_BUFFER_SIZE];  // Longitude in degrees
-char altitudeLLA_str[LLA_ALT_BUFFER_SIZE];   // Altitude in meters
+float latitudeLLA_float;    /**< Latitude in degrees */
+float longitudeLLA_float;   /**< Longitude in degrees */
+float altitudeLLA_float;    /**< Altitude in meters */
+char latitudeLLA_str[LLA_LAT_BUFFER_SIZE];      /**< Latitude in degrees */
+char longitudeLLA_str[LLA_LONG_BUFFER_SIZE];    /**< Longitude in degrees */
+char altitudeLLA_str[LLA_ALT_BUFFER_SIZE];      /**< Altitude in meters */
 
 //local static
-static char nmea_msg_id_buffer[NMEA_MSG_ID_SIZE];
-static char gga_msg_buffer[GGA_SIZE];
+static char nmea_msg_id_buffer[NMEA_MSG_ID_SIZE];/**< Buffer to store NMEA message ID */
+static char gga_msg_buffer[GGA_SIZE];            /**< Buffer to store GGA message */
 
 
 //function definitions
 
-//Clear all strings but utc time
+/**
+ * @brief Clear all navigation strings except UTC time.
+ */
 void nf_clear_nav_strings(){
 	    memset(nmea_msg_id_buffer,0,sizeof(char)*NMEA_MSG_ID_SIZE); //zeroize
 	    memset(gga_msg_buffer, ' ',sizeof(char)*GGA_SIZE); //zeroize msg buffer
@@ -72,6 +74,11 @@ void nf_clear_nav_strings(){
 	    memset(altitudeLLA_str, ' ', LLA_ALT_BUFFER_SIZE * sizeof(char));
 }
 
+/**
+ * @brief Initialize the navigation fetch module.
+ * This function initializes UART communication and clears navigation strings.
+ * @return 0 if initialization is successful, otherwise returns 1.
+ */
 uint8_t nf_init(){
 	cli();
 	 /*
@@ -99,6 +106,11 @@ uint8_t nf_init(){
 	return NF_INIT_SUCCESS;
 }
 
+/**
+ * @brief Read a single character from the serial communication.
+ * This function blocks until a character is received.
+ * @param outputchar Pointer to the character variable to store the read character.
+ */
 void get_serial_char(char* outputchar){
 	unsigned int c;
 	while (1){
@@ -156,7 +168,11 @@ void get_serial_char(char* outputchar){
 	
 }
 
-
+/**
+ * @brief Read a raw NMEA message from the serial communication.
+ * This function reads a raw NMEA message and processes GGA and VTG messages.
+ * Additionally, it polls buttons between messages.
+ */
 void read_nmea_msg_raw(){
 	//nf_clear_nav_strings();
 	char tempChar;
@@ -311,7 +327,10 @@ void read_nmea_msg_raw(){
 
 
 
-// Function to convert NMEA format coordinates to LLA form in degrees
+/**
+ * @brief Convert NMEA format coordinates to Latitude, Longitude, and Altitude (LLA) format.
+ * This function converts NMEA format coordinates to LLA format and stores them in global variables.
+ */
 void convertNMEAtoLLA() {
 	// Convert latitude from NMEA format to degrees
 	double deg = 0.0;

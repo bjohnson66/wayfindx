@@ -27,7 +27,8 @@ void ds_print_string(char * inputString, int size, uint8_t row)
 }
 
 /**
- * @brief Initializes the display.
+ * @brief Initializes the LCD display.
+ * This function initializes the LCD display and turns on the display.
  */
 void ds_init()
 {
@@ -37,7 +38,8 @@ void ds_init()
 }
 
 /**
- * @brief Clears the display.
+ * @brief Clears the LCD display.
+ * This function clears the LCD display.
  */
 void ds_clear(){
 	lcd_clrscr();

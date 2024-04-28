@@ -3,29 +3,27 @@
 #include "../ut/utilities.h"
 
 //global
-uint16_t ir_test_counter = 0;
-boolean_t ir_trigger_1hz_flag_g = false;
+uint16_t ir_sec_counter = 0; /**< Seconds counter for indicating TTFF */
+boolean_t ir_trigger_1hz_flag_g = false; /**< Global flag indicating 1Hz trigger */
+
 
 
 //local static
 static uint8_t timer2_overflow_counter;
 
-/*
-Poll all four buttons in background set state if we have polled enough times
-*/
+
+// Interrupt Service Routine for Timer0 overflow: Poll all four buttons in background set state if we have polled enough times
 ISR(TIMER0_OVF_vect) {
 	ut_poll_btns();
 	TCNT0 = 0;
 }
 
-/*
-catch case where fan stops and timer rolls over.
-*/
+// Interrupt Service Routine for Timer2 overflow: Used to trip trigger flag at 1Hz
 ISR(TIMER2_OVF_vect) {
 	timer2_overflow_counter++;
 	if (timer2_overflow_counter >= 15){
 		timer2_overflow_counter = 0;
-		ir_test_counter++;
+		ir_sec_counter++;
 		if (!ir_trigger_1hz_flag_g){
 			ir_trigger_1hz_flag_g = true;
 		}
@@ -34,13 +32,14 @@ ISR(TIMER2_OVF_vect) {
 
 /**
  * @brief Initializes interrupt system functionality.
- * - Configures Timer2 for time management.
+ * 
+ * This function configures Timer2 for time management and Timer 0 for background button polling.
  */
 void ir_init()
 {
 	cli();
 	//----------------------------------------------
-	//timer 0 for task management
+	//timer 0 for background button polling
 	OCR0A = 2;        // Set TOP (maximum value for counter)
  
 	TCNT0 = 0x00;		//set counter to zero
@@ -56,7 +55,7 @@ void ir_init()
 	TCNT0 = 0;
 
 
-	//Set up timer2 for 1 hz task
+	//Set up timer2 for 1 hz task managment
 	// Set Timer2 in normal mode (WGM22:0 = 0)
 	TCCR2A = 0x00;
 	TCCR2B = 0x00;

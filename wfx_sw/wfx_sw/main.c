@@ -9,7 +9,7 @@
  * @date: 2024/04/24
  */ 
 #ifndef F_CPU
-#define F_CPU 4000000UL /**< Define the CPU frequency to 8MHz. */
+#define F_CPU 4000000UL /**< Define the CPU frequency to 4MHz. */
 #endif
 
 //PORT Pin 2 PD2
@@ -51,7 +51,11 @@ int main(void)
 }
 
 
-
+/**
+ * @brief Performs startup initialization.
+ *
+ * This function initializes various peripherals and components during startup, such as the display, interrupt routines, navigation fetch, and utilities.
+ */
 void startup(){
 	//Initialize
 	// Set clock pre-scaler to divide by 4
@@ -84,7 +88,11 @@ void startup(){
 	ut_init(); /**< Initialize utilities CSC. */
 }
 
-
+/**
+ * @brief Executes tasks that should occur every 1Hz.
+ *
+ * This function is called once per second and performs tasks such as updating the display.
+ */
 void task_1hz(){
 	update_display();
 	//Condition where USART if out of sync with NEO6-M
@@ -97,6 +105,11 @@ void task_1hz(){
 	}
 }
 
+/**
+ * @brief Updates the display with relevant information.
+ *
+ * This function updates the display with information such as GPS coordinates, mode, operation, and memory status.
+ */
 void update_display(){
 	char line0[MAX_COL] = SPACES;
 	char line1[MAX_COL] = SPACES;  
