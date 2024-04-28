@@ -38,6 +38,17 @@
 #define ON_TIME_THRESHHOLD (uint16_t)100   /**< Button press threshold time. */
 #define RESET_TIME_THRESHHOLD (uint16_t)30  /**< Button release threshold time. */
 
+#define DDR_SPI DDRB
+#define PORT_SPI PORTB
+#define CS PINB2
+#define MOSI PINB4
+#define MISO PINB5
+#define SCK PINB3
+
+// macros
+#define  CS_ENABLE()	PORT_SPI &= ~(1 << CS)
+#define  CS_DISABLE()   PORT_SPI |= (1<< CS)
+
 extern boolean_t ut_mode; /**< Current mode indicator. */
 extern uint8_t ut_operation; /**< Current operation index. */
 extern uint8_t ut_memory_0idx; /**< Current memory index. */
