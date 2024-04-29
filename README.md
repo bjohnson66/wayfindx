@@ -2,6 +2,10 @@
 
 WayFindX is a handheld GPS receiver project developed by Bradley Johnson and Abele Atresso. The project aims to create a portable navigation device that enhances outdoor navigation capabilities for users such as hikers, adventurers, and outdoor enthusiasts. WayFindX provides essential features including position and velocity tracking, storage of multiple locations, and distance calculation to selected stored positions.
 
+# Youtube Promo
+
+[![IWayFindX Promo Video](https://img.youtube.com/vi/03FtzsMHSRk/0.jpg)](https://www.youtube.com/watch?v=03FtzsMHSRk)
+
 ## Key Features
 
 - Display of user position and velocity information
