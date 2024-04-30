@@ -41,12 +41,9 @@
 #define	RADIUS_OF_EARTH	6371.0f //**<Radius of the Earth see: https://solarsystem.nasa.gov/planets/earth/in-depth.amp */
 #define DISTANCE_SIG_FIG 6 //**<Number of characters available for distance calculation */
 
-#define DDR_SPI DDRB
-#define PORT_SPI PORTB
-#define CS PINB2
-#define MOSI PINB4
-#define MISO PINB5
-#define SCK PINB3
+#define EEPROM_START_ADDR 0x0000 //**<Starting address for EEPROM data
+#define NUM_FLOATS_MAX_MEM_INDEX 10 //**<Number of float values in each array
+#define FLOAT_SIZE_BYTES sizeof(float) //**<Size of a float value in bytes
 
 // macros
 #define  CS_ENABLE()	PORT_SPI &= ~(1 << CS)

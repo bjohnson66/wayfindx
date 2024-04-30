@@ -2,6 +2,7 @@
 #define F_CPU 4000000UL /**< Define the CPU frequency to 4MHz. */
 #endif
 #include <avr/io.h>
+#include <avr/eeprom.h>
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
@@ -26,9 +27,13 @@ static uint8_t btn_off_time[NUM_BUTTONS]; /**< Array to store button states afte
 static boolean_t prev_state[NUM_BUTTONS]; /**< Previous state of buttons */
 static boolean_t btn_state[NUM_BUTTONS]; /**< Current state of buttons */
 
+//EPROM
+float EEMEM ut_lat_EPROM_floats[MAX_MEM_INDEX] = {0.0f}; /**< Array to store latitude memory floats. */
+float EEMEM ut_long_EPROM_floats[MAX_MEM_INDEX] = {0.0f}; /**< Array to store longitude memory floats. */
+
 //local functions
 /**
- * @brief Checks if a button is pressed.
+ * @brief Checks if a button is pressed (EPROM).
  * 
  * This function checks whether a specified button is pressed.
  * 
@@ -38,31 +43,9 @@ static boolean_t btn_state[NUM_BUTTONS]; /**< Current state of buttons */
  */
 boolean_t is_button_pressed(volatile uint8_t *port, uint8_t pin);
 
-/**
- * @brief Loads position from non-volatile memory.
- * 
- * This function loads the longitude and latitude from non-volatile memory.
- * 
- * @param index The index of the memory location.
- * @param longitude Pointer to store the longitude value.
- * @param latitude Pointer to store the latitude value.
- */
-void ut_load_from_non_vol(uint8_t index, float* longitude, float* latitude){
-	//TODO, load ith element of array from non-vol... or whole array at once if possible?
-	*longitude = 0.0f;
-	*latitude = 0.0f;
-}
+void ut_write_to_non_vol(uint8_t index);
 
-/**
- * @brief Writes to non-volatile memory.
- * 
- * This function writes data to non-volatile memory based on the provided index.
- * 
- * @param index The index of the memory location.
- */
-void ut_write_to_non_vol(uint8_t index){
-	//TODO, look at index and read from ut_long_mem_floats and ut_lat_mem_floats
-}
+void ut_load_from_non_vol(uint8_t index);
 
 /**
  * @brief Converts latitude from float to string.
@@ -151,7 +134,7 @@ void ut_init()
 {
 	//read from SD card
 	for (int i = 0; i < MAX_MEM_INDEX; i++){
-		ut_load_from_non_vol(i, ut_long_mem_floats+i, ut_lat_mem_floats+i);
+		ut_load_from_non_vol(i);
 	}
 
 	//initialize globals
@@ -302,47 +285,6 @@ boolean_t is_button_pressed(volatile uint8_t *port, uint8_t pin) {
 	return false;
 }
 
-void SPI_init(){
-	    // set CS, MOSI and SCK to output
-	    DDR_SPI |= (1 << CS) | (1 << MOSI) | (1 << SCK);
-
-	    // enable pull up resistor in MISO
-	    DDR_SPI |= (1 << MISO);
-
-	    // enable SPI, set as master, and clock to fosc/128
-	    SPCR = (1 << SPE) | (1 << MSTR) | (1 << SPR1) | (1 << SPR0);
-		// If we want to set clock to fck/16
-		//SPCR = (1 << SPE) | (1 << MSTR) | (1 << SPR0);
-    }
-uint8_t SPI_transfer(uint8_t data)
-{
-	// load data into register
-	SPDR = data;
-
-	// Wait for transmission complete
-	while(!(SPSR & (1 << SPIF)));
-
-	// return SPDR
-	return SPDR;
-}
-
-void SD_powerUpSeq()
-{
-	// make sure card is deselected
-	CS_DISABLE();
-
-	// give SD card time to power up
-	_delay_ms(1);
-
-	// send 80 clock cycles to synchronize
-	for(uint8_t i = 0; i < 10; i++)
-	SPI_transfer(0xFF);
-
-	// deselect SD card
-	CS_DISABLE();
-	SPI_transfer(0xFF);
-}
-
 /**
  * @brief A function that converts a degree value to an equivalent radian value
  */
@@ -394,4 +336,43 @@ void ut_update_dist(){
 	float distance = (RADIUS_OF_EARTH + (altitudeLLA_float/1000) ) * c; //assume common altitude which has to be converted from m to KM
 	//convert to string and copy to ut_distance_str;
 	float_to_string(distance, ut_distance_str, DISTANCE_SIG_FIG);
+}
+
+// Function to load a float value from EEPROM
+float ut_load_float_from_eeprom(uint16_t address) {
+	float value;
+	eeprom_read_block((void*)&value, (const void*)address, sizeof(float));
+	return value;
+}
+
+// Function to write a float value to EEPROM
+void ut_write_float_to_eeprom(uint16_t address, float value) {
+	eeprom_write_block((const void*)&value, (void*)address, sizeof(float));
+}
+
+
+/**
+ * @brief Loads position from non-volatile memory (EEPROM).
+ * 
+ * This function loads the longitude and latitude from non-volatile memory.
+ * 
+ * @param index The index of the memory location.
+ * @param longitude Pointer to store the longitude value.
+ * @param latitude Pointer to store the latitude value.
+ */
+void ut_load_from_non_vol(uint8_t index){
+	eeprom_read_block(&(ut_long_mem_floats[index]), &(ut_long_EPROM_floats[index]), sizeof(float));
+	eeprom_read_block(&(ut_lat_mem_floats[index]), &(ut_lat_EPROM_floats[index]), sizeof(float));
+}
+
+/**
+ * @brief Writes to non-volatile memory (EEPROM).
+ * 
+ * This function writes data to non-volatile memory based on the provided index.
+ * 
+ * @param index The index of the memory location.
+ */
+void ut_write_to_non_vol(uint8_t index){
+	eeprom_write_block(&(ut_long_mem_floats[index]),&(ut_long_mem_floats[index]), sizeof(float));
+	eeprom_write_block(&(ut_lat_mem_floats[index]), &(ut_lat_mem_floats[index]), sizeof(float));
 }
