@@ -28,8 +28,8 @@ static boolean_t prev_state[NUM_BUTTONS]; /**< Previous state of buttons */
 static boolean_t btn_state[NUM_BUTTONS]; /**< Current state of buttons */
 
 //EPROM
-float EEMEM ut_lat_EPROM_floats[MAX_MEM_INDEX] = {0.0f}; /**< Array to store latitude memory floats. */
-float EEMEM ut_long_EPROM_floats[MAX_MEM_INDEX] = {0.0f}; /**< Array to store longitude memory floats. */
+float EEMEM ut_lat_EPROM_floats[MAX_MEM_INDEX]; /**< Array to store latitude memory floats. */
+float EEMEM ut_long_EPROM_floats[MAX_MEM_INDEX]; /**< Array to store longitude memory floats. */
 
 //local functions
 /**
@@ -361,8 +361,10 @@ void ut_write_float_to_eeprom(uint16_t address, float value) {
  * @param latitude Pointer to store the latitude value.
  */
 void ut_load_from_non_vol(uint8_t index){
-	eeprom_read_block(&(ut_long_mem_floats[index]), &(ut_long_EPROM_floats[index]), sizeof(float));
-	eeprom_read_block(&(ut_lat_mem_floats[index]), &(ut_lat_EPROM_floats[index]), sizeof(float));
+	eeprom_busy_wait();
+	ut_long_mem_floats[index] = eeprom_read_float(ut_long_EPROM_floats+index);
+	eeprom_busy_wait();
+	ut_lat_mem_floats[index] = eeprom_read_float(ut_lat_EPROM_floats+index);
 }
 
 /**
@@ -373,6 +375,9 @@ void ut_load_from_non_vol(uint8_t index){
  * @param index The index of the memory location.
  */
 void ut_write_to_non_vol(uint8_t index){
-	eeprom_write_block(&(ut_long_mem_floats[index]),&(ut_long_mem_floats[index]), sizeof(float));
-	eeprom_write_block(&(ut_lat_mem_floats[index]), &(ut_lat_mem_floats[index]), sizeof(float));
+	eeprom_busy_wait();
+	eeprom_update_float(ut_long_EPROM_floats+index, ut_long_mem_floats[index]);
+	eeprom_busy_wait();
+	eeprom_update_float(ut_lat_EPROM_floats+index, ut_lat_mem_floats[index]);
+
 }
