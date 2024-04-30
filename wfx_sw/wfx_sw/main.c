@@ -120,8 +120,6 @@ void startup(){
 		while(1){};
 	}
 	_delay_ms(0.6f);
-	sd_init();
-	_delay_ms(0.1f);
 	ut_init(); /**< Initialize utilities CSC. */
 }
 

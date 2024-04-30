@@ -63,6 +63,7 @@
       <Value>%24(PackRepoDir)\atmel\ATmega_DFP\1.7.374\include\</Value>
     </ListValues>
   </avrgcc.compiler.directories.IncludePaths>
+  <avrgcc.compiler.optimization.level>Optimize for size (-Os)</avrgcc.compiler.optimization.level>
   <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
   <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
   <avrgcc.compiler.warnings.AllWarnings>True</avrgcc.compiler.warnings.AllWarnings>
@@ -82,12 +83,6 @@
   </avrgcc.linker.libraries.LibrarySearchPaths>
   <avrgcc.assembler.general.IncludePaths>
     <ListValues>
-      <Value>../ds</Value>
-      <Value>../ir</Value>
-      <Value>../lib</Value>
-      <Value>../nf</Value>
-      <Value>../sd</Value>
-      <Value>../ut</Value>
       <Value>%24(PackRepoDir)\Atmel\ATmega_DFP\1.7.374\include\</Value>
       <Value>%24(PackRepoDir)\atmel\ATmega_DFP\1.7.374\include\</Value>
     </ListValues>
@@ -117,7 +112,7 @@
       <Value>%24(PackRepoDir)\atmel\ATmega_DFP\1.7.374\include\</Value>
     </ListValues>
   </avrgcc.compiler.directories.IncludePaths>
-  <avrgcc.compiler.optimization.level>Optimize more (-O2)</avrgcc.compiler.optimization.level>
+  <avrgcc.compiler.optimization.level>Optimize (-O1)</avrgcc.compiler.optimization.level>
   <avrgcc.compiler.optimization.PackStructureMembers>True</avrgcc.compiler.optimization.PackStructureMembers>
   <avrgcc.compiler.optimization.AllocateBytesNeededForEnum>True</avrgcc.compiler.optimization.AllocateBytesNeededForEnum>
   <avrgcc.compiler.optimization.DebugLevel>Default (-g2)</avrgcc.compiler.optimization.DebugLevel>
@@ -145,7 +140,6 @@
       <Value>../lib</Value>
       <Value>../nv</Value>
       <Value>%24(PackRepoDir)\atmel\ATmega_DFP\1.7.374\include\</Value>
-      <Value>../sd</Value>
     </ListValues>
   </avrgcc.assembler.general.IncludePaths>
   <avrgcc.assembler.debugging.DebugLevel>Default (-Wa,-g)</avrgcc.assembler.debugging.DebugLevel>
@@ -168,21 +162,6 @@
     <Compile Include="lib\lcd.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="lib\pf\source\diskio.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="lib\pf\source\diskio.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="lib\pf\source\pff.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="lib\pf\source\pff.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="lib\pf\source\pffconf.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="lib\uart.h">
       <SubType>compile</SubType>
     </Compile>
@@ -196,12 +175,6 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="nf\nf_types.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="sd\sd.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="sd\sd.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="ut\utilities.c">
@@ -218,9 +191,6 @@
     <Folder Include="lib" />
     <Folder Include="ds" />
     <Folder Include="ir" />
-    <Folder Include="lib\pf" />
-    <Folder Include="lib\pf\source" />
-    <Folder Include="sd" />
     <Folder Include="nf" />
     <Folder Include="ut" />
   </ItemGroup>
