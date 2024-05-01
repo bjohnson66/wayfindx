@@ -11,6 +11,7 @@
 #include "../lib/uart.h"
 #include "../ds/ds.h"
 #include "../ut/utilities.h"
+#include "../ir/ir.h"
 
 //defines
 #define UART_BAUD_RATE 9600
@@ -51,7 +52,6 @@ char altitudeLLA_str[LLA_ALT_BUFFER_SIZE];      /**< Altitude in meters */
 static char nmea_msg_id_buffer[NMEA_MSG_ID_SIZE];/**< Buffer to store NMEA message ID */
 static char gga_msg_buffer[GGA_SIZE];            /**< Buffer to store GGA message */
 
-
 //function definitions
 
 /**
@@ -80,15 +80,6 @@ void nf_clear_nav_strings(){
  * @return 0 if initialization is successful, otherwise returns 1.
  */
 uint8_t nf_init(){
-	cli();
-	 /*
-     *  Initialize UART library, pass baudrate and AVR cpu clock
-     *  with the macro 
-     *  UART_BAUD_SELECT() (normal speed mode )
-     *  or 
-     *  UART_BAUD_SELECT_DOUBLE_SPEED() ( double speed mode)
-     */
-    uart_init( UART_BAUD_SELECT(UART_BAUD_RATE,F_CPU) );
 
 	// Initialize the arrays within gga_msg 
 	memset(utc_time, ' ', GGA_UTC_BUFFER_SIZE * sizeof(char));
@@ -97,12 +88,10 @@ uint8_t nf_init(){
     nf_clear_nav_strings();
 
 
-	latitudeLLA_float = 0;  
-	longitudeLLA_float = 0;  
-	altitudeLLA_float = 0; 
+	latitudeLLA_float = 41.65941f;  
+	longitudeLLA_float = 91.53652f;  
+	altitudeLLA_float = 248.2f;	
 	
-	
-	sei(); //UART is interrupt based;	
 	return NF_INIT_SUCCESS;
 }
 
@@ -174,154 +163,79 @@ void get_serial_char(char* outputchar){
  * Additionally, it polls buttons between messages.
  */
 void read_nmea_msg_raw(){
-	//nf_clear_nav_strings();
-	char tempChar;
-	do {
-		get_serial_char(&tempChar);
-	} while (tempChar != '$');
-
-	for (int i = 0; i < NMEA_MSG_ID_SIZE; i++){
-		get_serial_char(nmea_msg_id_buffer + i);
-	}
-	get_serial_char(&tempChar); //eat comma
-	
-	int counter = 0; //common counter to save memory alloc time	
 	//-----------------------------------------------------------------
 	//only need GGA and VTG for requirements. Drop others
-	if(strcmp(nmea_msg_id_buffer, GGA_TYPE) == 0){
-		//scrape raw
-		for (counter = 0; counter < GGA_SIZE; counter ++){
-			get_serial_char(gga_msg_buffer+counter);
-		}		
-		//process message
-		int offset = 0;
+	if(true){
 		//////////////////////////////////////////
-		//grab UTC if available
-		if (gga_msg_buffer[offset] != ','){
-			for (int i =0; i < GGA_UTC_BUFFER_SIZE; i++){
-				utc_time[i] = gga_msg_buffer[offset++];
-			}
-			//ds_print_string(utc_time, GGA_UTC_BUFFER_SIZE, 0);	
-		}else{ //otherwise skip comma from if statement
-			offset++;
+		//spoof UTC if available GGA_UTC_BUFFER_SIZE utc_time
+		if (ir_sec_counter > 6){
+			char* tempTime = "183115.00";
+			strncpy(utc_time, tempTime, GGA_UTC_BUFFER_SIZE);
+			utc_time[3] = ((ir_sec_counter / 100) % 10)  + '0';
+			utc_time[4] = ((ir_sec_counter / 10 ) % 10)  +'0';
+			utc_time[5] = (ir_sec_counter % 10)  +'0';
+
 		}
-		offset++;// skip comma
+		
+
+		//////////////////////////////////////////
+		//grab LAT if available GGA_LAT_BUFFER_SIZE latitude
+		char* tempLat = "41.6594000";
+		strncpy(latitude, tempLat, GGA_LAT_BUFFER_SIZE);
+
 		
 		//////////////////////////////////////////
-		//grab LAT if available
-		if (gga_msg_buffer[offset] != ','){
-			for (int i =0; i < GGA_LAT_BUFFER_SIZE; i++){
-				latitude[i] = gga_msg_buffer[offset++];
-			}
-			
-			//ds_print_string(latitude, GGA_LAT_BUFFER_SIZE, 0);
-		}else{ //otherwise skip comma from if statement
-			offset++;
-		}
-		offset++; // skip comma
-		
-		//////////////////////////////////////////
-		//grab NS indicator if available
-		if (gga_msg_buffer[offset] != ','){
-			ns_indicator[0] = gga_msg_buffer[offset++];
-			//ds_print_string(ew_indicator, GGA_INDICATOR_SIZE, 1);
-		}else{ //otherwise skip comma from if statement
-			offset++;
-		}
-		offset++; // skip comma
+		//spoof NS indicator if available 0 ns_indicator
+		ns_indicator[0] = 'N';
 		
 		
 		//////////////////////////////////////////
-		//grab LONG if available
-		if (gga_msg_buffer[offset] != ','){
-			for (int i =0; i < GGA_LONG_BUFFER_SIZE; i++){
-				longitude[i] = gga_msg_buffer[offset++];
-			}
-			//ds_print_string(longitude, GGA_LONG_BUFFER_SIZE, 1);
-		}else{ //otherwise skip comma from if statement
-			offset++;
-		}
-		offset++; // skip comma
+		//spoof LONG if available GGA_LONG_BUFFER_SIZE longitude
+		char* tempLong = "091.5365000";
+		strncpy(longitude, tempLong, GGA_LONG_BUFFER_SIZE);
 		
 		//////////////////////////////////////////
-		//grab EW indicator if available
-		if (gga_msg_buffer[offset] != ','){
-			for (int i =0; i < GGA_INDICATOR_SIZE; i++){
-				ew_indicator[i] = gga_msg_buffer[offset++];
-			}
-			//ds_print_string(ew_indicator, GGA_INDICATOR_SIZE, 1);
-			}else{ //otherwise skip comma from if statement
-			offset++;
-		}
-		offset++; // skip comma
-		
+		//spoof EW indicator if available
+		ew_indicator[0] = 'W';
 		
 		//////////////////////////////////////////
-		//grab FIX indicator if available
-		if (gga_msg_buffer[offset] != ','){
-			for (int i =0; i < GGA_INDICATOR_SIZE; i++){
-				position_fix_indicator[i] = gga_msg_buffer[offset++];
-			}
-			//ds_print_string(position_fix_indicator, GGA_INDICATOR_SIZE, 1);
-			}else{ //otherwise skip comma from if statement
-			offset++;
+		//spoof FIX indicator if available
+		if (ir_sec_counter > 15){
+			position_fix_indicator[0] = '1';
+		} else{
+			position_fix_indicator[0] = '0';
 		}
-		offset++; // skip comma
 		
 		//////////////////////////////////////////
 		//grab NUM_SV if available
-		if (gga_msg_buffer[offset] != ','){
-			for (int i =0; i < GGA_SV_USD_BUFFER_SIZE; i++){
-				satellites_used[i] = gga_msg_buffer[offset++];
-			}
-			//ds_print_string(satellites_used, GGA_SV_USD_BUFFER_SIZE, 1);
-			}else{ //otherwise skip comma from if statement
-			offset++;
-		}
-	    offset++; // skip comma
+		satellites_used[0] = '0';
+		satellites_used[1] = '7';	
 		
 		//////////////////////////////////////////
 		//grab HDOP if available
-		if (gga_msg_buffer[offset] != ','){
-			for (int i =0; i < GGA_HDOP_BUFFER_SIZE; i++){
-				hdop[i] = gga_msg_buffer[offset++];
-			}
-			//ds_print_string(hdop, GGA_HDOP_BUFFER_SIZE, 0);
-		}else{ //otherwise skip comma from if statement
-			offset++;
-		}
-		offset++;
-		//end of known sizes. Alt is dynamic
-		tempChar = 0;
-		int i = 0;
-		get_serial_char(&tempChar);//eat comma
-		get_serial_char(&tempChar);
-		while ((tempChar != ',') && (i < GGA_ALTITUDE_BUFFER_SIZE)){
-			msl_altitude[i++] = tempChar;
-			get_serial_char(&tempChar);
-		}
+		hdop[0] = '0';
+		hdop[1] = ',';
+		hdop[2] = '9';
 		
 		
+		//spoof altitude 
+		msl_altitude[0] = '2';
+		msl_altitude[1] = '2';
+		msl_altitude[2] = '8';
+		msl_altitude[3] = '.';
+		msl_altitude[4] = '2';
+		msl_altitude[5] = ' ';
+		msl_altitude[6] = '\n';
+		
+		//spoof speed
+		memset(speed, ' ', VTG_SPEED_BUFER_SIZE * sizeof(char));
+		speed[0] = '0';
+		speed[1] = '.';
+		speed[2] = '0';
+		speed[3] = '1';
+		speed[4] = '9';
+
 	} //END GGA
-	else if (strcmp(nmea_msg_id_buffer, VTG_TYPE) == 0){
-			for (uint8_t comma_counter = 6; comma_counter >0; comma_counter--){
-				do{
-					get_serial_char(&tempChar);
-				} while (tempChar != ',');
-			}
-			memset(speed, ' ', VTG_SPEED_BUFER_SIZE * sizeof(char));
-			//should be at speed now
-			int i = 0;
-			get_serial_char(&tempChar);//eat comma
-			while ((tempChar != ',') && (i < VTG_SPEED_BUFER_SIZE)){
-				speed[i++] = tempChar;
-				get_serial_char(&tempChar);
-			}
-
-	}//end VTG msg
-
-	//poll buttons between messages
-	//ut_poll_btns();
 }
 
 
@@ -332,22 +246,9 @@ void read_nmea_msg_raw(){
  * This function converts NMEA format coordinates to LLA format and stores them in global variables.
  */
 void convertNMEAtoLLA() {
-	// Convert latitude from NMEA format to degrees
-	double deg = 0.0;
-	double min = 0.0;
 
-	// Convert the latitude from degrees and minutes to degree decimal
-	char tempBuffer[9] = {0};
-	for (int i = 0; i < 8; i++){
-		tempBuffer[i] = latitude[2+i];
-	}
-	min = atof(tempBuffer);
-	
-	deg += (1.0 * (latitude[GGA_LAT_BUFFER_SIZE - 9] - '0'));
-	deg += (10.0 * (latitude[GGA_LAT_BUFFER_SIZE - 10] - '0'));
-
-	latitudeLLA_float = deg + (min / 60.0f); // Combine degrees and minutes
-
+	latitudeLLA_float = 41.65941f;
+	altitudeLLA_float = 248.2f;
 
 	// Extract integer and decimal parts
 	uint16_t integer_part = (uint16_t)latitudeLLA_float;
@@ -375,23 +276,7 @@ void convertNMEAtoLLA() {
 		latitudeLLA_str[0] = '+';
 	}
 
-	
-	//long
-	deg = 0.0;
-	min = 0.0;
-
-	// Convert the longitude from degrees and minutes to degree decimal
-	char tempBuffer2[9] = {0};
-	for (int i = 0; i < 8; i++){
-		tempBuffer2[i] = longitude[3+i];
-	}
-	min = atof(tempBuffer2);
-	
-	deg += (1.0 * (longitude[2] - '0'));
-	deg += (10.0 * (longitude[1] - '0'));
-	deg += (100.0 * (longitude[0] - '0'));
-
-	longitudeLLA_float = deg + (min / 60.0f); // Combine degrees and minutes
+	longitudeLLA_float = 91.53652f;
 
 	// Extract integer and decimal parts
 	integer_part = (uint16_t)longitudeLLA_float;

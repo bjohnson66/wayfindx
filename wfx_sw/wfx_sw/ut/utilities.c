@@ -27,6 +27,10 @@ static uint8_t btn_off_time[NUM_BUTTONS]; /**< Array to store button states afte
 static boolean_t prev_state[NUM_BUTTONS]; /**< Previous state of buttons */
 static boolean_t btn_state[NUM_BUTTONS]; /**< Current state of buttons */
 
+//Old Cap, Kinnick, SC, 
+const float SPOOFED_MEM_lat[] = {41.66132f, 41.65702f, 41.65887f};
+const float SPOOFED_MEM_long[] = {91.53652f, 91.55111f, 91.53623f};
+		
 //EPROM
 float EEMEM ut_lat_EPROM_floats[MAX_MEM_INDEX]; /**< Array to store latitude memory floats. */
 float EEMEM ut_long_EPROM_floats[MAX_MEM_INDEX]; /**< Array to store longitude memory floats. */
@@ -257,6 +261,10 @@ void ut_poll_btns(){
 					//Load into global array
 					ut_lat_mem_floats[i] = 0.0f;
 					ut_long_mem_floats[i] = 0.0f;
+					if (i < 3){ //spoofed
+						ut_lat_mem_floats[i] = SPOOFED_MEM_lat[i];
+						ut_long_mem_floats[i] = SPOOFED_MEM_long[i];
+					}
 
 					//update string
 					ut_convert_lat_float_to_string(ut_lat_mem_floats[i], ut_lat_mem_str);
